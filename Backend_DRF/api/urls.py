@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import CustomTokenObtainPairView
-from seller.views import ItemListCreateView
+from seller.views import ItemListCreateView,BuyerItemListView
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('seller/register/',SellerRegistrationFormView.as_view(),name='seller_register_form'),
     path('seller/items/',ItemListCreateView.as_view(),name="food_item_fetch_and_stored"),
     path('seller/details/',kitchenDetailsView.as_view(),name="kitchen_details_by_seller_fetched"),
+    path('buyer/items/', BuyerItemListView.as_view(), name='public-items'),
     
 ]
 if settings.DEBUG:

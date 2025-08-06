@@ -26,8 +26,10 @@ class Item(models.Model):
     image=models.ImageField(upload_to="seller/items")
     is_available=models.CharField(default=AvailabelFieldOption.NO , choices=AvailabelFieldOption.choices ,max_length=5)
     created_at = models.DateTimeField(auto_now_add=True) # Automatically set the date when the record is created
-    available_quantity=models.DecimalField(max_digits=8,decimal_places=2, default=0)
-    sold_quantity=models.DecimalField(max_digits=8,decimal_places=2, default=0)
+    available_quantity=models.DecimalField(max_digits=8, decimal_places=0,default=0)
+    sold_quantity=models.DecimalField(max_digits=8,decimal_places=0, default=0)
+    preperiation_time=models.DecimalField(max_digits=8, decimal_places=0, default=20)
+    kitchen_photo=models.ImageField(upload_to="seller/kitchen_photos", blank=True, null=True)
     
     def __str__(self):
         return f"{self.item_name} : {self.kitchen_name.kitchen_name}"

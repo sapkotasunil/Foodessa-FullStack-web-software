@@ -37,5 +37,10 @@ class ItemListCreateView(generics.ListCreateAPIView):
             raise PermissionDenied("seller profile not found")
         
         serializer.save(kitchen_name=seller) # seller name would be saved as a kitchen name in item models , so we dont need to send kitchen name from frontend
+        serializer.save(kitchen_photo=seller.kitchen_profile_photo) # seller name would be saved as a kitchen name in item models , so we dont need to send kitchen name from frontend
         
 
+class BuyerItemListView(generics.ListAPIView):
+    queryset = Item.objects.all()
+    serializer_class = ItemsSerializer
+    permission_classes = [permissions.AllowAny]  # Anyone can access it (no login required)
