@@ -8,7 +8,7 @@ import { TbShoppingBagPlus } from "react-icons/tb";
 
 function FoodItemCard({ items }: { items: IresposeItemData }) {
   const dispatch = useAppDispatch();
-  console.log(items.image);
+
   return (
     <div>
       <div className="flex rounded-xl bg-[#e0fbc2] relative max-w-100 md:w-full">

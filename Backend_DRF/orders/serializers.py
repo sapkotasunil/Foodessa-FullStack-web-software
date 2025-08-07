@@ -7,7 +7,7 @@ class orderSerializer(serializers.ModelSerializer):
     class Meta:
         fields='__all__'
         model=Order
-        extra_kwargs={"buyer_name":{"required":False}}
+        read_only_fields = ['kitchen_name', 'buyer_name', 'items_name']
         
         
     def get_buyer_name(self,obj):

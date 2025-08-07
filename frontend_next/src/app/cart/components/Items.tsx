@@ -7,7 +7,6 @@ import BuyModel from "./BuyFunction/BuyModel";
 
 export default function CartItem({ data, onBuy, onCancel }: any) {
   const [quantity, setQuantity] = useState(1);
-  console.log(data);
 
   const dispatch = useAppDispatch();
 
@@ -26,12 +25,18 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
 
   return (
     <>
-      {modelOpen && <BuyModel />}
+      {modelOpen && (
+        <BuyModel
+          itemsData={data}
+          closeModel={closeModel}
+          prevQuantity={quantity}
+        />
+      )}
       <div className="w-full grid   bg-white shadow-xl rounded-2xl p-4 grid-cols-4  items-center space-x-4 mb-4">
         <div className="flex items-center gap-3  ">
           <Image
             src={data?.image && data.image.replace("/media/", "/api/v1/media/")}
-            alt={data?.name}
+            alt="Loading.."
             width={80}
             height={80}
             className="rounded-lg object-cover"
@@ -65,7 +70,7 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
         <div className="mt-4 flex space-x-2 justify-end px-12">
           <button
             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
-            onClick={() => setModelOpen(true)}
+            onClick={openModel}
           >
             Buy
           </button>

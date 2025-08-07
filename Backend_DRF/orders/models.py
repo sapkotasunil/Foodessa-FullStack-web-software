@@ -36,6 +36,7 @@ class Order(models.Model):
     created_at=models.DateTimeField( auto_now_add=True)
     Status_updated_at=models.DateTimeField(auto_now=True)
     payment=models.ImageField(upload_to="payment" ,null=True ,blank=True)
+    phone_number = models.CharField(max_length=10, blank=True, null=False)
     
     def __str__(self):
         return f"order #{self.id}--{self.buyer_name.username}--{self.orderStatus}"
