@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "seller_registration_data",
     "seller",
     "items",
+    "orders",
     
 ]
 

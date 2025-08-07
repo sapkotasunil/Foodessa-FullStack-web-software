@@ -14,7 +14,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
     category: "",
     item_description: "",
     item_name: "",
-    photo: null,
+    image: null,
     price: 0,
   });
 

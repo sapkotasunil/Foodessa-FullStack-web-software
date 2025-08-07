@@ -3,14 +3,6 @@
 import { useAppSelector } from "@/lib/store/hooks";
 import CartItem from "./components/Items";
 
-const sampleProduct = {
-  id: "1",
-  name: "Tasty Pizza",
-  price: 499,
-  image: "/images/food_1.png",
-  description: "pizza is a very testy food", // Add this image in your public folder
-};
-
 export default function CartPage() {
   const { data } = useAppSelector((store) => store.cart);
   console.log(data);

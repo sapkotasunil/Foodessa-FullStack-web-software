@@ -3,7 +3,7 @@ from .models import Item
 
 class ItemsSerializer(serializers.ModelSerializer):
     kitchen_name=serializers.SerializerMethodField()
-    kitchen_photo=serializers.SerializerMethodField
+    kitchen_photo=serializers.SerializerMethodField()
     
     class Meta:
         model=Item
