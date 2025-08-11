@@ -1,9 +1,11 @@
 "use client";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IUserRegisterData } from "@/lib/store/auth/authSlice.types";
 import Link from "next/link";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { registerUser } from "@/lib/store/auth/authSlice";
+import Loader from "@/components/GlobalComponents/Loders";
+import SucessfulModel from "@/components/GlobalComponents/SucessfullModel";
 
 function Register() {
   const [data, setData] = useState<IUserRegisterData>({
@@ -18,9 +20,11 @@ function Register() {
     last_name: "",
     gender: "",
   });
+  const { errors, status } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch();
   const [passWordMatch, setPassWordMatch] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   const handleChange = (e: ChangeEvent<any>) => {
     const { name, value, files } = e.target;
@@ -33,12 +37,18 @@ function Register() {
 
   const handleRegisterSubmission = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (data.password === data.confirmPassword) {
       dispatch(registerUser(data));
       console.log("submmited", data);
-      setPassWordMatch(true);
+      if (status === "loading" && setLoader(true)) setPassWordMatch(true);
     } else setPassWordMatch(false);
   };
+  useEffect(() => {
+    if (status !== "loading") {
+      setLoader(false);
+    }
+  }, [status]);
 
   return (
     <div className=" min-h-fit flex items-center justify-center p-4">
@@ -57,6 +67,12 @@ function Register() {
             </a>
           </div>
 
+          {/* Show success modal when registration is successful */}
+          {status === "success" &&
+            (() => {
+              SucessfulModel();
+              return null;
+            })()}
           <a
             href="/"
             className="absolute top-6 right-6 bg-green-600 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm hover:bg-green-500 transition-colors z-10"
@@ -155,6 +171,11 @@ function Register() {
                   required
                   className="input-field"
                 />
+                {errors.username && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.username[0]}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -269,6 +290,11 @@ function Register() {
                   required
                   className="input-field"
                 />
+                {errors.password && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.password[0]}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -299,7 +325,7 @@ function Register() {
                 <input
                   type="checkbox"
                   required
-                  className="rounded text-green-600 focus:ring-green-600"
+                  className="rounded text-green-600  focus:ring-green-600"
                 />
                 <span className="text-gray-600 text-sm">
                   I agree to the{" "}
@@ -311,9 +337,11 @@ function Register() {
 
               <button
                 type="submit"
-                className="w-full bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium"
+                className={`w-full ${
+                  loader && "cursor-not-allowed"
+                } bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium`}
               >
-                Register
+                {loader ? <Loader /> : "Register"}
               </button>
             </form>
           </div>

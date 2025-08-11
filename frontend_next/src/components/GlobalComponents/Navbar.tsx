@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { BiHistory, BiHotel, BiRestaurant } from "react-icons/bi";
 import { BsMenuApp } from "react-icons/bs";
-import { GiKitchenTap } from "react-icons/gi";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { PiPhone } from "react-icons/pi";
 import { RiShoppingBasketLine, RiUserLine } from "react-icons/ri";
@@ -90,9 +89,9 @@ export default function Navbar() {
               <RiShoppingBasketLine className="text-2xl hover:text-green-600" />
             </Link>
           </div>
-          <div>
+          <Link href={"/auth/login/"}>
             <RiUserLine className="text-xl hover:text-green-600" />
-          </div>
+          </Link>
         </div>
       </nav>
     </>
