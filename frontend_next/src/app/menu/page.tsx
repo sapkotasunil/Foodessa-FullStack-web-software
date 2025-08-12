@@ -42,7 +42,7 @@ function menuPage() {
           parsaStyles={""}
           title1Styles={""}
         />
-        <ItemData />
+        <ItemData serchedItem={search} />
       </section>
     </>
   );

@@ -1,5 +1,7 @@
 "use client";
-import { useAppSelector } from "@/lib/store/hooks";
+import { setStatus } from "@/lib/store/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { Status } from "@/lib/types/types";
 import Link from "next/link";
 import { useState } from "react";
 import { BiHistory, BiHotel, BiRestaurant } from "react-icons/bi";
@@ -13,6 +15,12 @@ export default function Navbar() {
   const [menuOpend, setmenuOpend] = useState(false);
 
   const { data } = useAppSelector((store) => store.cart);
+  const { user } = useAppSelector((store) => store.auth);
+  const { profile_picture } = user;
+  const dispatch = useAppDispatch();
+  const statusClear = () => {
+    dispatch(setStatus(Status.LOADING));
+  };
   const cartItemLength = data.length;
   return (
     <>
@@ -89,9 +97,26 @@ export default function Navbar() {
               <RiShoppingBasketLine className="text-2xl hover:text-green-600" />
             </Link>
           </div>
-          <Link href={"/auth/login/"}>
-            <RiUserLine className="text-xl hover:text-green-600" />
-          </Link>
+          {profile_picture ? (
+            <Link
+              href={"/profile/"}
+              className=" rounded-full border-2 border-gray-600 bg-gray-300"
+            >
+              <img
+                src={profile_picture}
+                alt="Profile"
+                className="w-7 h-7 rounded-full object-cover"
+              />
+            </Link>
+          ) : (
+            <Link
+              href={"/auth/login/"}
+              className="p-1 rounded-2xl border-2 border-gray-600 bg-gray-300"
+              onClick={statusClear}
+            >
+              <RiUserLine className="text-xl hover:text-green-600" />
+            </Link>
+          )}
         </div>
       </nav>
     </>

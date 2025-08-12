@@ -5,7 +5,7 @@ import "./globals.css";
 import { Provider } from "react-redux";
 import store from "@/lib/store/store";
 import Navbar from "@/components/GlobalComponents/Navbar";
-
+import { Toaster } from "react-hot-toast";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -33,6 +33,7 @@ export default function RootLayout({
       >
         <div className="bg-gradient-to-br from-[#f9f9f9] via-[#e3f7fa] to-[#fffdf4] md:px-6">
           <Provider store={store}>{children}</Provider>
+          <Toaster />
         </div>
       </body>
     </html>

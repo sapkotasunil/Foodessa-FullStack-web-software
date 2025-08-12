@@ -1,11 +1,10 @@
 import Swal from "sweetalert2";
 
-function SucessfulModel() {
-  return Swal.fire({
-    title: "Good job!",
-    text: "You clicked the button!",
+export const SucessfulModel = (title: string, text: string) => {
+  Swal.fire({
+    title,
+    text,
     icon: "success",
+    confirmButtonText: "OK",
   });
-}
-
-export default SucessfulModel;
+};

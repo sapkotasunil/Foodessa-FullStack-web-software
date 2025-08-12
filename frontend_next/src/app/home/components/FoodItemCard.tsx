@@ -66,7 +66,7 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
             </div>
             <button
               onClick={() => dispatch(addToCart(items))}
-              className="flex items-center justify-center px-3 gap-x-1 text-[22px] bg-[#217041] text-white rounded-sm p-[3px]"
+              className="flex items-center justify-center px-3 gap-x-1 text-[22px] bg-[#217041] hover:bg-green-600 cursor-pointer  text-white rounded-sm p-[3px]"
             >
               <TbShoppingBagPlus />
             </button>

@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { registerUser } from "@/lib/store/auth/authSlice";
 import Loader from "@/components/GlobalComponents/Loders";
-import SucessfulModel from "@/components/GlobalComponents/SucessfullModel";
+import { redirect } from "next/navigation";
+import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
 
 function Register() {
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState<IUserRegisterData>({
     username: "",
     password: "",
@@ -39,17 +41,22 @@ function Register() {
     e.preventDefault();
 
     if (data.password === data.confirmPassword) {
+      setLoader(true);
+      setPassWordMatch(true);
       dispatch(registerUser(data));
       console.log("submmited", data);
-      if (status === "loading" && setLoader(true)) setPassWordMatch(true);
     } else setPassWordMatch(false);
   };
+
   useEffect(() => {
     if (status !== "loading") {
       setLoader(false);
     }
+    if (status === "success") {
+      SucessfulModel("Registered successfully", "Welcome to the foodessa");
+      redirect("/auth/login/");
+    }
   }, [status]);
-
   return (
     <div className=" min-h-fit flex items-center justify-center p-4">
       <div className="w-full max-w-[1200px] bg-[#4d5448] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
@@ -68,11 +75,7 @@ function Register() {
           </div>
 
           {/* Show success modal when registration is successful */}
-          {status === "success" &&
-            (() => {
-              SucessfulModel();
-              return null;
-            })()}
+
           <a
             href="/"
             className="absolute top-6 right-6 bg-green-600 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm hover:bg-green-500 transition-colors z-10"
@@ -284,7 +287,7 @@ function Register() {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={data.password}
                   onChange={handleChange}
                   required
@@ -308,17 +311,29 @@ function Register() {
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={data.confirmPassword}
                   onChange={handleChange}
                   required
                   className="input-field !mb-0"
                 />
+
                 {!passWordMatch && (
                   <p className="text-red-500 text-sm mt-2">
                     Passwords do not match
                   </p>
                 )}
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={() => setShowPassword(!showPassword)}
+                    className="form-checkbox"
+                  />
+                  <span className="ml-2 text-[14px] text-gray-500">
+                    Show Password
+                  </span>
+                </label>
               </div>
 
               <div className="flex items-center space-x-2">
@@ -339,7 +354,7 @@ function Register() {
                 type="submit"
                 className={`w-full ${
                   loader && "cursor-not-allowed"
-                } bg-green-600 hover:bg-green-700 py-3 rounded-lg font-medium`}
+                } bg-green-600 hover:bg-green-700 py-3 text-white   rounded-lg font-medium`}
               >
                 {loader ? <Loader /> : "Register"}
               </button>
