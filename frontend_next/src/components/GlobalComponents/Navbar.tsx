@@ -28,7 +28,7 @@ export default function Navbar() {
       <nav className="w-full    max-w-[1440px] px-6 lg:px-12 mx-auto sticky top-0  z-50 backdrop-blur-md  rounded-xl  flex justify-between items-center py-4">
         {/* Logo */}
         <Link
-          href="/"
+          href="/buyer/home"
           className="text-[24px] font-bold flex items-center gap-1"
         >
           <span className="inline-flex items-center justify-center p-2 h-8 w-8 bg-[#217041] text-white -rotate-[31deg] rounded-full">
@@ -41,7 +41,7 @@ export default function Navbar() {
         <ul className="hidden lg:flex items-center gap-8 text-gray-800 font-semibold">
           <li className="">
             <Link
-              href="/home/"
+              href="/buyer/home/"
               className=" transition  flex gap-2 items-center hover:text-green-700"
             >
               <TbHomeFilled className=" text-2xl" />
@@ -50,7 +50,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/menu/"
+              href="/buyer/menu/"
               className=" transition  flex gap-2 items-center hover:text-green-700"
             >
               <BsMenuApp className=" text-xl" />
@@ -59,7 +59,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/kitchens/"
+              href="/buyer/kitchens/"
               className=" transition flex gap-2 items-center hover:text-green-700"
             >
               <BiRestaurant className="text-xl" />
@@ -68,7 +68,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/history/"
+              href="/buyer/history/"
               className=" transition flex gap-2 items-center hover:text-green-700"
             >
               <BiHistory className="text-xl" />
@@ -77,7 +77,7 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/contact/"
+              href="/buyer/contact/"
               className=" transition flex gap-2 items-center hover:text-green-700"
             >
               <PiPhone className="text-xl" />
@@ -93,13 +93,13 @@ export default function Navbar() {
             <div className="absolute text-sm text-white px-1.5 bg-green-600 rounded-2xl -top-2 -right-2">
               {cartItemLength}
             </div>
-            <Link href={"/cart/"}>
+            <Link href={"/buyer/cart/"}>
               <RiShoppingBasketLine className="text-2xl hover:text-green-600" />
             </Link>
           </div>
           {profile_picture ? (
             <Link
-              href={"/profile/"}
+              href={"/buyer/auth/login/"}
               className=" rounded-full border-2 border-gray-600 bg-gray-300"
             >
               <img
@@ -110,7 +110,7 @@ export default function Navbar() {
             </Link>
           ) : (
             <Link
-              href={"/auth/login/"}
+              href={"/buyer/auth/login/"}
               className="p-1 rounded-2xl border-2 border-gray-600 bg-gray-300"
               onClick={statusClear}
             >

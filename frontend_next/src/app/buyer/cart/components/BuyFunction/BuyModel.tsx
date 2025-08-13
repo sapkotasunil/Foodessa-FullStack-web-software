@@ -1,13 +1,19 @@
 "use client";
 
-import { useAppDispatch } from "@/lib/store/hooks";
-import { addOrders } from "@/lib/store/orders/orders.slice";
+import Loader from "@/components/GlobalComponents/Loders";
+import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { addOrders, setStatus } from "@/lib/store/orders/orders.slice";
+import { Status } from "@/lib/types/types";
+import { redirect } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
-  const [paymentMethod, setPaymentMethod] = useState("COD");
+  const { status } = useAppSelector((store) => store.orders);
+
   const [quantity, setQuantity] = useState(prevQuantity);
+  const [loader, setLoader] = useState(false);
 
   const [ordersItemData, setOrdersItemData] = useState({
     item_name: itemsData.id,
@@ -16,7 +22,7 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
     deliveryAddress: "",
     totalPrice: quantity * itemsData.price,
     quantity: quantity,
-    paymentStatus: paymentMethod,
+    paymentStatus: "",
     payment: null,
   });
   const dispatch = useAppDispatch();
@@ -30,8 +36,8 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
 
   const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoader(true);
     dispatch(addOrders(ordersItemData));
-    console.log("submittedData", ordersItemData);
   };
   useEffect(() => {
     setOrdersItemData((prev) => ({
@@ -39,10 +45,29 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
       quantity: quantity,
       totalPrice: quantity * itemsData.price,
     }));
-  }, [quantity, itemsData.price, paymentMethod]);
+  }, [quantity, itemsData.price]);
+
+  useEffect(() => {
+    if (status !== "loading") {
+      setLoader(false);
+    }
+    if (status === "success") {
+      SucessfulModel(
+        "Order Placed Successfully!",
+        "Your delicious dishes will be delivered soon!"
+      );
+      dispatch(setStatus(Status.LOADING));
+      closeModel();
+    }
+    if (status === "error") {
+      toast.error("login Expired, Please login to continue");
+      dispatch(setStatus(Status.LOADING));
+      redirect("/buyer/auth/login");
+    }
+  }, [status]);
 
   return (
-    <div className="fixed inset-0 z-40 min-h-full overflow-y-auto overflow-x-hidden transition flex items-center">
+    <div className="fixed inset-0 z-40 min-h-full overflow-y-auto overflow-x-hidden transition flex pb-15 mt-10  items-center">
       {/* overlay */}
       <div
         aria-hidden="true"
@@ -69,7 +94,10 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
         </button>
         <div className="flex flex-col md:flex-row gap-6 mt-3">
           <img
-            src="images/food_1.png"
+            src={
+              itemsData?.image &&
+              itemsData.image.replace("/media/", "/api/v1/media/")
+            }
             alt="Food"
             className="w-full md:w-1/2 h-60  rounded-md"
           />
@@ -162,10 +190,10 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  name="payment"
+                  name="paymentStatus"
                   value="COD"
-                  checked={paymentMethod === "COD"}
-                  onChange={() => setPaymentMethod("COD")}
+                  checked={ordersItemData.paymentStatus === "COD"}
+                  onChange={handleChange}
                   className="form-radio text-green-600"
                 />
                 <span className="ml-2 text-gray-700">Cash on Delivery</span>
@@ -173,10 +201,10 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
               <label className="inline-flex items-center">
                 <input
                   type="radio"
-                  name="payment"
+                  name="paymentStatus"
                   value="ONLINE"
-                  checked={paymentMethod === "ONLINE"}
-                  onChange={() => setPaymentMethod("ONLINE")}
+                  checked={ordersItemData.paymentStatus === "ONLINE"}
+                  onChange={handleChange}
                   className="form-radio text-green-600"
                 />
                 <span className="ml-2 text-gray-700">Online Payment</span>
@@ -184,7 +212,7 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
             </div>
 
             {/* 🔁 Show when online selected */}
-            {paymentMethod === "ONLINE" && (
+            {ordersItemData.paymentStatus === "ONLINE" && (
               <div className="space-y-3 border border-green-100 p-4 rounded-md bg-green-50">
                 <p className="text-sm text-gray-700">Scan QR to pay:</p>
                 <img
@@ -200,7 +228,7 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
                     type="file"
                     onChange={handleChange}
                     name="payment"
-                    required={paymentMethod === "ONLINE"}
+                    required={ordersItemData.paymentStatus === "ONLINE"}
                     accept="image/*"
                     className="w-full text-sm text-gray-500
                   file:mr-4 file:py-2 file:px-4
@@ -215,9 +243,13 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
           </div>
 
           {/* 📦 Submit */}
-          <div className="text-center">
-            <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md">
-              Place Order
+          <div className="text-center mt-3 ">
+            <button
+              className={`bg-green-600 ${
+                loader && "cursor-not-allowed"
+              } cursor-pointer max-h-10 w-34 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-md`}
+            >
+              {loader ? <Loader /> : "Place order"}
             </button>
           </div>
         </form>

@@ -18,7 +18,6 @@ export default function CartPage() {
 
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gray-100 py-10 scrol px-16">
         <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
         {data.map((item) => (

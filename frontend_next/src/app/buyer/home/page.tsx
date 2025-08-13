@@ -9,12 +9,10 @@ import Navbar from "@/components/GlobalComponents/Navbar";
 function home() {
   return (
     <>
-      <Navbar />
       <Hero />
       <Features />
       <PopularFoods />
       <Testomonials />
-      <Footer />
     </>
   );
 }

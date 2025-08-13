@@ -8,7 +8,6 @@ import { loginUser } from "@/lib/store/auth/authSlice";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import Loader from "@/components/GlobalComponents/Loders";
-import SucessFullMessage from "@/components/GlobalComponents/SucessFullMessage";
 
 function Login() {
   const [data, setdata] = useState<IUserLoginData>({
@@ -42,7 +41,7 @@ function Login() {
     }
     if (status === "success") {
       toast.success("Login sucessfully");
-      redirect("/home");
+      redirect("/buyer/home");
     }
   }, [status]);
 

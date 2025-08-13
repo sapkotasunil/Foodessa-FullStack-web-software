@@ -54,7 +54,7 @@ function Register() {
     }
     if (status === "success") {
       SucessfulModel("Registered successfully", "Welcome to the foodessa");
-      redirect("/auth/login/");
+      redirect("/buyer/auth/login/");
     }
   }, [status]);
   return (

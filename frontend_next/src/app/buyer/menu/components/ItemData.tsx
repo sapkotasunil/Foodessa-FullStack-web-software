@@ -1,12 +1,12 @@
 "use client";
 
-import FoodItemCard from "@/app/home/components/FoodItemCard";
 import Title from "@/components/GlobalComponents/Title";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getAllItemsData } from "@/lib/store/seller/items/items";
 import { useEffect, useState } from "react";
 import { LuSettings2 } from "react-icons/lu";
 import { RiSearch2Line } from "react-icons/ri";
+import FoodItemCard from "../../home/components/FoodItemCard";
 
 function ItemData() {
   const dispatch = useAppDispatch();
