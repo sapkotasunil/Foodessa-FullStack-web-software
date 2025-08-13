@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { removecartData } from "@/lib/store/cart/cart.slice";
 import BuyModel from "./BuyFunction/BuyModel";
+import toast from "react-hot-toast";
 
 export default function CartItem({ data, onBuy, onCancel }: any) {
   const [quantity, setQuantity] = useState(1);
@@ -12,7 +13,14 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
 
   const removeItems = () => {
     dispatch(removecartData(data.id));
-    onCancel(data?.id);
+    toast.success("Removed from cart", {
+      icon: "🗑️",
+      style: {
+        border: "1px solid #ff4d4f",
+        padding: "5px",
+        color: "#ff4d4f",
+      },
+    });
   };
 
   const [modelOpen, setModelOpen] = useState<boolean>(false);
@@ -69,13 +77,13 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
 
         <div className="mt-4 flex space-x-2 justify-end px-12">
           <button
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+            className="bg-green-600 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
             onClick={openModel}
           >
             Buy
           </button>
           <button
-            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+            className="bg-red-500 text-white cursor-pointer px-4 py-2 rounded-lg hover:bg-red-600 transition"
             onClick={() => removeItems()}
           >
             Cancel

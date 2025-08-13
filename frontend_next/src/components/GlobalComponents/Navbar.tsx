@@ -90,7 +90,7 @@ export default function Navbar() {
         <div className=" flex items-center justify-center gap-8  ">
           <HiBars3BottomRight className="  lg:hidden text-2xl hover:text-green-600" />
           <div className="relative ">
-            <div className="absolute text-sm px-1.5 bg-green-600 rounded-2xl -top-2 -right-2">
+            <div className="absolute text-sm text-white px-1.5 bg-green-600 rounded-2xl -top-2 -right-2">
               {cartItemLength}
             </div>
             <Link href={"/cart/"}>

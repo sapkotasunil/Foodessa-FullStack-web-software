@@ -1,13 +1,36 @@
 "use client";
 
-import { addToCart } from "@/lib/store/cart/cart.slice";
+import { addToCart, removecartData } from "@/lib/store/cart/cart.slice";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { IresposeItemData } from "@/lib/store/seller/items/items.slice";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { BsFillCartCheckFill } from "react-icons/bs";
 import { FaStar, FaStarHalfStroke } from "react-icons/fa6";
 import { TbShoppingBagPlus } from "react-icons/tb";
 
 function FoodItemCard({ items }: { items: IresposeItemData }) {
   const dispatch = useAppDispatch();
+  const [addToCartIcon, setAddToCartIcon] = useState(false);
+
+  const addedToCart = () => {
+    if (addToCartIcon) {
+      dispatch(removecartData(items.id));
+      setAddToCartIcon(false);
+      toast.success("Removed from cart", {
+        icon: "🗑️",
+        style: {
+          border: "1px solid #ff4d4f",
+          padding: "5px",
+          color: "#ff4d4f",
+        },
+      });
+    } else {
+      dispatch(addToCart(items));
+      setAddToCartIcon(true);
+      toast.success("Added to cart");
+    }
+  };
 
   return (
     <div>
@@ -65,10 +88,10 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
               </p>
             </div>
             <button
-              onClick={() => dispatch(addToCart(items))}
+              onClick={addedToCart}
               className="flex items-center justify-center px-3 gap-x-1 text-[22px] bg-[#217041] hover:bg-green-600 cursor-pointer  text-white rounded-sm p-[3px]"
             >
-              <TbShoppingBagPlus />
+              {!addToCartIcon ? <TbShoppingBagPlus /> : <BsFillCartCheckFill />}
             </button>
           </div>
           {/* order info */}

@@ -48,7 +48,6 @@ function Login() {
 
   return (
     <div className="min-h-screen  bg-[#f5fbf7] text-gray-900 flex justify-center">
-      <SucessFullMessage />
       <div className="max-w-screen-xl m-0 sm:my-10 bg-[#f5fbf7] shadow sm:rounded-lg flex justify-start flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6  sm:p-12  bg-[#f5fbf7]">
           <div className="text-2xl md:text-4xl font-bold text-[#217041] leading-tight">

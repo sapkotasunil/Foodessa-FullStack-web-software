@@ -1,33 +1,26 @@
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
-const SucessFullMessage = () => {
-  const notify = () =>
-    toast.success("Login Sucessfully", {
-      duration: 4000,
-      position: "top-center",
+const notify = () =>
+  toast.success("Login Sucessfully", {
+    duration: 4000,
+    position: "top-center",
 
-      // Styling
-      style: {},
-      className: "",
+    // Styling
+    style: {},
+    className: "",
 
-      // Custom Icon
+    // Custom Icon
 
-      // Change colors of success/error/loading icon
+    // Change colors of success/error/loading icon
 
-      // Aria
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
+    // Aria
+    ariaProps: {
+      role: "status",
+      "aria-live": "polite",
+    },
 
-      // Additional Configuration
-      removeDelay: 1000,
-    });
-  return (
-    <div>
-      <Toaster />
-    </div>
-  );
-};
+    // Additional Configuration
+    removeDelay: 1000,
+  });
 
-export default SucessFullMessage;
+export default notify;

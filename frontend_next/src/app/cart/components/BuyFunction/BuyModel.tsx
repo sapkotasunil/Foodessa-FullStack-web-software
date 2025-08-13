@@ -1,8 +1,9 @@
 "use client";
 
-import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
-import axios from "axios";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { addOrders } from "@/lib/store/orders/orders.slice";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -15,35 +16,30 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
     deliveryAddress: "",
     totalPrice: quantity * itemsData.price,
     quantity: quantity,
+    paymentStatus: paymentMethod,
+    payment: null,
   });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const dispatch = useAppDispatch();
+  const handleChange = (e: ChangeEvent<any>) => {
+    const { name, value, files } = e.target;
     setOrdersItemData({
       ...ordersItemData,
-      [name]: value,
+      [name]: name === "payment" ? files?.[0] ?? null : value,
     });
   };
 
+  const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(addOrders(ordersItemData));
+    console.log("submittedData", ordersItemData);
+  };
   useEffect(() => {
     setOrdersItemData((prev) => ({
       ...prev,
       quantity: quantity,
       totalPrice: quantity * itemsData.price,
     }));
-  }, [quantity, itemsData.price]);
-
-  const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await APIWITHTOKEN.post("/buyer/order/", ordersItemData);
-      if (response.status === 200) {
-        console.log("orders created sucessfully");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [quantity, itemsData.price, paymentMethod]);
 
   return (
     <div className="fixed inset-0 z-40 min-h-full overflow-y-auto overflow-x-hidden transition flex items-center">
@@ -202,6 +198,9 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
                   </label>
                   <input
                     type="file"
+                    onChange={handleChange}
+                    name="payment"
+                    required={paymentMethod === "ONLINE"}
                     accept="image/*"
                     className="w-full text-sm text-gray-500
                   file:mr-4 file:py-2 file:px-4
