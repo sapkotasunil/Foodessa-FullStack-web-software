@@ -6,7 +6,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { BiHistory, BiHotel, BiRestaurant } from "react-icons/bi";
 import { BsMenuApp } from "react-icons/bs";
+import { GiFoodChain } from "react-icons/gi";
 import { HiBars3BottomRight } from "react-icons/hi2";
+import { MdOutlineFastfood } from "react-icons/md";
 import { PiPhone } from "react-icons/pi";
 import { RiShoppingBasketLine, RiUserLine } from "react-icons/ri";
 import { TbHomeFilled } from "react-icons/tb";
@@ -68,11 +70,11 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/buyer/history/"
+              href="/buyer/orders/"
               className=" transition flex gap-2 items-center hover:text-green-700"
             >
-              <BiHistory className="text-xl" />
-              History
+              <MdOutlineFastfood className="text-xl" />
+              Orders
             </Link>
           </li>
           <li>

@@ -86,7 +86,7 @@ function Login() {
                   value={data.username}
                   placeholder="username"
                 />
-                {errors.username && (
+                {errors?.username && (
                   <p className="text-red-500 text-sm mt-2">
                     {errors.username?.[0]}
                   </p>
@@ -154,12 +154,12 @@ function Login() {
                     )}
                   </button>
                 </div>
-                {errors.password && (
+                {errors?.password && (
                   <p className="text-red-500 text-sm mt-2">
                     {errors.password?.[0]}
                   </p>
                 )}
-                {errors.detail && (
+                {errors?.detail && (
                   <p className="text-red-500 text-sm mt-2">{errors.detail}</p>
                 )}
                 <button
