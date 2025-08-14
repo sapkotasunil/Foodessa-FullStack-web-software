@@ -9,7 +9,7 @@ from users.views import CustomTokenObtainPairView
 from seller.views import ItemListCreateView,BuyerItemListView
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView
-from orders.views import CreateOrderView
+from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller
 
 urlpatterns = [
     path('register/',UserRegisterView.as_view()),
@@ -20,6 +20,8 @@ urlpatterns = [
     path('seller/details/',kitchenDetailsView.as_view(),name="kitchen_details_by_seller_fetched"),
     path('buyer/items/', BuyerItemListView.as_view(), name='public-items'),
     path('buyer/order/', CreateOrderView.as_view(), name='creating_a_order'),
+    path('buyer/orders/', FetchOrderByBuyer.as_view(), name='fetch all order by buyer that created '),
+    path('seller/orders/', FetchOrderBySeller.as_view(), name='fetching all orders that sumited to that seller'),
     
 ]
 if settings.DEBUG:

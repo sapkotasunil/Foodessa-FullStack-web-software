@@ -4,6 +4,7 @@ from rest_framework import generics,permissions
 from rest_framework.exceptions import ValidationError,NotFound
 from .models import Item
 from seller_registration_data.models import SellerRegistrationForm
+from rest_framework.exceptions import PermissionDenied
 
 
 
@@ -23,4 +24,30 @@ class CreateOrderView(generics.CreateAPIView):
         except Item.DoesNotExist:
             raise NotFound("items not found")
         serializer.save(items_name=item,kitchen_name=item.kitchen_name,buyer_name=user)
+        
+class FetchOrderByBuyer(generics.ListAPIView):
+    serializer_class=orderSerializer
+    permission_classes=[permissions.IsAuthenticated]
+    queryset=Order.objects.all()
+    
+    def get_queryset(self):
+        user=self.request.user
+        return Order.objects.filter(buyer_name=user)
+    
+class FetchOrderBySeller(generics.ListAPIView):
+    serializer_class=orderSerializer
+    permission_classes=[permissions.IsAuthenticated]
+    queryset=Order.objects.all()
+    
+    def get_queryset(self):
+        user=self.request.user
+        if(user.role !="Seller"):
+            raise  PermissionDenied("You are not a sller")
+        try:
+            seller=SellerRegistrationForm.objects.get(user=user)
+        except:
+            raise PermissionDenied ("Cannot find seller id")
+        return Order.objects.filter(kitchen_name=seller)
+        
+    
         

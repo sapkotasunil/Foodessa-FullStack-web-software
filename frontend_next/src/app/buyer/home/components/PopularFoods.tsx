@@ -19,7 +19,7 @@ function PopularFoods() {
   }, []);
 
   const { data } = useAppSelector((store) => store.item);
-  const PopularFoods = data.slice(1, 6);
+  const PopularFoods = data.slice(-6, -1);
 
   return (
     <section className=" mx-auto max-w-[1440px] px-6 lg:px-12 pt-16">

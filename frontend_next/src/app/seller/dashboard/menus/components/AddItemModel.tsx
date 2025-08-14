@@ -30,178 +30,136 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("your data is", itemData);
     dispatch(addItemData(itemData));
   };
 
   return (
-    <>
-      <div className="fixed inset-0 z-40 min-h-full overflow-y-auto overflow-x-hidden transition flex items-center">
-        {/* overlay */}
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 w-full h-full bg-black/50 cursor-pointer"
-        ></div>
-        {/* Modal */}
-        <div className="relative w-full cursor-pointer pointer-events-none transition my-auto p-4">
-          <div className="w-full py-2 bg-indigo-50 cursor-default pointer-events-auto dark:bg-gray-800 relative rounded-xl mx-auto max-w-lg ">
-            <button
-              onClick={closeModel}
-              type="button"
-              className="absolute top-2 right-2 rtl:right-auto rtl:left-2"
-            >
-              <svg
-                className="h-4 w-4 hover:rotate-180 transition-all ease-in-out duration-500 cursor-pointer text-gray-400"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" />
-              </svg>
-              <span className="sr-only">Close</span>
-            </button>
-            <div className="space-y-2 p-2">
-              <div className="p-2 space-y-2 text-center dark:text-white">
-                <h2
-                  className="text-xl font-bold tracking-tight"
-                  id="page-action.heading"
-                >
-                  Let add a Item Details
-                </h2>
-                <p className="text-gray-500">
-                  Are you sure you would like to do this?
-                </p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div
-                aria-hidden="true"
-                className="border-t border-gray-700 px-2"
-              />
-              <div className="grid grid-cols-1 place-items-center px-4 py-2">
-                <form noValidate onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="mb-2 text-gray-400 text-lg">
-                      Item Name
-                      <span className="text-red-600 inline-block p-1 text-sm">
-                        *
-                      </span>
-                    </label>
-                    <input
-                      onChange={handleChange}
-                      name="item_name"
-                      className="item-input-field"
-                      type="text"
-                      placeholder="Item Name"
-                      value={itemData.item_name}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="mb-2 text-gray-400 text-lg">
-                      Price
-                      <span className="text-red-600 inline-block p-1 text-sm">
-                        *
-                      </span>
-                    </label>
-                    <input
-                      onChange={handleChange}
-                      name="price"
-                      className="item-input-field"
-                      type="number"
-                      title="must be a digit"
-                      value={itemData.price}
-                      placeholder="Price"
-                      required
-                    />
-                  </div>
-                  <div className="lg:">
-                    <div>
-                      <label className="mb-2 text-gray-400 text-lg">
-                        Image
-                        <span className="text-red-600 inline-block p-1 text-sm">
-                          *
-                        </span>
-                      </label>
-                      <input
-                        onChange={handleChange}
-                        name="image"
-                        className="item-input-field"
-                        type="file"
-                        accept="image/*"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="mb-2 text-gray-400 text-lg">
-                        Category
-                        <span className="text-red-600 st inline-block p-1 text-sm">
-                          *
-                        </span>
-                      </label>
-                      <select
-                        onChange={handleChange}
-                        name="category"
-                        id=""
-                        required
-                        className="item-input-field"
-                        value={itemData.category}
-                      >
-                        <option value="">Select category</option>
-                        <option value="pizza">Pizza</option>
-                        <option value="chicken">Chicken</option>
-                        <option value="mutton">Mutton</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="mb-2 text-gray-400 text-lg">
-                      Item Description
-                      <span className="text-red-600 inline-block p-1 text-sm">
-                        *
-                      </span>
-                    </label>
-                    <textarea
-                      value={itemData.item_description}
-                      onChange={handleChange}
-                      name="item_description"
-                      className="item-input-field"
-                      placeholder="Item Description"
-                      required
-                    />
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    className="border-b border-gray-700 px-2"
-                  />
-                  <div className="px-6 py-2">
-                    <div className="grid gap-2 grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
-                      <button
-                        onClick={closeModel}
-                        type="button"
-                        className="item-input-field"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset dark:focus:ring-offset-0 min-h-[2.25rem] px-4 text-sm text-white shadow focus:ring-white border-transparent bg-green-500 hover:bg-green-600 focus:bg-[#11071F] focus:ring-offset-[#11071F]"
-                      >
-                        <span className="flex items-center gap-1">
-                          <span>Add</span>
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 bg-black/50 backdrop-blur-sm">
+      {/* Modal Container */}
+      <div className="bg-white dark:bg-gray-900 w-full max-w-lg rounded-2xl shadow-lg overflow-hidden animate-fadeIn">
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-bold text-gray-800 dark:text-white">
+            Add New Item
+          </h2>
+          <button
+            onClick={closeModel}
+            className="text-gray-400 hover:text-red-500 transition-colors"
+          >
+            ✕
+          </button>
         </div>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-5">
+          {/* Item Name */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Item Name <span className="text-red-500">*</span>
+            </label>
+            <input
+              onChange={handleChange}
+              name="item_name"
+              value={itemData.item_name}
+              type="text"
+              placeholder="Enter item name"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-green-500 outline-none"
+              required
+            />
+          </div>
+
+          {/* Price */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Price <span className="text-red-500">*</span>
+            </label>
+            <input
+              onChange={handleChange}
+              name="price"
+              value={itemData.price}
+              type="number"
+              placeholder="Enter price"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-green-500 outline-none"
+              required
+            />
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Image <span className="text-red-500">*</span>
+            </label>
+            <input
+              onChange={handleChange}
+              name="image"
+              type="file"
+              accept="image/*"
+              className="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200"
+              required
+            />
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Category <span className="text-red-500">*</span>
+            </label>
+            <select
+              onChange={handleChange}
+              name="category"
+              value={itemData.category}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-green-500 outline-none"
+              required
+            >
+              <option value="">Select category</option>
+              <option value="pizza">Pizza</option>
+              <option value="chicken">Chicken</option>
+              <option value="drinks">Drinks</option>
+              <option value="fruits">Fruits</option>
+              <option value="momo">Momo</option>
+              <option value="roti">Roti</option>
+              <option value="others">Others</option>
+              <option value="khana_set">Khana Set</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+            </select>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Item Description <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              onChange={handleChange}
+              name="item_description"
+              value={itemData.item_description}
+              placeholder="Enter item description"
+              rows={3}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-green-500 outline-none"
+              required
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <button
+              type="button"
+              onClick={closeModel}
+              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium shadow-sm transition"
+            >
+              Add Item
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
