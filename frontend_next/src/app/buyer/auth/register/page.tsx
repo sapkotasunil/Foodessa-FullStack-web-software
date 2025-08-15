@@ -3,10 +3,11 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IUserRegisterData } from "@/lib/store/auth/authSlice.types";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { registerUser } from "@/lib/store/auth/authSlice";
+import { registerUser, setStatus } from "@/lib/store/auth/authSlice";
 import Loader from "@/components/GlobalComponents/Loders";
 import { redirect } from "next/navigation";
 import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
+import { Status } from "@/lib/types/types";
 
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -54,6 +55,7 @@ function Register() {
     }
     if (status === "success") {
       SucessfulModel("Registered successfully", "Welcome to the foodessa");
+      dispatch(setStatus(Status.LOADING));
       redirect("/buyer/auth/login/");
     }
   }, [status]);
@@ -114,7 +116,7 @@ function Register() {
             <p className="text-gray-400 mb-8">
               Already have an account?{" "}
               <Link
-                href="/auth/login"
+                href="/buyer/auth/login"
                 className="text-purple-400 hover:underline"
               >
                 Log in

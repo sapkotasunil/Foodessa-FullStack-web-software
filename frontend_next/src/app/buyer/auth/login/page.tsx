@@ -4,10 +4,11 @@ import Link from "next/link";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { IUserLoginData } from "@/lib/store/auth/authSlice.types";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { loginUser } from "@/lib/store/auth/authSlice";
+import { loginUser, setStatus } from "@/lib/store/auth/authSlice";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 import Loader from "@/components/GlobalComponents/Loders";
+import { Status } from "@/lib/types/types";
 
 function Login() {
   const [data, setdata] = useState<IUserLoginData>({
@@ -69,7 +70,7 @@ function Login() {
                 <p className="text-gray-400 mb-8">
                   No account yet?{" "}
                   <Link
-                    href="/auth/register"
+                    href="/buyer/auth/register"
                     className="text-purple-400 hover:underline"
                   >
                     Sign Up

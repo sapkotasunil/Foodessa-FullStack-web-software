@@ -37,6 +37,7 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoader(true);
+
     dispatch(addOrders(ordersItemData));
   };
   useEffect(() => {

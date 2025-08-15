@@ -47,7 +47,7 @@ export default function OrdersPage() {
                 {filteredOrders.length > 0 ? (
                   filteredOrders.map((order) => <ItemCard order={order} />)
                 ) : (
-                  <p className="text-gray-500">No orders found</p>
+                  <p className="text-gray-600 text-2xl">No orders found</p>
                 )}
               </div>
             </div>

@@ -5,6 +5,8 @@ import { useAppDispatch } from "@/lib/store/hooks";
 import { removecartData } from "@/lib/store/cart/cart.slice";
 import BuyModel from "./BuyFunction/BuyModel";
 import toast from "react-hot-toast";
+import { setStatus } from "@/lib/store/orders/orders.slice";
+import { Status } from "@/lib/types/types";
 
 export default function CartItem({ data, onBuy, onCancel }: any) {
   const [quantity, setQuantity] = useState(1);
@@ -26,6 +28,7 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
   const [modelOpen, setModelOpen] = useState<boolean>(false);
   const openModel = () => {
     setModelOpen(true);
+    dispatch(setStatus(Status.LOADING));
   };
   const closeModel = () => {
     setModelOpen(false);
