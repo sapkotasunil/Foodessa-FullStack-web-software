@@ -34,7 +34,7 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
 
   return (
     <div>
-      <div className="flex rounded-xl bg-[#e0fbc2] relative max-w-100 md:w-full">
+      <div className="flex rounded-xl bg-[#e0fbc2] relative  md:w-full ">
         <div className="flex  items-center justify-center m-6 rounded-full absolute top-0 bottom-0 -left-[58px]">
           <img
             src={

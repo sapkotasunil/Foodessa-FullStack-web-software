@@ -56,7 +56,7 @@ function PopularFoods() {
         className="h-[255px] "
       >
         {PopularFoods.map((food) => (
-          <SwiperSlide key={food.id} className="pl-16 ">
+          <SwiperSlide key={food.id} className="pl-8 ">
             <Item items={food} />
           </SwiperSlide>
         ))}
