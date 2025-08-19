@@ -8,8 +8,9 @@ function ItemsData() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    data.length === 0 && dispatch(getSellerItemsData());
+    dispatch(getSellerItemsData());
   }, []);
+  console.log(data);
 
   return (
     <>

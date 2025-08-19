@@ -1,9 +1,11 @@
 "use client";
 
-import { useAppDispatch } from "@/lib/store/hooks";
+import Loader from "@/components/GlobalComponents/Loders";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { addItemData } from "@/lib/store/seller/items/items";
 import { IAdditemData } from "@/lib/store/seller/items/items.slice";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface IcloseMOdel {
   closeModel: () => void;
@@ -17,6 +19,8 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
     image: null,
     price: 0,
   });
+  const [loader, setLoader] = useState(false);
+  const { status } = useAppSelector((store) => store.item);
 
   const dispatch = useAppDispatch();
 
@@ -30,8 +34,19 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoader(true);
     dispatch(addItemData(itemData));
   };
+
+  useEffect(() => {
+    if (status !== "loading") {
+      setLoader(false);
+    }
+    if (status === "success") {
+      toast.success("Item added sucessfully");
+      closeModel();
+    }
+  }, [status]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 bg-black/50 backdrop-blur-sm">
@@ -146,15 +161,17 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
             <button
               type="button"
               onClick={closeModel}
-              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+              className="px-4 py-2 cursor-pointer rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium shadow-sm transition"
+              className={` ${
+                loader && "cursor-not-allowed"
+              } px-4 py-2 max-h-10 cursor-pointer rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium shadow-sm transition`}
             >
-              Add Item
+              {loader ? <Loader /> : "Add Item"}
             </button>
           </div>
         </form>

@@ -1,9 +1,13 @@
 "use client";
 
+import Loader from "@/components/GlobalComponents/Loders";
 import Navbar from "@/components/GlobalComponents/Navbar";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { setStatus } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
 import { sellerRegisterForm } from "@/lib/store/seller/sellerRegisterSlice";
-import React, { FormEvent, useState } from "react";
+import { Status } from "@/lib/types/types";
+import React, { FormEvent, useEffect, useState } from "react";
 
 export default function SellerRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -14,9 +18,10 @@ export default function SellerRegistrationForm() {
     kitchen_type: "",
     kitchen_profile_photo: null,
   });
+  const [loader, setLoader] = useState(false);
 
   const dispatch = useAppDispatch();
-
+  const { status } = useAppSelector((store) => store.seller);
   const handleChange = (e: any) => {
     const { name, value, files } = e.target;
     setFormData({
@@ -29,7 +34,19 @@ export default function SellerRegistrationForm() {
     e.preventDefault();
     console.log("Submitting form:", formData);
     dispatch(sellerRegisterForm(formData));
+
+    setLoader(true);
   };
+  useEffect(() => {
+    console.log(status);
+    if (status !== "loading") {
+      setLoader(false);
+    }
+    if (status === "success") {
+      SucessfulModel("Registered successfully", "Please Wait for the approval");
+      dispatch(setStatus(Status.LOADING));
+    }
+  }, [status]);
 
   return (
     <>
@@ -133,6 +150,7 @@ export default function SellerRegistrationForm() {
                 onChange={handleChange}
                 accept="image/*"
                 className="input-field"
+                required
               />
             </div>
 
@@ -153,9 +171,13 @@ export default function SellerRegistrationForm() {
             <div className="md:col-span-2">
               <button
                 type="submit"
-                className="w-full bg-[#217041] hover:bg-[#1b5a37] text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                className={`
+                   ${loader && "cursor-not-allowed"}
+                 " bg-[#217041] hover:bg-[#1b5a37] min-w-full max-h-12 cursor-pointer text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+
+                 `}
               >
-                Submit Registration
+                {loader ? <Loader /> : "Submit Registration"}
               </button>
             </div>
           </form>
