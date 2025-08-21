@@ -19,6 +19,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const Logged = localStorage.getItem("access");
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -115,7 +116,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className=" relative  rounded-full    hover:border-green-500  cursor-pointer  ">
-            {email ? (
+            {Logged ? (
               <div>
                 {/* Trigger */}
                 {profile_picture ? (
@@ -180,6 +181,8 @@ export default function Navbar() {
                     onClick={() => {
                       setOpen(false);
                       dispatch(setStatus(Status.LOADING)); // redux logout logic
+                      //@ts-ignore
+                      localStorage.removeItem("access");
                       dispatch(
                         setUser({
                           address: "",

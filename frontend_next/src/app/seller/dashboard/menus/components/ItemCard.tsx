@@ -14,8 +14,11 @@ function ItemCard({ data }: any) {
         />
         <div>
           <p className="font-semibold text-xl">{data?.item_name}</p>
-          <p className="text-gray-600 text-sm">des: {data?.item_description}</p>
-          <p className="text-gray-600 text-sm">price: {data?.price}</p>
+          <p className="text-gray-900 text-sm line-clamp-2">
+            Description:{" "}
+            <span className="text-gray-500 ">{data?.item_description}</span>
+          </p>
+          <p className="text-black text-sm mt-1">Price: {data?.price}</p>
         </div>
       </div>
 

@@ -1,14 +1,22 @@
+"use client";
+
 import Footer from "@/components/GlobalComponents/Footer";
 import Navbar from "@/components/GlobalComponents/Navbar";
-import Dashboard from "@/components/sellerDahboard/Dashboard";
+import FoodSkeletonGrid from "@/components/Skalton Loader/FoodSkeletonGrid";
+import store from "@/lib/store/store";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 function sellerDashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  let persistor = persistStore(store);
   return (
     <>
       <Navbar />
-      <div className="min-h-screen">{children}</div>
+      <PersistGate persistor={persistor} loading={<FoodSkeletonGrid />}>
+        <div className="min-h-screen">{children}</div>
+      </PersistGate>
       <Footer />
     </>
   );

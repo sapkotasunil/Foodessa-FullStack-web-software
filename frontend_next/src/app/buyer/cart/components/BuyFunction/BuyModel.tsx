@@ -2,8 +2,10 @@
 
 import Loader from "@/components/GlobalComponents/Loders";
 import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
+import { setUser } from "@/lib/store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { addOrders, setStatus } from "@/lib/store/orders/orders.slice";
+import { setStatus as authStatus } from "@/lib/store/auth/authSlice";
 import { Status } from "@/lib/types/types";
 import { redirect } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -63,6 +65,21 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
     if (status === "error") {
       toast.error("login Expired, Please login to continue");
       dispatch(setStatus(Status.LOADING));
+      dispatch(authStatus(Status.LOADING));
+      localStorage.removeItem("access");
+      dispatch(
+        setUser({
+          address: "",
+          email: "",
+          first_name: "",
+          gender: "",
+          id: 0,
+          last_name: "",
+          phone_number: "",
+          profile_picture: null,
+        })
+      );
+
       redirect("/buyer/auth/login");
     }
   }, [status]);

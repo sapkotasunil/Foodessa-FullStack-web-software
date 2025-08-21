@@ -24,9 +24,19 @@ class Order(models.Model):
         ONLINE="ONLINE","online"
     
     
-    kitchen_name=models.ForeignKey(SellerRegistrationForm,on_delete=models.DO_NOTHING,related_name="orders")
-    buyer_name=models.ForeignKey(User,on_delete=models.DO_NOTHING, related_name="orders")
-    items_name=models.ForeignKey(Item,on_delete=models.DO_NOTHING,related_name="orders_items")
+    kitchen_name = models.ForeignKey(SellerRegistrationForm,on_delete=models.PROTECT,related_name="orders")     # Prevent deleting seller if orders exist
+        
+    buyer_name = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,    # If user deletes account, keep orders but set null
+        null=True, blank=True,
+        related_name="orders"
+    )
+    items_name = models.ForeignKey(
+        Item,
+        on_delete=models.PROTECT,     # Prevent deleting item if it’s used in orders
+        related_name="orders_items"
+    )
     orderStatus=models.CharField(choices=OrderStatus.choices, default=OrderStatus.PENDING, max_length=20)
     deleveryStatus=models.CharField(choices=DeliveryStataus.choices, default=DeliveryStataus.PREPARING, max_length=20)
     paymentStatus=models.CharField(choices=PaymentStatus.choices, default=PaymentStatus.COD)

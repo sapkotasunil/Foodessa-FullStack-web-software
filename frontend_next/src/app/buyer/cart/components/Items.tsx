@@ -54,7 +54,9 @@ export default function CartItem({ data, onBuy, onCancel }: any) {
           />
           <div>
             <h2 className="text-xl font-semibold">{data?.item_name}</h2>
-            <h2 className="text-lmd text-gray-700">{data?.item_description}</h2>
+            <h2 className="text-lmd text-gray-700 line-clamp-2">
+              {data?.item_description}
+            </h2>
           </div>{" "}
         </div>
 

@@ -20,7 +20,7 @@ const Hero = () => {
               ood Discount Now!
             </h1>
             <p className="text-gray-500">
-              Fondessa a world of ﬂavors, freshness, and delight. Discovar
+              Foodessa a world of ﬂavors, freshness, and delight. Discovar
               dishes the satisfy your cravings, excite your taste buds, and
               bring people together. From classic favorites to modern delights,
               find the perfect meal for every moment.
