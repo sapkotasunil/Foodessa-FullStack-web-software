@@ -41,7 +41,7 @@ class FetchOrderBySeller(generics.ListAPIView):
     
     def get_queryset(self):
         user=self.request.user
-        if(user.role !="Seller"):
+        if(user.role !="seller"):
             raise  PermissionDenied("You are not a sller")
         try:
             seller=SellerRegistrationForm.objects.get(user=user)
