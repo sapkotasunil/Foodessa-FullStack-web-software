@@ -49,5 +49,10 @@ class FetchOrderBySeller(generics.ListAPIView):
             raise PermissionDenied ("Cannot find seller id")
         return Order.objects.filter(kitchen_name=seller)
         
+        
+class OrderStatus(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class=orderSerializer
+    queryset=Order.objects.all()
+    permission_classes=[permissions.IsAuthenticated]
     
         

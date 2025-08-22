@@ -1,4 +1,28 @@
+"use client";
+
+import { useAppDispatch } from "@/lib/store/hooks";
+import { UpdateOrderStatus } from "@/lib/store/seller/OrderStatus/orderStatusSlice";
+
 function OrderDetailsModel({ closeModel, itemsData }: any) {
+  const dispatch = useAppDispatch();
+
+  const onAccept = () => {
+    dispatch(
+      UpdateOrderStatus(itemsData.id, {
+        deleveryStatus: "PREPARING",
+        orderStatus: "ACCEPT",
+      })
+    );
+  };
+  const onDecline = () => {
+    dispatch(
+      UpdateOrderStatus(itemsData.id, {
+        deleveryStatus: "FAILED",
+        orderStatus: "CANCEL",
+      })
+    );
+  };
+
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-8 relative animate-fadeIn">
@@ -89,14 +113,14 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
         {/* Actions */}
         <div className="flex justify-end gap-4 mt-8">
           <button
-            // onClick={onDecline}
-            className="px-6 py-2.5 rounded-xl bg-red-500 text-white font-medium shadow hover:bg-red-600 transition"
+            onClick={onDecline}
+            className="px-6 py-2.5 cursor-pointer rounded-xl bg-red-500 text-white font-medium shadow hover:bg-red-600 transition"
           >
             Decline
           </button>
           <button
-            // onClick={onAccept}
-            className="px-6 py-2.5 rounded-xl bg-green-500 text-white font-medium shadow hover:bg-green-600 transition"
+            onClick={onAccept}
+            className="px-6 py-2.5 rounded-xl cursor-pointer bg-green-500 text-white font-medium shadow hover:bg-green-600 transition"
           >
             Accept
           </button>

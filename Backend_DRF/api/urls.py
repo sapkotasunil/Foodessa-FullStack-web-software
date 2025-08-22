@@ -9,7 +9,7 @@ from users.views import CustomTokenObtainPairView
 from seller.views import ItemListCreateView,BuyerItemListView
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView
-from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller
+from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller,OrderStatus
 
 urlpatterns = [
     path('register/',UserRegisterView.as_view()),
@@ -22,6 +22,8 @@ urlpatterns = [
     path('buyer/order/', CreateOrderView.as_view(), name='creating_a_order'),
     path('buyer/orders/', FetchOrderByBuyer.as_view(), name='fetch all order by buyer that created '),
     path('seller/orders/', FetchOrderBySeller.as_view(), name='fetching all orders that sumited to that seller'),
+    path('seller/order/<int:pk>/', OrderStatus.as_view(), name='Updating Order Status'),
+
     
 ]
 if settings.DEBUG:
