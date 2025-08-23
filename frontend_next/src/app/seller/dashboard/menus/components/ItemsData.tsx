@@ -14,9 +14,11 @@ function ItemsData() {
 
   return (
     <>
-      {data.map((data) => (
-        <ItemCard key={data.id} data={data} />
-      ))}
+      <div className="pr-3">
+        {data.map((data) => (
+          <ItemCard key={data.id} data={data} />
+        ))}
+      </div>
     </>
   );
 }

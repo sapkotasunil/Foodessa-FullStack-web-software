@@ -13,6 +13,7 @@ class Order(models.Model):
         SUCESS="SUCESS","Sucess"
         
     class DeliveryStataus(models.TextChoices):
+        PENDING="PENDING","Pending"
         PREPARING = 'PREPARING', 'Preparing'
         READY = 'READY', 'Ready'
         OUT_FOR_DELIVERY = 'OUT_FOR_DELIVERY', 'OutForDelivery'
@@ -38,7 +39,7 @@ class Order(models.Model):
         related_name="orders_items"
     )
     orderStatus=models.CharField(choices=OrderStatus.choices, default=OrderStatus.PENDING, max_length=20)
-    deleveryStatus=models.CharField(choices=DeliveryStataus.choices, default=DeliveryStataus.PREPARING, max_length=20)
+    deleveryStatus=models.CharField(choices=DeliveryStataus.choices, default=DeliveryStataus.PENDING, max_length=20)
     paymentStatus=models.CharField(choices=PaymentStatus.choices, default=PaymentStatus.COD)
     quantity=models.DecimalField(max_digits=4, blank=False,decimal_places=0, null=False)
     totalPrice=models.DecimalField(max_digits=8,blank=False,decimal_places=2,null=False)

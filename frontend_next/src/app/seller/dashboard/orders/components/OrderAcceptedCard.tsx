@@ -1,6 +1,26 @@
+"use client";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { UpdateOrderStatus } from "@/lib/store/seller/OrderStatus/orderStatusSlice";
 import Image from "next/image";
+import { useState } from "react";
 
 function OrderAcceptedCard({ item }: any) {
+  const [orderStatus, setOrderStatus] = useState(item.orderStatus);
+  const [deliveryStatus, setDeliveryStatus] = useState(item.deleveryStatus);
+
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    dispatch(
+      UpdateOrderStatus(item.id, {
+        orderStatus: orderStatus,
+        deleveryStatus: deliveryStatus,
+      })
+    );
+  };
+
   return (
     <>
       <div className="w-full bg-[#c8f2ef] shadow-md rounded-2xl border border-gray-200 p-5 hover:shadow-xl transition-all duration-300 max-h-fit">
@@ -49,37 +69,84 @@ function OrderAcceptedCard({ item }: any) {
             action=""
             className=" grid grid-cols-2 min-w-fit space-x-4 col-span-2"
           >
-            {/* Order Status */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Order Status
-              </label>
-              <select
-                //   value={orderStatus}
-                //   onChange={(e) => setOrderStatus(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
-              >
-                <option value="Pending">Pending</option>
-                <option value="Confirmed">Confirmed</option>
-                <option value="Shipped">Shipped</option>
-                <option value="Delivered">Delivered</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
-            </div>
-
             {/* Delivery Status */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Delivery Status
               </label>
               <select
-                //   value={deliveryStatus}
-                //   onChange={(e) => setDeliveryStatus(e.target.value)}
-                className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500"
+                value={deliveryStatus}
+                onChange={(e) => setDeliveryStatus(e.target.value)}
+                className={`w-full border rounded-lg px-3 py-2 focus:ring-2 transition
+      ${
+        deliveryStatus === "PENDING"
+          ? "bg-yellow-100 border-yellow-400 text-yellow-700"
+          : deliveryStatus === "PREPARING"
+          ? "bg-blue-100 border-blue-400 text-blue-700"
+          : deliveryStatus === "OUT_FOR_DELIVERY"
+          ? "bg-purple-100 border-purple-400 text-purple-700"
+          : deliveryStatus === "DELIVERED"
+          ? "bg-green-100 border-green-400 text-green-700"
+          : deliveryStatus === "FAILED"
+          ? "bg-red-100 border-red-400 text-red-700"
+          : "bg-gray-100 border-gray-300 text-gray-700"
+      }`}
               >
-                <option value="Pending">Pending</option>
-                <option value="Out for Delivery">Out for Delivery</option>
-                <option value="Completed">Completed</option>
+                <option
+                  value="PENDING"
+                  className="bg-yellow-100 text-yellow-800"
+                >
+                  Pending
+                </option>
+                <option value="PREPARING" className="bg-blue-100 text-blue-800">
+                  Preparing
+                </option>
+                <option
+                  value="OUT_FOR_DELIVERY"
+                  className="bg-purple-100 text-purple-800"
+                >
+                  Out for Delivery
+                </option>
+                <option
+                  value="DELIVERED"
+                  className="bg-green-100 text-green-800"
+                >
+                  Delivered
+                </option>
+                <option value="FAILED" className="bg-red-100 text-red-800">
+                  Failed
+                </option>
+              </select>
+            </div>
+
+            {/* Order Status */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Order Status
+              </label>
+              <select
+                value={orderStatus}
+                onChange={(e) => setOrderStatus(e.target.value)}
+                className={`w-full border rounded-lg px-3 py-2 focus:ring-2 transition
+      ${
+        orderStatus === "ACCEPT"
+          ? "bg-blue-100 border-blue-400 text-blue-700"
+          : orderStatus === "SUCESS"
+          ? "bg-green-100 border-green-400 text-green-700"
+          : orderStatus === "CANCEL"
+          ? "bg-red-100 border-red-400 text-red-700"
+          : "bg-gray-100 border-gray-300 text-gray-700"
+      }`}
+              >
+                <option value="ACCEPT" className="bg-blue-100 text-blue-800">
+                  Accepted
+                </option>
+                <option value="SUCESS" className="bg-green-100 text-green-800">
+                  Delivered
+                </option>
+                <option value="CANCEL" className="bg-red-100 text-red-800">
+                  Cancelled
+                </option>
               </select>
             </div>
           </form>
@@ -87,7 +154,7 @@ function OrderAcceptedCard({ item }: any) {
           {/* Right: View Button */}
           <div className="flex justify-center sm:justify-end">
             <button
-              // onClick={openModel}
+              onClick={handleSubmit}
               className="bg-[#217041] hover:bg-[#1a5c36] px-6 py-2 rounded-xl cursor-pointer text-white font-medium shadow-sm hover:shadow-md transition"
             >
               Update

@@ -4,6 +4,7 @@ from .models import Item
 class ItemsSerializer(serializers.ModelSerializer):
     kitchen_name=serializers.SerializerMethodField()
     kitchen_photo=serializers.SerializerMethodField()
+    newQuantity = serializers.IntegerField(write_only=True, required=False, default=0)
     
     class Meta:
         model=Item

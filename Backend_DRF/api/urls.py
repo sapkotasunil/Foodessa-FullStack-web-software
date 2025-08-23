@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 from django.conf import settings
 from django.conf.urls.static import static
 from users.views import CustomTokenObtainPairView
-from seller.views import ItemListCreateView,BuyerItemListView
+from seller.views import ItemListCreateView,BuyerItemListView,ItemQuantityUpdate
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView
 from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller,OrderStatus
@@ -23,6 +23,7 @@ urlpatterns = [
     path('buyer/orders/', FetchOrderByBuyer.as_view(), name='fetch all order by buyer that created '),
     path('seller/orders/', FetchOrderBySeller.as_view(), name='fetching all orders that sumited to that seller'),
     path('seller/order/<int:pk>/', OrderStatus.as_view(), name='Updating Order Status'),
+    path('seller/item/<int:pk>/', ItemQuantityUpdate.as_view(), name='Updating Item Quantity and is_available or not'),
 
     
 ]
