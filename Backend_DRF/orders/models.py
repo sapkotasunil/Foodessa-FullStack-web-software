@@ -11,6 +11,7 @@ class Order(models.Model):
         ACCEPT="ACCEPT","Accept"
         CANCEL="CANCEL","Cancel"
         SUCESS="SUCESS","Sucess"
+        UNSUCESS="UNSUCESS","Unsucess"
         
     class DeliveryStataus(models.TextChoices):
         PENDING="PENDING","Pending"

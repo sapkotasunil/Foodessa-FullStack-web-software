@@ -53,26 +53,47 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
     
     def perform_update(self, serializer):
         instance = self.get_object()  # current Item from DB
-        new_quantity=serializer.validated_data.get("newQuantity",0)
-        print(new_quantity)
-        is_available=serializer.validated_data.get("is_available",instance.is_available)
-        
-        if(new_quantity <0 and abs(new_quantity)>instance.available_quantity):
-            raise PermissionDenied(f"You are trying to remove more items({new_quantity}) from available quantity({instance.available_quantity})")
+        new_quantity = serializer.validated_data.get("newQuantity", 0)
+        is_available = serializer.validated_data.get("is_available", instance.is_available)
+
+        # Prevent removing more items than available
+        if new_quantity < 0 and abs(new_quantity) > instance.available_quantity:
+            raise PermissionDenied(
+                f"You are trying to remove more items ({abs(new_quantity)}) "
+                f"than available ({instance.available_quantity})."
+            )
+
+        # Calculate new stock
         updated_quantity = instance.available_quantity + new_quantity
-            
-        if instance.available_quantity<1 :
-           updated_is_available = "no"
-        if is_available=="yes" and instance.available_quantity<1:
+        
+        if new_quantity<0:
+            if abs(new_quantity)==instance.available_quantity:
+                updated_is_available = "no"
+
+        # Case 1: If stock becomes 0, always force is_available = "no"
+        if updated_quantity < 1:
             updated_is_available = "no"
-            # raise PermissionDenied("No Quantity available for Sale! Please add Quantity to Continue.")
             
+            
+        # Case 2: If stock > 0, accept user choice
         else:
             updated_is_available = is_available
-        
-        
+
+        # Save updated values
         serializer.save(
-        available_quantity=updated_quantity,
-        is_available=updated_is_available
-    )
-        
+            available_quantity=updated_quantity,
+            is_available=updated_is_available,
+        )
+        if updated_quantity < 1:
+            if is_available == "yes" and new_quantity<0:
+                raise PermissionDenied(
+                  {
+                      "Message":"Update Quantity sucessfully",
+                      "Error":"No Quantity available for Sale! Please add Quantity to Continue."
+                  }
+                )
+            elif is_available == "yes":
+                raise PermissionDenied( "No Quantity available for Sale! Please add Quantity to Continue.")
+            updated_is_available = "no"
+
+            

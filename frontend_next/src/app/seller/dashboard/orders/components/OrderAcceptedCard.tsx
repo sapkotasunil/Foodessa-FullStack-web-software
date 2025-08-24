@@ -26,7 +26,7 @@ function OrderAcceptedCard({ item }: any) {
       <div className="w-full bg-[#c8f2ef] shadow-md rounded-2xl border border-gray-200 p-5 hover:shadow-xl transition-all duration-300 max-h-fit">
         <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-5 items-center gap-6">
           {/* Left: Image + Name */}
-          <div className="grid grid-cols-2   gap-1 items-start">
+          <div className="grid grid-cols-2">
             <div>
               <Image
                 src={
@@ -47,7 +47,7 @@ function OrderAcceptedCard({ item }: any) {
               <p className="text-sm text-gray-700">
                 <span className="font-semibold">Buyer:</span> {item?.buyer_name}
               </p>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 ">
                 <span className="font-semibold">Payment Method:</span>{" "}
                 {item?.paymentStatus}
               </p>
@@ -133,7 +133,7 @@ function OrderAcceptedCard({ item }: any) {
           ? "bg-blue-100 border-blue-400 text-blue-700"
           : orderStatus === "SUCESS"
           ? "bg-green-100 border-green-400 text-green-700"
-          : orderStatus === "CANCEL"
+          : orderStatus === "UNSUCESS"
           ? "bg-red-100 border-red-400 text-red-700"
           : "bg-gray-100 border-gray-300 text-gray-700"
       }`}
@@ -144,8 +144,8 @@ function OrderAcceptedCard({ item }: any) {
                 <option value="SUCESS" className="bg-green-100 text-green-800">
                   Delivered
                 </option>
-                <option value="CANCEL" className="bg-red-100 text-red-800">
-                  Cancelled
+                <option value="UNSUCESS" className="bg-red-100 text-red-800">
+                  Unsuccessful
                 </option>
               </select>
             </div>

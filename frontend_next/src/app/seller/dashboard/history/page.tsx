@@ -1,26 +1,16 @@
 "use client";
 
-import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
-import { useEffect } from "react";
+import HistoryData from "./component/HistoryData";
 
-function HistoryData() {
-  useEffect(() => {
-    async function getKitchenDetails() {
-      try {
-        const response = await APIWITHTOKEN.get("/seller/items/");
-
-        if (response.status === 200) {
-          console.log(response.data);
-        } else {
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getKitchenDetails();
-  }, []);
-
-  return <></>;
+function History() {
+  return (
+    <>
+      <main className="flex-1 p-6 bg-gray-100">
+        <h1 className="text-2xl font-semibold text-gray-900">Orders</h1>
+        <HistoryData />
+      </main>
+    </>
+  );
 }
 
-export default HistoryData;
+export default History;

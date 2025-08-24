@@ -34,7 +34,7 @@ const OrderListCard = ({ item }: any) => {
               height={80}
               className="rounded-xl object-cover shadow-sm border"
             />
-            <p className="text-lg font-semibold  text-black mt-2">
+            <p className="text-lg font-semibold  text-nowrap text-black mt-2">
               {item?.item_name}
             </p>
           </div>
