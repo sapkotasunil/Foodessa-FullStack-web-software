@@ -10,6 +10,7 @@ import { Status } from "@/lib/types/types";
 import { redirect } from "next/navigation";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { removecartData } from "@/lib/store/cart/cart.slice";
 
 export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const { status } = useAppSelector((store) => store.orders);
@@ -59,6 +60,8 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
         "Order Placed Successfully!",
         "Your delicious dishes will be delivered soon!"
       );
+      dispatch(removecartData(itemsData.id));
+
       dispatch(setStatus(Status.LOADING));
       closeModel();
     }

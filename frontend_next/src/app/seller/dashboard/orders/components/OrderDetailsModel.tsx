@@ -1,11 +1,23 @@
 "use client";
 
-import { useAppDispatch } from "@/lib/store/hooks";
-import { UpdateOrderStatus } from "@/lib/store/seller/OrderStatus/orderStatusSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import {
+  setOrderStatus,
+  UpdateOrderStatus,
+} from "@/lib/store/seller/OrderStatus/orderStatusSlice";
+import { Status } from "@/lib/types/types";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function OrderDetailsModel({ closeModel, itemsData }: any) {
+  const [loader, setLoader] = useState(false);
+  const [accept, setAccept] = useState(true);
   const dispatch = useAppDispatch();
-
+  const { orderStatusData, status } = useAppSelector(
+    (store) => store.OrderStatus
+  );
+  console.log("orderStatusData:", orderStatusData);
+  console.log("stataus", status);
   const onAccept = () => {
     dispatch(
       UpdateOrderStatus(itemsData.id, {
@@ -13,6 +25,7 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
         orderStatus: "ACCEPT",
       })
     );
+    setAccept(true);
   };
   const onDecline = () => {
     dispatch(
@@ -21,7 +34,46 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
         orderStatus: "CANCEL",
       })
     );
+    setAccept(false);
   };
+
+  useEffect(() => {
+    if (status !== "loading") {
+      setLoader(false);
+    }
+    console.log(status);
+    if (status === Status.SUCCESS) {
+      toast.success("Order Accepted Sucessfully");
+      // : toast.success("OrderDecline", {
+      //     icon: "",
+      //     style: {
+      //       backgroundColor: "red",
+      //     },
+      //   });
+      dispatch(setOrderStatus(Status.LOADING));
+      closeModel();
+    }
+    // if (status === "error") {
+    //   toast.error("login Expired, Please login to continue");
+    //   dispatch(setStatus(Status.LOADING));
+    //   dispatch(authStatus(Status.LOADING));
+    //   localStorage.removeItem("access");
+    //   dispatch(
+    //     setUser({
+    //       address: "",
+    //       email: "",
+    //       first_name: "",
+    //       gender: "",
+    //       id: 0,
+    //       last_name: "",
+    //       phone_number: "",
+    //       profile_picture: null,
+    //     })
+    //   );
+
+    //   redirect("/buyer/auth/login");
+    // }
+  }, [status, orderStatusData]);
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">

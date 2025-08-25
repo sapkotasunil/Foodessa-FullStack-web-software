@@ -26,7 +26,9 @@ function SellerOrdersData() {
       </div>
       <div className="min-h-fit bg-gray-100 py-3 space-y-4 grid xl:grid-cols-2 gap-x-4 grid-cols-1">
         {pendingOrder.length !== 0 ? (
-          pendingOrder.map((item) => <OrderListCard item={item} />)
+          pendingOrder.map((item) => (
+            <OrderListCard key={item.id} item={item} />
+          ))
         ) : (
           <h1 className="text-gray-500 text-2xl font-semibold">
             No Pending Orders Available
@@ -38,7 +40,9 @@ function SellerOrdersData() {
       </div>
       <div className="min-h-fit bg-gray-100 py-3 space-y-4 grid  grid-cols-1">
         {acceptedOrder.length !== 0 ? (
-          acceptedOrder.map((item) => <OrderAcceptedCard item={item} />)
+          acceptedOrder.map((item) => (
+            <OrderAcceptedCard item={item} key={item.id} />
+          ))
         ) : (
           <h1 className="text-gray-500 text-2xl font-semibold">
             No Acceptes Orders Available
