@@ -26,12 +26,12 @@ export default function Hero() {
           <p className="mt-6 text-lg text-[#404040] max-w-md">
             Experience the future of food delivery! Foodessa connects you with
             top home chefs and cloud kitchens nearby. Freshly prepared meals,
-            fast delivery, and flavors that feel like home.
+            fast delivery, and flavors that feel like home .
           </p>
           <ul className="mt-6 space-y-2 text-[#404040]">
             <li>🍽️ Order from verified local chefs</li>
             <li>🚀 Fast and reliable delivery</li>
-            <li>💬 Live chat with kitchen owners</li>
+            <li>💬 Live chat with kitvfvdsvfdvchen owners</li>
             <li>📍 Discover kitchens near your location</li>
           </ul>
           <Link href="/auth/register">
