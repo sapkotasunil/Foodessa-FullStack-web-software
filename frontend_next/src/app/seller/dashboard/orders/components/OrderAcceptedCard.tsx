@@ -1,24 +1,62 @@
 "use client";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { UpdateOrderStatus } from "@/lib/store/seller/OrderStatus/orderStatusSlice";
+import Loader from "@/components/GlobalComponents/Loders";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import {
+  UpdateOrderStatus,
+  setOrderStatus as setOrderStatusSlice,
+} from "@/lib/store/seller/OrderStatus/orderStatusSlice";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function OrderAcceptedCard({ item }: any) {
+  const [IsUpdated, setisUpdated] = useState(true);
+  const [isLogicError, setIsLogicError] = useState(false);
   const [orderStatus, setOrderStatus] = useState(item.orderStatus);
   const [deliveryStatus, setDeliveryStatus] = useState(item.deleveryStatus);
 
   const dispatch = useAppDispatch();
 
+  const [loader, setLoader] = useState(false);
+
+  useEffect(() => {
+    if (
+      item.orderStatus === orderStatus &&
+      item.deleveryStatus === deliveryStatus
+    ) {
+      setisUpdated(true);
+    } else {
+      setisUpdated(false);
+    }
+  }, [orderStatus, deliveryStatus, item.orderStatus, item.deleveryStatus]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
+    // Combined logic check
+    if (
+      (orderStatus === "SUCESS" && deliveryStatus !== "DELIVERED") ||
+      (orderStatus === "UNSUCESS" && deliveryStatus !== "FAILED")
+    ) {
+      setIsLogicError(true);
+      return; // stop execution if logic invalid
+    } else {
+      setIsLogicError(false);
+    }
+
+    // Valid combination → proceed
+    setLoader(true);
     dispatch(
       UpdateOrderStatus(item.id, {
         orderStatus: orderStatus,
         deleveryStatus: deliveryStatus,
       })
     );
+
+    setTimeout(() => {
+      setLoader(false);
+      toast.success("Order Updated Successfully");
+    }, 500);
   };
 
   return (
@@ -77,7 +115,9 @@ function OrderAcceptedCard({ item }: any) {
               </label>
               <select
                 value={deliveryStatus}
-                onChange={(e) => setDeliveryStatus(e.target.value)}
+                onChange={(e) => (
+                  setDeliveryStatus(e.target.value), setIsLogicError(false)
+                )}
                 className={`w-full border rounded-lg px-3 py-2 focus:ring-2 transition
       ${
         deliveryStatus === "PENDING"
@@ -127,7 +167,9 @@ function OrderAcceptedCard({ item }: any) {
               </label>
               <select
                 value={orderStatus}
-                onChange={(e) => setOrderStatus(e.target.value)}
+                onChange={(e) => (
+                  setOrderStatus(e.target.value), setIsLogicError(false)
+                )}
                 className={`w-full border rounded-lg px-3 py-2 focus:ring-2 transition
       ${
         orderStatus === "ACCEPT"
@@ -149,6 +191,13 @@ function OrderAcceptedCard({ item }: any) {
                   Unsuccessful
                 </option>
               </select>
+              <h1
+                className={`mt-1 text-sm text-red-500 ${
+                  isLogicError ? "flex" : "hidden"
+                }`}
+              >
+                You cannot do this with that Delivery status.
+              </h1>
             </div>
           </form>
 
@@ -156,9 +205,16 @@ function OrderAcceptedCard({ item }: any) {
           <div className="flex justify-center sm:justify-end">
             <button
               onClick={handleSubmit}
-              className="bg-[#217041] hover:bg-[#1a5c36] px-6 py-2 rounded-xl cursor-pointer text-white font-medium shadow-sm hover:shadow-md transition"
+              disabled={loader || IsUpdated}
+              className={`px-6 py-2 rounded-xl font-medium shadow-sm transition
+      ${
+        loader || IsUpdated
+          ? "bg-green-900 text-white cursor-not-allowed"
+          : "bg-green-500 hover:bg-[#1a5c36] text-white cursor-pointer hover:shadow-md"
+      }
+    `}
             >
-              Update
+              {loader ? <Loader /> : IsUpdated ? "Updated" : "Update"}
             </button>
           </div>
         </div>

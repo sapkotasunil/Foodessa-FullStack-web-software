@@ -19,6 +19,8 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
   console.log("orderStatusData:", orderStatusData);
   console.log("stataus", status);
   const onAccept = () => {
+    toast.success("Order Accepted ");
+
     dispatch(
       UpdateOrderStatus(itemsData.id, {
         deleveryStatus: "PREPARING",
@@ -28,6 +30,14 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
     setAccept(true);
   };
   const onDecline = () => {
+    toast.success("Order Decline", {
+      icon: "❌",
+      style: {
+        border: "1px solid #ff4d4f",
+        padding: "5px",
+        color: "#ff4d4f",
+      },
+    });
     dispatch(
       UpdateOrderStatus(itemsData.id, {
         deleveryStatus: "FAILED",
@@ -37,51 +47,13 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
     setAccept(false);
   };
 
-  useEffect(() => {
-    if (status !== "loading") {
-      setLoader(false);
-    }
-    console.log(status);
-    if (status === Status.SUCCESS) {
-      toast.success("Order Accepted Sucessfully");
-      // : toast.success("OrderDecline", {
-      //     icon: "",
-      //     style: {
-      //       backgroundColor: "red",
-      //     },
-      //   });
-      dispatch(setOrderStatus(Status.LOADING));
-      closeModel();
-    }
-    // if (status === "error") {
-    //   toast.error("login Expired, Please login to continue");
-    //   dispatch(setStatus(Status.LOADING));
-    //   dispatch(authStatus(Status.LOADING));
-    //   localStorage.removeItem("access");
-    //   dispatch(
-    //     setUser({
-    //       address: "",
-    //       email: "",
-    //       first_name: "",
-    //       gender: "",
-    //       id: 0,
-    //       last_name: "",
-    //       phone_number: "",
-    //       profile_picture: null,
-    //     })
-    //   );
-
-    //   redirect("/buyer/auth/login");
-    // }
-  }, [status, orderStatusData]);
-
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-8 relative animate-fadeIn">
         {/* Close Button */}
         <button
           onClick={closeModel}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 transition"
+          className="absolute top-4 right-4 text-red-400 hover:text-red-700 font-semibold cursor-pointer transition"
         >
           ✕
         </button>
@@ -163,20 +135,23 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-4 mt-8">
-          <button
-            onClick={onDecline}
-            className="px-6 py-2.5 cursor-pointer rounded-xl bg-red-500 text-white font-medium shadow hover:bg-red-600 transition"
-          >
-            Decline
-          </button>
-          <button
-            onClick={onAccept}
-            className="px-6 py-2.5 rounded-xl cursor-pointer bg-green-500 text-white font-medium shadow hover:bg-green-600 transition"
-          >
-            Accept
-          </button>
-        </div>
+
+        {itemsData.orderStatus === "PENDING" && (
+          <div className="flex justify-end gap-4 mt-8">
+            <button
+              onClick={onDecline}
+              className="px-6 py-2.5 cursor-pointer rounded-xl bg-red-500 text-white font-medium shadow hover:bg-red-600 transition"
+            >
+              Decline
+            </button>
+            <button
+              onClick={onAccept}
+              className="px-6 py-2.5 rounded-xl cursor-pointer bg-green-500 text-white font-medium shadow hover:bg-green-600 transition"
+            >
+              Accept
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

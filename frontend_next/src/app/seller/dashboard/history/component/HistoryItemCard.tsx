@@ -1,8 +1,24 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import OrderDetailsModel from "../../orders/components/OrderDetailsModel";
 
 function HistoryItemCard({ item }: any) {
+  const [modelOpen, setModelOpen] = useState(false);
+
+  const openModel = () => {
+    setModelOpen(true);
+    // dispatch(setStatus(Status.LOADING));
+  };
+  const closeModel = () => {
+    setModelOpen(false);
+  };
   return (
     <>
+      {modelOpen && (
+        <OrderDetailsModel itemsData={item} closeModel={closeModel} />
+      )}
       <div
         className={`w-full shadow-md rounded-2xl p-5 hover:shadow-xl transition-all border-4 duration-300 max-h-fit
     ${
@@ -79,7 +95,7 @@ function HistoryItemCard({ item }: any) {
           {/* Right: View Button */}
           <div className="flex justify-center sm:justify-end">
             <button
-              // onClick={handleSubmit}
+              onClick={openModel}
               className="bg-[#217041] hover:bg-[#1a5c36] px-6 py-2 rounded-xl cursor-pointer text-white font-medium shadow-sm hover:shadow-md transition"
             >
               View Details
