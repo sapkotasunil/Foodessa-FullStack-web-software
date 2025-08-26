@@ -25,6 +25,6 @@ export interface IitemInitialData {
 }
 
 export interface IItemQuantity {
-  newQuantity: number;
+  newQuantity: number | string;
   is_available: string;
 }

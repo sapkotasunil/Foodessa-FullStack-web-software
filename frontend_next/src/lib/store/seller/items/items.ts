@@ -25,6 +25,19 @@ const itemsSlice = createSlice({
     ) {
       state.data.push(action.payload);
     },
+    setUpdateItem(
+      state: IitemInitialData,
+      action: PayloadAction<IresposeItemData>
+    ) {
+      const index = state.data.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (index != -1) {
+        state.data[index] = action.payload;
+      } else {
+        console.log("cannot find order");
+      }
+    },
 
     setStatus(state: IitemInitialData, action: PayloadAction<Status>) {
       state.status = action.payload;
@@ -39,7 +52,8 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { setAddItem, setFetchItemData, setStatus } = itemsSlice.actions;
+export const { setAddItem, setFetchItemData, setStatus, setUpdateItem } =
+  itemsSlice.actions;
 export default itemsSlice.reducer;
 
 export function addItemData(data: IAdditemData) {
@@ -104,7 +118,7 @@ export function UpdateItemsQuantity(id: number, data: IItemQuantity) {
         data
       );
       if (response.status === 200) {
-        console.log("Item Quantity Added sucessfully");
+        dispatch(setUpdateItem(response.data));
       } else {
         console.log("error");
       }
