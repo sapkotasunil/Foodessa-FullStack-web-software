@@ -6,9 +6,9 @@ import Link from "next/link";
 function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
   const { kitchenDetails } = useAppSelector((store) => store.kitchen);
   return (
-    <div className="bg-gray-100 flex h-screen">
+    <div className="bg-gray-100 flex h-full min-h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md">
+      <aside className="w-64 bg-white shadow-md ">
         <div className="p-4 border-b">
           <div className="flex items-center">
             <Link href="/" className="text-[24px] font-bold flex items-center">

@@ -23,41 +23,45 @@ function HistoryData() {
   );
   return (
     <>
-      <div className=" text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-green-200 border-green-500 border-l-6">
-        Sucessfull Orders
-      </div>
-      <div className="grid lg:grid-cols-2 gap-3  space-y-3">
-        {successfulOrder.length !== 0 ? (
-          successfulOrder.map((item) => <HistoryItemCard item={item} />)
-        ) : (
-          <h1 className="text-gray-500 text-2xl font-semibold">
-            No Sucessfull Orders Available
-          </h1>
-        )}
-      </div>
-      <div className=" mt-6 text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-red-200 border-red-500 border-l-6">
-        Failed Orders
-      </div>
-      <div className="grid lg:grid-cols-2 gap-3  space-y-3">
-        {unsucessOrder.length !== 0 ? (
-          unsucessOrder.map((item) => <HistoryItemCard item={item} />)
-        ) : (
-          <h1 className="text-gray-500 text-2xl font-semibold">
-            No Failed Orders Available
-          </h1>
-        )}
-      </div>
-      <div className=" mt-6 text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-amber-200 border-amber-500 border-l-6">
-        Declined Orders
-      </div>
-      <div className="grid lg:grid-cols-2 gap-3  space-y-3">
-        {canceledOrder.length !== 0 ? (
-          canceledOrder.map((item) => <HistoryItemCard item={item} />)
-        ) : (
-          <h1 className="text-gray-500 text-2xl font-semibold">
-            No Declined Orders Available
-          </h1>
-        )}
+      <div className="overflow-y-scroll max-h-screen">
+        <div className=" text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-green-200 border-green-500 border-l-6">
+          Sucessfull Orders
+        </div>
+        <div className="grid lg:grid-cols-2 gap-3  space-y-3">
+          {successfulOrder.length !== 0 ? (
+            successfulOrder.map((item) => <HistoryItemCard item={item} />)
+          ) : (
+            <h1 className="text-gray-500 text-2xl font-semibold">
+              No Sucessfull Orders Available
+            </h1>
+          )}
+        </div>
+        <hr />
+        <div className=" mt-12 text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-red-200 border-red-500 border-l-6">
+          Failed Orders
+        </div>
+        <div className="grid lg:grid-cols-2 gap-3  space-y-3">
+          {unsucessOrder.length !== 0 ? (
+            unsucessOrder.map((item) => <HistoryItemCard item={item} />)
+          ) : (
+            <h1 className="text-gray-500 text-2xl font-semibold">
+              No Failed Orders Available
+            </h1>
+          )}
+        </div>
+        <hr />
+        <div className=" mt-12 text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-amber-200 border-amber-500 border-l-6">
+          Declined Orders
+        </div>
+        <div className="grid lg:grid-cols-2 gap-3  space-y-3">
+          {canceledOrder.length !== 0 ? (
+            canceledOrder.map((item) => <HistoryItemCard item={item} />)
+          ) : (
+            <h1 className="text-gray-500 text-2xl font-semibold">
+              No Declined Orders Available
+            </h1>
+          )}
+        </div>
       </div>
     </>
   );

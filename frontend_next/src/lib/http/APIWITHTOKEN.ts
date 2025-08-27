@@ -21,4 +21,36 @@ APIWITHTOKEN.interceptors.request.use(
   }
 );
 
+//response intersector
+APIWITHTOKEN.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  //Handle failed response
+  async function (error) {
+    const orginalRequest = error.config;
+    // console.log("orginal request", orginalRequest);
+    if (error.response.status === 401 && !orginalRequest.retry) {
+      orginalRequest.retry = true;
+      const refreshToken = localStorage.getItem("refresh");
+
+      try {
+        const response = await APIWITHTOKEN.post("/token/refresh/", {
+          refresh: refreshToken,
+        });
+        //console.log("New token==>", response.data.access);
+        localStorage.setItem("accessToken", response.data.access);
+        orginalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${response.data.access}`;
+        return APIWITHTOKEN(orginalRequest);
+      } catch (error) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default APIWITHTOKEN;

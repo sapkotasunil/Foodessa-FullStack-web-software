@@ -3,7 +3,7 @@ import { setStatus, setUser } from "@/lib/store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { Status } from "@/lib/types/types";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { BiRestaurant, BiSolidUserCircle } from "react-icons/bi";
@@ -11,7 +11,7 @@ import { BsMenuApp } from "react-icons/bs";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { MdOutlineFastfood } from "react-icons/md";
 import { PiPhone } from "react-icons/pi";
-import { RiShoppingBasketLine, RiUserLine } from "react-icons/ri";
+import { RiShoppingBasketLine } from "react-icons/ri";
 import { TbHomeFilled } from "react-icons/tb";
 
 export default function Navbar() {
@@ -32,6 +32,13 @@ export default function Navbar() {
     };
   }, []);
 
+  const pathname = usePathname();
+  console.log(pathname);
+  const LinkClasses = (path: string) =>
+    pathname === path
+      ? "transition  flex gap-2 items-center  text-green-700 border-b-4 py-0.5  border-green-600"
+      : "transition  flex gap-2 items-center hover:text-green-700";
+
   const { data } = useAppSelector((store) => store.cart);
   const { user } = useAppSelector((store) => store.auth);
   const { profile_picture, email } = user;
@@ -42,8 +49,8 @@ export default function Navbar() {
   const cartItemLength = data.length;
   return (
     <>
-      <div className="py-1"></div>
-      <nav className="w-full   max-w-[1440px] px-6 lg:px-12 mx-auto sticky top-0  z-50 backdrop-blur-md  rounded-xl  flex justify-between items-center py-4">
+      <div className="py-1  "></div>
+      <nav className="w-full    max-w-[1440px] px-6 lg:px-12 mx-auto sticky top-0  z-50 backdrop-blur-md  rounded-xl  flex justify-between items-center py-4">
         {/* Logo */}
         <Link
           href="/buyer/home"
@@ -59,8 +66,8 @@ export default function Navbar() {
         <ul className="hidden lg:flex items-center gap-8 text-gray-800 font-semibold">
           <li className="">
             <Link
-              href="/buyer/home/"
-              className=" transition  flex gap-2 items-center hover:text-green-700"
+              href="/buyer/home"
+              className={`${LinkClasses("/buyer/home")}`}
             >
               <TbHomeFilled className=" text-2xl" />
               Home
@@ -68,8 +75,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/buyer/menu/"
-              className=" transition  flex gap-2 items-center hover:text-green-700"
+              href="/buyer/menu"
+              className={`${LinkClasses("/buyer/menu")}`}
             >
               <BsMenuApp className=" text-xl" />
               Menu
@@ -77,17 +84,8 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/buyer/kitchens/"
-              className=" transition flex gap-2 items-center hover:text-green-700"
-            >
-              <BiRestaurant className="text-xl" />
-              Kitchens
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/buyer/orders/"
-              className=" transition flex gap-2 items-center hover:text-green-700"
+              href="/buyer/orders"
+              className={`${LinkClasses("/buyer/orders")}`}
             >
               <MdOutlineFastfood className="text-xl" />
               Orders
@@ -95,8 +93,17 @@ export default function Navbar() {
           </li>
           <li>
             <Link
-              href="/buyer/contact/"
-              className=" transition flex gap-2 items-center hover:text-green-700"
+              href="/buyer/kitchens"
+              className={`${LinkClasses("/buyer/kitchens")}`}
+            >
+              <BiRestaurant className="text-xl" />
+              Kitchens
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/buyer/contact"
+              className={`${LinkClasses("/buyer/contact")}`}
             >
               <PiPhone className="text-xl" />
               Contact

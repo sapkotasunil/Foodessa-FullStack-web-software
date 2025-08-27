@@ -1,7 +1,9 @@
 "use client";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getKitchenDetails } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
 import { useEffect } from "react";
+import KitchenDetailsBanner from "./dashboard Component/KitchenDetailsBanner";
+import WelcomeBanner from "./dashboard Component/WelcomeBanner";
 
 function dashboard() {
   const dispatch = useAppDispatch();
@@ -9,7 +11,15 @@ function dashboard() {
     dispatch(getKitchenDetails());
   }, []);
 
-  return <h1>i am a dashboard</h1>;
+  const { kitchenDetails } = useAppSelector((store) => store.kitchen);
+
+  return (
+    <>
+      <div className=" overflow-y-scroll h-screen ">
+        <KitchenDetailsBanner kitchen={kitchenDetails} />
+      </div>
+    </>
+  );
 }
 
 export default dashboard;
