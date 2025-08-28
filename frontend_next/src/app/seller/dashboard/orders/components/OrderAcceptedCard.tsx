@@ -58,12 +58,32 @@ function OrderAcceptedCard({ item }: any) {
     }, 500);
   };
 
+  // Format currency
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      maximumFractionDigits: 0,
+    }).format(amount);
+  };
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    return (
+      date.toLocaleDateString() +
+      " " +
+      date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    );
+  };
+
   return (
     <>
       <div className="w-full bg-white shadow-md rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
           {/* Image */}
-          <div className="md:col-span-1 flex justify-center">
+          <div className=" flex gap-5 col-span-3">
             <Image
               src={
                 item?.item_image &&
@@ -74,47 +94,63 @@ function OrderAcceptedCard({ item }: any) {
               height={70}
               className="rounded-lg object-cover shadow-sm border border-gray-200"
             />
-          </div>
-
-          {/* Item Details */}
-          <div className="md:col-span-2">
-            <p className="text-lg font-semibold text-gray-800 truncate">
-              {item?.item_name}
-            </p>
-            <div className="mt-1 text-sm text-gray-600">
-              Buyer: {item?.buyer_name}
+            {/* Item Details */}
+            <div className="flex flex-col items-start">
+              <p className="text-lg font-semibold text-gray-800 truncate">
+                {item?.item_name}
+              </p>
+              <div className="flex items-center mt-1 space-x-2">
+                <span className="text-sm text-gray-600 bg-gray-100 px-2 py-0.5 rounded-md">
+                  Qty: {item?.quantity || 1}
+                </span>
+                <span className="text-sm font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-md">
+                  {formatCurrency(
+                    item?.totalPrice ||
+                      parseFloat(item?.price || 0) * (item?.quantity || 1)
+                  )}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Payment Info */}
+          {/* Buyer Info */}
           <div className="md:col-span-2">
-            <div className="text-sm text-gray-700">
-              <span className="font-medium text-gray-600">Payment:</span>
-              <span
-                className={`ml-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-                  item?.paymentStatus === "completed"
-                    ? "bg-green-100 text-green-800"
-                    : item?.paymentStatus === "pending"
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-red-100 text-red-800"
-                }`}
-              >
-                {item?.paymentStatus}
-              </span>
+            <div className="text-sm text-gray-700 truncate">
+              <span className="font-medium text-gray-600">Buyer:</span>
+              <span className="ml-1">{item?.buyer_name}</span>
             </div>
             <div className="mt-1 text-sm text-gray-600 truncate">
-              Phone: {item?.phone_number}
+              <span className="font-medium text-gray-600">Phone:</span>
+              <span className="ml-1">{item?.phone_number}</span>
             </div>
           </div>
+          <div className="col-span-2">
+            {/* Payment Info */}
+            <div className="md:col-span-1">
+              <div className="text-sm text-gray-700">
+                <span className="font-medium text-gray-600">Payment:</span>
+                <span
+                  className={`ml-1 px-2 py-0.5 rounded-full text-xs font-medium ${
+                    item?.paymentStatus === "completed"
+                      ? "bg-green-100 text-green-800"
+                      : item?.paymentStatus === "pending"
+                      ? "bg-amber-100 text-amber-800"
+                      : "bg-red-100 text-red-800"
+                  }`}
+                >
+                  {item?.paymentStatus}
+                </span>
+              </div>
+            </div>
 
-          {/* Address */}
-          <div className="md:col-span-2">
-            <p className="text-sm text-gray-700 line-clamp-2">
-              <span className="font-medium text-gray-600">Address:</span>
-              <span className="ml-1">{item?.deliveryAddress}</span>
-            </p>
+            {/* Address */}
+            <div className="md:col-span-2">
+              <p className="text-sm text-gray-700 line-clamp-2">
+                <span className="font-medium text-gray-600">Address:</span>
+                <span className="ml-1">{item?.deliveryAddress}</span>
+              </p>
+            </div>
           </div>
-
           {/* Delivery Status */}
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -162,7 +198,7 @@ function OrderAcceptedCard({ item }: any) {
           </div>
 
           {/* Order Status */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 ">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Order Status
             </label>
@@ -200,17 +236,17 @@ function OrderAcceptedCard({ item }: any) {
           </div>
 
           {/* Update Button */}
-          <div className="md:col-span-1 flex justify-center">
+          <div className="md:col-span-1 flex justify-center items-end pt-6">
             <button
               onClick={handleSubmit}
               disabled={loader || IsUpdated}
-              className={`w-full py-2 rounded-lg font-medium text-sm shadow-sm transition-colors flex items-center justify-center
+              className={` py-2 w-20 rounded-lg    font-medium text-sm shadow-sm transition-colors flex  justify-center
                 ${
                   loader
                     ? "bg-gray-400 text-white cursor-not-allowed"
                     : IsUpdated
                     ? "bg-green-700 text-white cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                    : "bg-yellow-400 hover:bg-yellow-600 text-black cursor-pointer"
                 }`}
             >
               {loader ? <Loader /> : IsUpdated ? "Updated" : "Update"}
@@ -223,10 +259,13 @@ function OrderAcceptedCard({ item }: any) {
           <div className="text-xs text-gray-500">
             Order ID: #{item?.id || "N/A"}
           </div>
-          <div className="text-xs text-gray-500">
-            {item?.order_date
-              ? new Date(item.order_date).toLocaleDateString()
-              : "Date not available"}
+          <div className="flex items-center space-x-7">
+            <div className="text-xs text-gray-900">
+              Order Created at: {formatDate(item?.created_at)}
+            </div>
+            <div className="text-xs text-gray-900">
+              Last Updated at: {formatDate(item?.Status_updated_at)}
+            </div>
           </div>
         </div>
       </div>

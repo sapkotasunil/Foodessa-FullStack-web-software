@@ -30,7 +30,7 @@ function ItemCard({ data }: any) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg my-4">
+    <div className="bg-red-50 rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg my-4">
       <div className="flex flex-col lg:flex-row p-5">
         {/* Image and details */}
         <div className="flex items-center  space-x-4 lg:w-2/5">

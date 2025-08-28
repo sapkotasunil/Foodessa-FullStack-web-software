@@ -20,7 +20,7 @@ const kitchenDetailsInitial: IkitchenDetailsinitial = {
 };
 
 export const kitchenDetails = createSlice({
-  name: "kitchenDetails",
+  name: "kitchen",
   initialState: kitchenDetailsInitial,
   reducers: {
     setKitchenDetails(

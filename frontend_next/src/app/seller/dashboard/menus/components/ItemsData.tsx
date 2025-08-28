@@ -18,8 +18,8 @@ function ItemsData({ searched }: any) {
 
   return (
     <>
-      <div className="overflow-y-scroll max-h-screen ">
-        <div className="pr-3">
+      <div className="">
+        <div className="">
           {SearchedItem.map((data) => (
             <ItemCard key={data.id} data={data} />
           ))}

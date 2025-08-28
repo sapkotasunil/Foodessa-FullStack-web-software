@@ -101,7 +101,7 @@ const OrderListCard = ({ item }: any) => {
           <div className="md:col-span-2 flex justify-center md:justify-end">
             <button
               onClick={openModel}
-              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white font-medium text-sm shadow-sm hover:shadow-md transition-all flex items-center"
+              className="bg-green-600 cursor-pointer hover:bg-green-700 px-4 py-2 rounded-lg text-white font-medium text-sm shadow-sm hover:shadow-md transition-all flex items-center"
             >
               <span>View Details</span>
               <svg

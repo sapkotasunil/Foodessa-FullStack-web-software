@@ -17,7 +17,7 @@ function reports() {
   console.log(data);
   return (
     <>
-      <div className=" overflow-y-scroll h-screen  ">
+      <div className=" overflow-y-scroll h-screen w-full ">
         <MenuAnalyticsDashboard items={data} />
       </div>
     </>
