@@ -1,37 +1,77 @@
+"use client";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getSellerItemsData } from "@/lib/store/seller/items/items";
 import { useState, useEffect } from "react";
-
-interface Kitchen {
-  kitchen_profile_photo: string;
-  user: string;
-  kitchen_name: string;
-  kitchen_description: string;
-  kitchen_address: string;
-  phone_number: string;
-  kitchen_Types: string;
-  created_at: string;
-}
+import { getAllOrdersDataBySeller } from "@/lib/store/orders/orders.slice";
 
 export default function KitchenDashboard({ kitchen }: any) {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((store) => store.item);
+  const { ordered_data } = useAppSelector((store) => store.orders);
+
+  const SucessOrders = ordered_data.filter(
+    (items) => items.orderStatus === "SUCESS"
+  );
+
   useEffect(() => {
     dispatch(getSellerItemsData());
+    dispatch(getAllOrdersDataBySeller());
   }, []);
-  console.log(data);
 
-  const [salesData, setSalesData] = useState({
-    today: 1245,
-    week: 8560,
-    month: 34200,
-    popularItems: [
-      { name: "Spicy Chicken Pizza", sales: 142 },
-      { name: "Veggie Supreme Pasta", sales: 118 },
-      { name: "Chocolate Lava Cake", sales: 96 },
-    ],
+  //Today Sales Data
+  const Now = new Date();
+
+  const TodaySalesOrders = SucessOrders.filter(
+    (item) =>
+      new Date(item.Status_updated_at).toDateString() === Now.toDateString()
+  );
+
+  //Today sales amount
+  const TodaySalesAmount = TodaySalesOrders.reduce(
+    (todaySellAmount, orders) => {
+      //@ts-ignore
+      return todaySellAmount + Number(orders.totalPrice ?? 0);
+    },
+    0
+  );
+
+  //last  7 days sells data
+  const Week = new Date();
+  Week.setDate(Now.getDate() - 7);
+
+  const ThisWeekSales = SucessOrders.filter((item) => {
+    const d = new Date(item.Status_updated_at);
+    return d >= Week && d <= Now;
   });
+
+  const WeekSalesAmount = ThisWeekSales.reduce((SellAmount, orders) => {
+    //@ts-ignore
+    return SellAmount + Number(orders.totalPrice ?? 0);
+  }, 0);
+
+  // last 30 days sell data
+
+  const month = new Date();
+  month.setDate(Now.getDate() - 30);
+
+  const ThisMonthData = SucessOrders.filter((item) => {
+    const date = new Date(item.Status_updated_at);
+    return date >= month && date <= Now;
+  });
+  const MonthSalesAmount = ThisMonthData.reduce((SellAmount, orders) => {
+    //@ts-ignore
+    return SellAmount + Number(orders.totalPrice ?? 0);
+  }, 0);
+
+  //Top 5 selling Items
+  const TopSellingItem = [...data]
+    .map((item) => ({
+      ...item,
+      totalRevenue: (item.sold_quantity ?? 0) * (item.price ?? 0),
+    }))
+    .sort((a, b) => (b.sold_quantity ?? 0) - (a.sold_quantity ?? 0))
+    .slice(0, 5);
 
   if (!kitchen) {
     return (
@@ -121,23 +161,23 @@ export default function KitchenDashboard({ kitchen }: any) {
               Today's Sales
             </h3>
             <p className="text-3xl font-bold text-green-600">
-              Rs {salesData.today}
+              Rs {TodaySalesAmount}
             </p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-gray-500 text-sm font-semibold mb-2">
-              This Week
+              Lat 7 days
             </h3>
             <p className="text-3xl font-bold text-blue-600">
-              Rs {salesData.week}
+              Rs {WeekSalesAmount}
             </p>
           </div>
           <div className="bg-white p-6 rounded-xl shadow-md">
             <h3 className="text-gray-500 text-sm font-semibold mb-2">
-              This Month
+              Last 30 Days
             </h3>
             <p className="text-3xl font-bold text-purple-600">
-              Rs {salesData.month}
+              Rs {MonthSalesAmount}
             </p>
           </div>
         </div>
@@ -148,15 +188,20 @@ export default function KitchenDashboard({ kitchen }: any) {
             Popular Menu Items
           </h2>
           <div className="space-y-4">
-            {salesData.popularItems.map((item, index) => (
+            {TopSellingItem.map((item, index) => (
               <div
                 key={index}
-                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                className=" flex justify-between p-3 bg-gray-50 rounded-lg"
               >
-                <span className="font-medium">{item.name}</span>
-                <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
-                  {item.sales} sold
-                </span>
+                <span className="font-medium">{item.item_name}</span>
+                <div className="grid grid-cols-2">
+                  <span className="bg-orange-100 w-20 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                    {item.sold_quantity} sold
+                  </span>
+                  <span className="bg-green-700 w-30 text-white  px-3 py-1 rounded-full text-sm font-semibold">
+                    Rs {item.totalRevenue}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

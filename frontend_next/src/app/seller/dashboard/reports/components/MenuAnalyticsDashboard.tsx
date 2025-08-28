@@ -27,7 +27,7 @@ export default function ItemsDashboard({ items }: any) {
     if (filter === "all") return items;
 
     const now = new Date();
-    return items.filter((item) => {
+    return items.filter((item: any) => {
       const created = new Date(item.created_at);
 
       if (filter === "today") {
@@ -54,7 +54,7 @@ export default function ItemsDashboard({ items }: any) {
     let totalRevenue = 0;
     let lowStockItems: Item[] = [];
 
-    filteredItems.forEach((item) => {
+    filteredItems.forEach((item: any) => {
       const sold = parseInt(item.sold_quantity);
       const available = parseInt(item.available_quantity);
       const price = parseFloat(item.price);
@@ -71,18 +71,14 @@ export default function ItemsDashboard({ items }: any) {
   }, [filteredItems]);
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 min-w-full">
       {/* Filter Controls */}
       <div className="flex gap-3">
-        {["all", "today", "week", "month"].map((f) => (
+        {["Sales Reports"].map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f as any)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium ${
-              filter === f
-                ? "bg-green-600 text-white"
-                : "bg-gray-200 hover:bg-gray-300"
-            }`}
+            className={`px-4 py-2 rounded-lg  "bg-green-600 bg-green-500 text-white text-xl font-semibold`}
           >
             {f.toUpperCase()}
           </button>
@@ -90,7 +86,7 @@ export default function ItemsDashboard({ items }: any) {
       </div>
 
       {/* Overall Stats */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
         <div className="p-5 bg-white rounded-2xl shadow-md">
           <h3 className="text-lg font-semibold">Total Sold Quantity</h3>
           <p className="text-2xl font-bold text-green-700">
@@ -122,16 +118,20 @@ export default function ItemsDashboard({ items }: any) {
       {/* Per Item Stats */}
       <div>
         <h2 className="text-xl font-bold mb-4">Per-Item Analysis</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredItems.map((item) => {
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredItems.map((item: any) => {
             const sold = parseInt(item.sold_quantity);
             const available = parseInt(item.available_quantity);
             const revenue = sold * parseFloat(item.price);
 
             return (
               <div key={item.id} className="p-5 bg-white rounded-2xl shadow-md">
-                <h3 className="text-lg font-semibold">{item.item_name}</h3>
-                <p className="text-gray-600 text-sm">{item.category}</p>
+                <h3 className="text-lg font-bold text-green-600 ">
+                  {item.item_name}
+                </h3>
+                <p className="text-gray-600 font-bold text-[10px]">
+                  {item.category.toUpperCase()}
+                </p>
                 <div className="mt-3 space-y-1">
                   <p>
                     Sold: <span className="font-bold">{sold}</span>

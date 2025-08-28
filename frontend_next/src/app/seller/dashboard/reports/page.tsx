@@ -10,12 +10,14 @@ function reports() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    !data && dispatch(getSellerItemsData());
+    if (!data || data.length === 0) {
+      dispatch(getSellerItemsData());
+    }
   }, []);
   console.log(data);
   return (
     <>
-      <div className=" overflow-y-scroll h-screen">
+      <div className=" overflow-y-scroll h-screen  ">
         <MenuAnalyticsDashboard items={data} />
       </div>
     </>

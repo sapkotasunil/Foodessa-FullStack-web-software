@@ -39,14 +39,14 @@ APIWITHTOKEN.interceptors.response.use(
           refresh: refreshToken,
         });
         //console.log("New token==>", response.data.access);
-        localStorage.setItem("accessToken", response.data.access);
+        localStorage.setItem("access", response.data.access);
         orginalRequest.headers[
           "Authorization"
         ] = `Bearer ${response.data.access}`;
         return APIWITHTOKEN(orginalRequest);
       } catch (error) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
       }
     }
     return Promise.reject(error);
