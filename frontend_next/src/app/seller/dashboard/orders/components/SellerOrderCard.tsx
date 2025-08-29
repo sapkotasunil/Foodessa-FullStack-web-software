@@ -1,12 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import OrderDetailsModel from "./OrderDetailsModel";
-import { IuserResponseDataForOrders } from "@/lib/store/orders/orders.types";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { getSellerItemsData } from "@/lib/store/seller/items/items";
 
 const OrderListCard = ({ item }: any) => {
   const [modelOpen, setModelOpen] = useState<boolean>(false);
+  const { data } = useAppSelector((store) => store.item);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (data.length === 0) {
+      dispatch(getSellerItemsData());
+    }
+  }, []);
+  const availableStockOfOrderItems = data.find(
+    (items) => items.id == Number(item.items_name)
+  );
 
   const openModel = () => {
     setModelOpen(true);
@@ -28,7 +40,11 @@ const OrderListCard = ({ item }: any) => {
   return (
     <>
       {modelOpen && (
-        <OrderDetailsModel itemsData={item} closeModel={closeModel} />
+        <OrderDetailsModel
+          itemsData={item}
+          closeModel={closeModel}
+          availableStockOfOrderItems={availableStockOfOrderItems}
+        />
       )}
       <div className="w-full bg-white shadow-md rounded-xl border border-gray-100 p-5 hover:shadow-lg transition-all duration-300">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
@@ -127,10 +143,20 @@ const OrderListCard = ({ item }: any) => {
           <div className="text-xs text-gray-500">
             Order ID: #{item?.id || "N/A"}
           </div>
-          <div className="text-xs text-gray-500">
-            {item?.created_at
-              ? new Date(item?.created_at).toLocaleString()
-              : "Date not available"}
+          <div className="text-xs text-black flex gap-3">
+            <h1 className="">
+              Available Stock: {availableStockOfOrderItems?.available_quantity}{" "}
+              ,
+            </h1>
+            <h1>
+              Order Created at:
+              <span className="pl-1">
+                {" "}
+                {item?.created_at
+                  ? new Date(item?.created_at).toLocaleString()
+                  : "Date not available"}
+              </span>
+            </h1>
           </div>
         </div>
       </div>

@@ -6,6 +6,7 @@ export interface IAdditemData {
   image: File | null;
   category: string;
   price: number;
+  preperiation_time: string;
 }
 
 export interface IresposeItemData extends IAdditemData {
@@ -15,7 +16,6 @@ export interface IresposeItemData extends IAdditemData {
   created_at: string;
   is_available: string;
   kitchen_name: string;
-  preperiation_time: number;
   kitchen_photo: File | null;
 }
 

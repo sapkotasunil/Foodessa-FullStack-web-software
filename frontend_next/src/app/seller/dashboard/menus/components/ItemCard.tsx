@@ -73,7 +73,6 @@ function ItemCard({ data }: any) {
                 <input
                   type="number"
                   value={quantity}
-                  min="0"
                   className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   onChange={(e) => setQuantity(Number(e.target.value))}
                   placeholder="Enter quantity..."
@@ -141,9 +140,12 @@ function ItemCard({ data }: any) {
                   </div>
                 </div>
 
-                <div className="mt-3 bg-green-100 p-2 rounded-md">
-                  <div className="text-xs font-semibold text-green-600">
-                    Sold: {data.sold_quantity || 0} units
+                <div className="mt-1   rounded-md">
+                  <div className="text-sm font-semibold ">
+                    Sold Stock:{" "}
+                    <span className="text-blue-600">
+                      {data.sold_quantity || 0} units
+                    </span>
                   </div>
                 </div>
               </div>

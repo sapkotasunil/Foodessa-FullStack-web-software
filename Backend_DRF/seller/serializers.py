@@ -22,6 +22,10 @@ class ItemsSerializer(serializers.ModelSerializer):
             return self.context['request'].build_absolute_uri(obj.kitchen_photo.url)
         return None
     
+    def create(self, validated_data):
+        validated_data.pop("newQuantity", None)  # remove extra field
+        return super().create(validated_data)
+    
     
 
 

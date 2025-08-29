@@ -1,21 +1,31 @@
 "use client";
 
-import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { useAppDispatch } from "@/lib/store/hooks";
 import { UpdateItemsQuantity } from "@/lib/store/seller/items/items";
-import {
-  setOrderStatus,
-  UpdateOrderStatus,
-} from "@/lib/store/seller/OrderStatus/orderStatusSlice";
-import { Status } from "@/lib/types/types";
-import { useEffect, useState } from "react";
+import { UpdateOrderStatus } from "@/lib/store/seller/OrderStatus/orderStatusSlice";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
-function OrderDetailsModel({ closeModel, itemsData }: any) {
+function OrderDetailsModel({
+  closeModel,
+  itemsData,
+  availableStockOfOrderItems,
+}: any) {
   const dispatch = useAppDispatch();
-
   const [showReceipt, setShowReceipt] = useState(false);
+  const [stockNotAvailable, setstockNotAvailable] = useState(false);
+
+  console.log(typeof availableStockOfOrderItems?.available_quantity);
 
   const onAccept = () => {
+    if (
+      availableStockOfOrderItems?.available_quantity &&
+      Number(itemsData.quantity) >
+        Number(availableStockOfOrderItems.available_quantity)
+    ) {
+      setstockNotAvailable(true);
+      return;
+    }
     toast.success("Order Accepted");
     dispatch(
       UpdateOrderStatus(itemsData.id, {
@@ -48,13 +58,6 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
   };
 
   // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   // Check if payment is online and has receipt
   const isOnlinePayment = itemsData?.paymentStatus === "ONLINE";
@@ -116,13 +119,16 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Unit Price:</span>
                     <span className="font-medium">
-                      {formatCurrency(parseFloat(itemsData?.price || 0))}
+                      Rs{" "}
+                      {parseFloat(
+                        String(availableStockOfOrderItems?.price ?? "0")
+                      ) || 0}
                     </span>
                   </div>
                   <div className="flex justify-between text-lg font-bold border-t border-gray-200 pt-2">
                     <span className="text-gray-800">Total:</span>
                     <span className="text-green-600">
-                      {formatCurrency(parseFloat(itemsData?.totalPrice || 0))}
+                      Rs {parseFloat(itemsData?.totalPrice || 0)}
                     </span>
                   </div>
                 </div>
@@ -362,45 +368,57 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
 
           {/* Actions */}
           {itemsData.orderStatus === "PENDING" && (
-            <div className="flex justify-end gap-4 mt-6 pt-6 border-t border-gray-200">
-              <button
-                onClick={onDecline}
-                className="px-6 py-2.5 cursor-pointer rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 transition-colors flex items-center"
-              >
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+            <div className="w-full">
+              <div className="flex justify-end gap-4 mt-6 pt-6 border-t border-gray-200">
+                <button
+                  onClick={onDecline}
+                  className="px-6 py-2.5 cursor-pointer rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 transition-colors flex items-center"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                Decline Order
-              </button>
-              <button
-                onClick={onAccept}
-                className="px-6 py-2.5 cursor-pointer rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors flex items-center"
-              >
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  Decline Order
+                </button>
+                <button
+                  onClick={onAccept}
+                  className="px-6 py-2.5 cursor-pointer rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition-colors flex items-center"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Accept Order
-              </button>
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  Accept Order
+                </button>
+              </div>
+              {stockNotAvailable && (
+                <h1 className="w-full text-end mt-1 text-red-500">
+                  * This item
+                  <span className="text-green-600 ml-0.5">
+                    ( {itemsData?.item_name} ){" "}
+                  </span>
+                  has {availableStockOfOrderItems?.available_quantity} stock
+                  available
+                </h1>
+              )}
             </div>
           )}
         </div>

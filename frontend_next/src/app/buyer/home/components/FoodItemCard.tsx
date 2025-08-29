@@ -67,7 +67,7 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
                 <FaStarHalfStroke className="w-3 h-3" />
               </div>
             </div>
-            <p className="line-clamp-2 leading-4 text-sm text-gray-600">
+            <p className="line-clamp-2 min-h-8 leading-4 text-sm text-gray-600">
               {items.item_description}
             </p>
           </div>
@@ -91,7 +91,7 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
             </div>
             <button
               onClick={addedToCart}
-              className={`flex items-center justify-center p-2 rounded-lg transition-colors duration-200 ${
+              className={`flex cursor-pointer items-center justify-center p-2 rounded-lg transition-colors duration-200 ${
                 addToCartIcon
                   ? "bg-green-600 text-white hover:bg-green-700"
                   : "bg-green-500 text-white hover:bg-green-600"
@@ -121,7 +121,7 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span>20m</span>
+              <span>{items.preperiation_time} min</span>
             </div>
 
             <div className="w-px h-4 bg-gray-300"></div>
