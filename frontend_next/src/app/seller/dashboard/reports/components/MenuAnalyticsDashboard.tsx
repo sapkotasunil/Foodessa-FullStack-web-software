@@ -99,13 +99,6 @@ export default function ItemsDashboard({ items }: any) {
   }, [filteredItems]);
 
   // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   return (
     <div className="p-6 space-y-6 min-w-full bg-gray-50 min-h-screen">
@@ -223,7 +216,7 @@ export default function ItemsDashboard({ items }: any) {
                 Total Revenue
               </p>
               <p className="text-2xl font-bold text-gray-800">
-                {formatCurrency(overallStats.totalRevenue)}
+                Rs {overallStats.totalRevenue}
               </p>
             </div>
           </div>
@@ -277,7 +270,7 @@ export default function ItemsDashboard({ items }: any) {
                 Avg. Revenue per item
               </p>
               <p className="text-2xl font-bold text-gray-800">
-                {formatCurrency(overallStats.averageRevenue)}
+                Rs {overallStats.averageRevenue}
               </p>
             </div>
           </div>
@@ -388,13 +381,13 @@ export default function ItemsDashboard({ items }: any) {
                     <div className="flex justify-between">
                       <span className="text-gray-600">Revenue:</span>
                       <span className="font-medium text-blue-600">
-                        {formatCurrency(revenue)}
+                        Rs {revenue}
                       </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Price:</span>
                       <span className="font-medium">
-                        {formatCurrency(parseFloat(item.price))}
+                        Rs {parseFloat(item.price)}
                       </span>
                     </div>
                   </div>

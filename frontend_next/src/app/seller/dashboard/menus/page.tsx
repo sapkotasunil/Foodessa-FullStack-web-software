@@ -51,7 +51,7 @@ function Menus() {
                     <input
                       onChange={(e) => setSearched(e.target.value)}
                       type="text"
-                      placeholder="Search menu items by name, category, or description..."
+                      placeholder="Search menu items by name....."
                       className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
                       value={searched}
                     />

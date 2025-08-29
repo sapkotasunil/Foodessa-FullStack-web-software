@@ -1,7 +1,16 @@
+"use client";
+import { useAppDispatch } from "@/lib/store/hooks";
+import { getKitchenDetails } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 function Sidebar() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getKitchenDetails());
+  }, []);
+
   const pathname = usePathname();
 
   const linkClasses = (path: string) =>
@@ -62,8 +71,8 @@ function Sidebar() {
           fill="none"
           stroke="currentColor"
           stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-square-menu-icon lucide-square-menu"
         >
           <rect width="18" height="18" x="3" y="3" rx="2" />
@@ -84,9 +93,9 @@ function Sidebar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-clipboard-clock-icon lucide-clipboard-clock"
         >
           <path d="M16 14v2.2l1.6 1" />

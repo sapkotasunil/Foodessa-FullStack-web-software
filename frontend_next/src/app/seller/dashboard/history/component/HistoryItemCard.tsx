@@ -225,7 +225,7 @@ function HistoryItemCard({ item }: any) {
           <div className="lg:col-span-1 flex justify-center">
             <button
               onClick={openModel}
-              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-white font-medium text-sm shadow-sm hover:shadow-md transition-all flex items-center"
+              className="bg-green-600 cursor-pointer hover:bg-green-700 px-4 py-2 rounded-lg text-white font-medium text-sm shadow-sm hover:shadow-md transition-all flex items-center"
             >
               <span>View</span>
               <svg

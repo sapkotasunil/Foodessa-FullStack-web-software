@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { UpdateItemsQuantity } from "@/lib/store/seller/items/items";
 import {
   setOrderStatus,
   UpdateOrderStatus,
@@ -20,6 +21,11 @@ function OrderDetailsModel({ closeModel, itemsData }: any) {
       UpdateOrderStatus(itemsData.id, {
         deleveryStatus: "PREPARING",
         orderStatus: "ACCEPT",
+      })
+    );
+    dispatch(
+      UpdateItemsQuantity(itemsData.items_name, {
+        newQuantity: itemsData.quantity === "" ? 0 : -itemsData.quantity,
       })
     );
   };

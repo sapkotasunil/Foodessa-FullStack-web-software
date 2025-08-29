@@ -21,6 +21,9 @@ function HistoryData() {
   const canceledOrder = ordered_data.filter(
     (item) => item.orderStatus === "CANCEL"
   );
+  const OngoingOrder = ordered_data.filter(
+    (item) => item.orderStatus === "ACCEPT" || item.orderStatus === "PENDING"
+  );
 
   // Calculate statistics
   const totalOrders = ordered_data.length;
@@ -32,7 +35,7 @@ function HistoryData() {
       {/* Header with Stats */}
       <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
         <h1 className="text-2xl font-bold text-gray-800 mb-4">Order History</h1>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500">
             <div className="text-sm text-blue-700 font-medium">
               Total Orders
@@ -47,6 +50,12 @@ function HistoryData() {
               {successfulOrder.length}
             </div>
           </div>
+          <div className="bg-yellow-100 p-4 rounded-lg border-l-4 border-yellow-700">
+            <div className="text-sm text-amber-700 font-medium">Ongoing</div>
+            <div className="text-2xl font-bold text-green-900">
+              {OngoingOrder.length}
+            </div>
+          </div>
           <div className="bg-red-50 p-4 rounded-lg border-l-4 border-red-500">
             <div className="text-sm text-red-700 font-medium">Failed</div>
             <div className="text-2xl font-bold text-red-900">
@@ -54,7 +63,7 @@ function HistoryData() {
             </div>
           </div>
           <div className="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500">
-            <div className="text-sm text-amber-700 font-medium">Canceled</div>
+            <div className="text-sm text-amber-700 font-medium">Declined</div>
             <div className="text-2xl font-bold text-amber-900">
               {canceledOrder.length}
             </div>
@@ -78,13 +87,12 @@ function HistoryData() {
 
       {/* Successful Orders Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 py-1 bg-green-100 border-green-500 border-l-5 rounded-l px-2">
           <div className="flex items-center">
-            <div className="w-3 h-6 bg-green-500 rounded-sm mr-3"></div>
             <h2 className="text-xl font-semibold text-gray-800">
               Successful Orders
             </h2>
-            <span className="ml-3 bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+            <span className=" bg-blue-500 ml-1 text-white text-sm font-medium px-1 py- rounded-full">
               {successfulOrder.length}
             </span>
           </div>
@@ -126,13 +134,12 @@ function HistoryData() {
 
       {/* Failed Orders Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4  py-1 bg-red-100 border-red-500 border-l-5 rounded-l px-2">
           <div className="flex items-center">
-            <div className="w-3 h-6 bg-red-500 rounded-sm mr-3"></div>
             <h2 className="text-xl font-semibold text-gray-800">
               Failed Orders
             </h2>
-            <span className="ml-3 bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+            <span className=" bg-blue-500 ml-1 text-white text-sm font-medium px-1 py- rounded-full">
               {unsucessOrder.length}
             </span>
           </div>
@@ -174,13 +181,12 @@ function HistoryData() {
 
       {/* Canceled Orders Section */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4  py-1 bg-amber-100 border-amber-500 border-l-5 rounded-l px-2">
           <div className="flex items-center">
-            <div className="w-3 h-6 bg-amber-500 rounded-sm mr-3"></div>
             <h2 className="text-xl font-semibold text-gray-800">
               Canceled Orders
             </h2>
-            <span className="ml-3 bg-amber-100 text-amber-800 text-sm font-medium px-2.5 py-0.5 rounded-full">
+            <span className=" bg-blue-500 ml-1 text-white text-sm font-medium px-1 py- rounded-full">
               {canceledOrder.length}
             </span>
           </div>

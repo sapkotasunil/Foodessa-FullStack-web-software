@@ -22,7 +22,7 @@ function SellerOrdersData() {
   return (
     <>
       <div className=" text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-yellow-200 border-yellow-500 border-l-6">
-        Pending Order
+        New Requested Orders
       </div>
       <div className="min-h-fit bg-gray-100 py-3 space-y-4 grid  gap-x-4 grid-cols-1">
         {pendingOrder.length !== 0 ? (
@@ -31,12 +31,12 @@ function SellerOrdersData() {
           ))
         ) : (
           <h1 className="text-gray-500 text-2xl font-semibold">
-            No Pending Orders Available
+            No new Requested orders Available
           </h1>
         )}
       </div>
       <div className=" text-xl font-bold text-black my-2 w-full h-fit rounded-md px-1 py-1 bg-green-200 border-green-500 border-l-6">
-        Accepted Order
+        Ongoing Orders
       </div>
       <div className="min-h-fit bg-gray-100 py-3 space-y-4 grid  grid-cols-1">
         {acceptedOrder.length !== 0 ? (
@@ -45,7 +45,7 @@ function SellerOrdersData() {
           ))
         ) : (
           <h1 className="text-gray-500 text-2xl font-semibold">
-            No Acceptes Orders Available
+            No Ongoing Orders Available
           </h1>
         )}
       </div>

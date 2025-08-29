@@ -54,6 +54,7 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         instance = self.get_object()  # current Item from DB
         new_quantity = serializer.validated_data.get("newQuantity", 0)
+        sold_quantity = serializer.validated_data.get("sold_quantity", 0)
         is_available = serializer.validated_data.get("is_available", instance.is_available)
 
         # Prevent removing more items than available
@@ -65,6 +66,8 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
 
         # Calculate new stock
         updated_quantity = instance.available_quantity + new_quantity
+        
+        
         
         if new_quantity<0:
             if abs(new_quantity)==instance.available_quantity:
@@ -83,6 +86,7 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(
             available_quantity=updated_quantity,
             is_available=updated_is_available,
+            sold_quantity=instance.sold_quantity+sold_quantity
         )
         if updated_quantity < 1:
             if is_available == "yes" and new_quantity<0:

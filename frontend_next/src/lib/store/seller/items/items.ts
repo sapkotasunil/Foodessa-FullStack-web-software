@@ -110,7 +110,7 @@ export function getAllItemsData() {
   };
 }
 
-export function UpdateItemsQuantity(id: number, data: IItemQuantity) {
+export function UpdateItemsQuantity(id: number, data: any) {
   return async function UpdateItemsQuantityThunk(dispatch: AppDispatch) {
     try {
       const response = await APIWITHTOKEN.patch(

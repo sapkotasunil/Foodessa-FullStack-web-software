@@ -8,6 +8,8 @@ import {
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import OrderDetailsModel from "./OrderDetailsModel";
+import { UpdateItemsQuantity } from "@/lib/store/seller/items/items";
 
 function OrderAcceptedCard({ item }: any) {
   const [IsUpdated, setisUpdated] = useState(true);
@@ -15,7 +17,14 @@ function OrderAcceptedCard({ item }: any) {
   const [orderStatus, setOrderStatus] = useState(item.orderStatus);
   const [deliveryStatus, setDeliveryStatus] = useState(item.deleveryStatus);
   const [loader, setLoader] = useState(false);
+  const [modelOpen, setModelOpen] = useState<boolean>(false);
+  const openModel = () => {
+    setModelOpen(true);
+  };
 
+  const closeModel = () => {
+    setModelOpen(false);
+  };
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -56,15 +65,14 @@ function OrderAcceptedCard({ item }: any) {
       setLoader(false);
       toast.success("Order Updated Successfully");
     }, 500);
-  };
 
-  // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
+    if (orderStatus === "SUCESS" && deliveryStatus === "DELIVERED") {
+      dispatch(
+        UpdateItemsQuantity(item.items_name, {
+          sold_quantity: item.quantity === "" ? 0 : item.quantity,
+        })
+      );
+    }
   };
 
   // Format date
@@ -80,6 +88,9 @@ function OrderAcceptedCard({ item }: any) {
 
   return (
     <>
+      {modelOpen && (
+        <OrderDetailsModel itemsData={item} closeModel={closeModel} />
+      )}
       <div className="w-full bg-white shadow-md rounded-xl border border-gray-200 p-5 hover:shadow-lg transition-all duration-300">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
           {/* Image */}
@@ -104,10 +115,9 @@ function OrderAcceptedCard({ item }: any) {
                   Qty: {item?.quantity || 1}
                 </span>
                 <span className="text-sm font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded-md">
-                  {formatCurrency(
-                    item?.totalPrice ||
-                      parseFloat(item?.price || 0) * (item?.quantity || 1)
-                  )}
+                  Rs{" "}
+                  {item?.totalPrice ||
+                    parseFloat(item?.price || 0) * (item?.quantity || 1)}
                 </span>
               </div>
             </div>
@@ -255,9 +265,29 @@ function OrderAcceptedCard({ item }: any) {
         </div>
 
         {/* Status Bar */}
-        <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-          <div className="text-xs text-gray-500">
-            Order ID: #{item?.id || "N/A"}
+        <div className="mt-2 pt-2 border-t border-gray-100 flex items-center justify-between">
+          {/* View Button */}
+          <div className="md:col-span-2 flex justify-center md:justify-end">
+            <button
+              onClick={openModel}
+              className="bg-green-500 cursor-pointer hover:bg-green-700 px-4 py-1 rounded-lg text-white font-medium text-sm shadow-sm hover:shadow-md transition-all flex items-center"
+            >
+              <span>View Details</span>
+              <svg
+                className="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
           <div className="flex items-center space-x-7">
             <div className="text-xs text-gray-900">

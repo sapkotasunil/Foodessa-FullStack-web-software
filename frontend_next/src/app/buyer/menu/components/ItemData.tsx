@@ -24,7 +24,7 @@ function ItemData() {
 
   return (
     <>
-      <section className="mt-10 mx-auto max-w-[1440px] px-6 lg:px-12 min-h-screen">
+      <section className="mt-10 mx-auto max-w-full px-6 lg:px-12 min-h-screen">
         {/* Search Box */}
         <div className="w-full max-w-2xl lex items-center justify-center  mb-8">
           <div className="inline-flex  items-center justify-center bg-[#ebf9dc] overflow-hidden w-full p-4 px-5">
