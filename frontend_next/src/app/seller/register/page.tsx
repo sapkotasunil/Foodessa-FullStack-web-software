@@ -17,7 +17,7 @@ export default function SellerRegistrationForm() {
     phone_number: "",
     kitchen_type: "",
     kitchen_profile_photo: null,
-
+    kitchen_qr_photo: null,
     payment_method: "both", // cash, online, both
   });
   const [loader, setLoader] = useState(false);
@@ -29,7 +29,10 @@ export default function SellerRegistrationForm() {
     const { name, value, files } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "kitchen_profile_photo" ? files?.[0] : value,
+      [name]:
+        name === "kitchen_profile_photo" || name === "kitchen_qr_photo"
+          ? files?.[0]
+          : value,
     });
   };
 
@@ -150,7 +153,6 @@ export default function SellerRegistrationForm() {
                   <option value="">Select Type</option>
                   <option value="hotel">Hotel / Restaurant / Cafe</option>
                   <option value="home">Home Kitchen</option>
-                  <option value="cloud">Cloud Kitchen</option>
                 </select>
               </div>
 
@@ -167,7 +169,7 @@ export default function SellerRegistrationForm() {
                   required
                 >
                   <option value="cash">Cash Only</option>
-                  <option value="online">Online Only</option>
+
                   <option value="both">Both Cash & Online</option>
                 </select>
               </div>
@@ -217,8 +219,7 @@ export default function SellerRegistrationForm() {
               </div>
 
               {/* QR Code Section for Online Payments */}
-              {(formData.payment_method === "online" ||
-                formData.payment_method === "both") && (
+              {formData.payment_method === "both" && (
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700 mb-2">
                     Upload Qr image *
@@ -226,15 +227,15 @@ export default function SellerRegistrationForm() {
                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-green-400 transition-colors">
                     <input
                       type="file"
-                      name="kitchen_profile_photo"
+                      name="kitchen_qr_photo"
                       onChange={handleChange}
                       accept="image/*"
                       className="hidden"
-                      id="profile-upload"
+                      id="kitchen_qr_photo"
                       required
                     />
                     <label
-                      htmlFor="profile-upload"
+                      htmlFor="kitchen_qr_photo"
                       className="cursor-pointer text-center block"
                     >
                       <svg
@@ -251,7 +252,7 @@ export default function SellerRegistrationForm() {
                         />
                       </svg>
                       <p className="text-sm text-gray-600">
-                        {formData.kitchen_profile_photo
+                        {formData.kitchen_qr_photo
                           ? "Photo selected"
                           : "Click to upload photo"}
                       </p>

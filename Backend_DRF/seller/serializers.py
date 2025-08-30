@@ -3,6 +3,7 @@ from .models import Item
 
 class ItemsSerializer(serializers.ModelSerializer):
     kitchen_name=serializers.SerializerMethodField()
+    kitchen_qr_photo=serializers.SerializerMethodField(read_only=True)
     kitchen_photo=serializers.SerializerMethodField()
     newQuantity = serializers.IntegerField(write_only=True, required=False, default=0)
     
@@ -20,6 +21,11 @@ class ItemsSerializer(serializers.ModelSerializer):
     def get_kitchen_photo(self, obj):
         if obj.kitchen_photo:
             return self.context['request'].build_absolute_uri(obj.kitchen_photo.url)
+        return None
+    
+    def get_kitchen_qr_photo(self, obj):
+        if obj.kitchen_name.kitchen_qr_photo:
+            return self.context['request'].build_absolute_uri(obj.kitchen_name.kitchen_qr_photo)
         return None
     
     def create(self, validated_data):

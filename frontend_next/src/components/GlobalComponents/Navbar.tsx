@@ -187,7 +187,6 @@ export default function Navbar() {
                   <button
                     onClick={() => {
                       setOpen(false);
-                      dispatch(setStatus(Status.LOADING)); // redux logout logic
                       //@ts-ignore
                       localStorage.removeItem("access");
                       dispatch(
@@ -209,6 +208,8 @@ export default function Navbar() {
                           color: "black",
                         },
                       });
+
+                      dispatch(setStatus(Status.LOADING));
 
                       router.push("/buyer/auth/login"); // navigate manually
                     }}

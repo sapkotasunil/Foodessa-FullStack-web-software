@@ -17,6 +17,7 @@ class SellerRegistrationForm(models.Model):
     phone_number = models.CharField(max_length=10, blank=False, null=False)
     kitchen_Types= models.CharField(default=Kitchen_Types.HOTEL,blank=False ,null= False)
     kitchen_profile_photo=models.FileField(upload_to="kitchens/profile_picture")
+    kitchen_qr_photo=models.FileField(upload_to="kitchens/QRimages", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True) # Automatically set the date when the record is created
 
 

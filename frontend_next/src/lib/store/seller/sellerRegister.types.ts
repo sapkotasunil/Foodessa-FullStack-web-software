@@ -7,6 +7,7 @@ export interface ISellerRegisterFormData {
   phone_number: string; // Phone number of the kitchen
   kitchen_type: string; // Type of the kitchen
   kitchen_profile_photo: File | null; // Profile photo of the kitchen
+  kitchen_qr_photo: File | null; // Profile photo of the kitchen
 }
 
 export interface IsellerRegisterInitialState {

@@ -15,6 +15,7 @@ const initialState: IsellerRegisterInitialState = {
     phone_number: "",
     kitchen_type: "",
     kitchen_profile_photo: null,
+    kitchen_qr_photo: null,
   },
   status: Status.LOADING,
 };
