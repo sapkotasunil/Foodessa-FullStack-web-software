@@ -8,9 +8,20 @@ export default function OrdersPage() {
   const { ordered_data } = useAppSelector((store) => store.orders);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllOrdersData());
-  }, []);
-  console.log(ordered_data);
+    let isMounted = true;
+
+    const fetchOrders = async () => {
+      if (!isMounted) return;
+      await dispatch(getAllOrdersData()); // wait for API
+      setTimeout(fetchOrders, 3000); // call again after 3s
+    };
+
+    fetchOrders();
+
+    return () => {
+      isMounted = false; // cleanup, stop loop
+    };
+  }, [dispatch]);
 
   const sections = [
     { title: "Accepted Orders", status: "ACCEPT" },

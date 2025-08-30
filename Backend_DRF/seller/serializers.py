@@ -25,7 +25,7 @@ class ItemsSerializer(serializers.ModelSerializer):
     
     def get_kitchen_qr_photo(self, obj):
         if obj.kitchen_name.kitchen_qr_photo:
-            return self.context['request'].build_absolute_uri(obj.kitchen_name.kitchen_qr_photo)
+            return self.context['request'].build_absolute_uri(obj.kitchen_name.kitchen_qr_photo.url)
         return None
     
     def create(self, validated_data):

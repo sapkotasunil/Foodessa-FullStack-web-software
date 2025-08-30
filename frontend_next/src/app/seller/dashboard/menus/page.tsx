@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddItemModel from "./components/AddItemModel";
 import ItemsData from "./components/ItemsData";
-import { useAppDispatch } from "@/lib/store/hooks";
-import { setStatus } from "@/lib/store/seller/items/items";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { getSellerItemsData, setStatus } from "@/lib/store/seller/items/items";
 import { Status } from "@/lib/types/types";
 
 function Menus() {
@@ -24,8 +24,18 @@ function Menus() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Search functionality would be implemented here
-    console.log("Searching for:", searched);
   };
+
+  const { data } = useAppSelector((store) => store.item);
+
+  useEffect(() => {
+    if (data.length === 0) {
+      dispatch(getSellerItemsData());
+    }
+  }, []);
+
+  const lowStockItem = data.filter((item) => item.available_quantity < 6);
+  const AvailableStock = data.filter((item) => item.is_available === "yes");
 
   return (
     <>
@@ -105,15 +115,21 @@ function Menus() {
             {/* Quick Stats */}
             <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-100">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-800">24</div>
+                <div className="text-2xl font-bold text-gray-800">
+                  {data.length}
+                </div>
                 <div className="text-sm text-gray-600">Total Items</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">18</div>
+                <div className="text-2xl font-bold text-green-600">
+                  {AvailableStock.length}
+                </div>
                 <div className="text-sm text-gray-600">Available</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-amber-600">6</div>
+                <div className="text-2xl font-bold text-amber-600">
+                  {lowStockItem.length}
+                </div>
                 <div className="text-sm text-gray-600">Low Stock</div>
               </div>
             </div>
@@ -121,7 +137,7 @@ function Menus() {
 
           {/* Items Data Section */}
           <div className="   ">
-            <ItemsData searched={searched} />
+            <ItemsData searched={searched} data={data} />
           </div>
 
           {/* Add Item Modal */}

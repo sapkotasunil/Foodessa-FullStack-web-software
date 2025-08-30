@@ -8,8 +8,20 @@ function SellerOrdersData() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllOrdersDataBySeller());
-  }, []);
+    let isMounted = true;
+
+    const fetchOrders = async () => {
+      if (!isMounted) return;
+      await dispatch(getAllOrdersDataBySeller()); // wait for API
+      setTimeout(fetchOrders, 3000); // call again after 3s
+    };
+
+    fetchOrders();
+
+    return () => {
+      isMounted = false; // cleanup, stop loop
+    };
+  }, [dispatch]);
 
   const { ordered_data } = useAppSelector((store) => store.orders);
   console.log(ordered_data);

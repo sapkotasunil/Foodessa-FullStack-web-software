@@ -14,6 +14,8 @@ import { removecartData } from "@/lib/store/cart/cart.slice";
 
 export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const { status } = useAppSelector((store) => store.orders);
+  const { user } = useAppSelector((store) => store.auth);
+  console.log(user);
 
   const [quantity, setQuantity] = useState(prevQuantity);
   const [loader, setLoader] = useState(false);
@@ -21,11 +23,11 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const [ordersItemData, setOrdersItemData] = useState({
     item_name: itemsData.id,
     kitchen_name: itemsData.kitchen_name,
-    phone_number: "",
-    deliveryAddress: "",
+    phone_number: user.phone_number,
+    deliveryAddress: user.address,
     totalPrice: quantity * itemsData.price,
     quantity: quantity,
-    paymentStatus: "",
+    paymentStatus: "COD",
     payment: null,
   });
   const dispatch = useAppDispatch();
@@ -36,6 +38,8 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
       [name]: name === "payment" ? files?.[0] ?? null : value,
     });
   };
+
+  console.log(itemsData.kitchen_qr_photo);
 
   const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -219,17 +223,24 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
                 />
                 <span className="ml-2 text-gray-700">Cash on Delivery</span>
               </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  name="paymentStatus"
-                  value="ONLINE"
-                  checked={ordersItemData.paymentStatus === "ONLINE"}
-                  onChange={handleChange}
-                  className="form-radio text-green-600"
-                />
-                <span className="ml-2 text-gray-700">Online Payment</span>
-              </label>
+
+              {itemsData.kitchen_qr_photo ? (
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="paymentStatus"
+                    value="ONLINE"
+                    checked={ordersItemData.paymentStatus === "ONLINE"}
+                    onChange={handleChange}
+                    className="form-radio text-green-600"
+                  />
+                  <span className="ml-2 text-gray-700">Online Payment</span>
+                </label>
+              ) : (
+                <h1 className=" text-red-400 ">
+                  * No online Payment Available
+                </h1>
+              )}
             </div>
 
             {/* 🔁 Show when online selected */}
@@ -237,7 +248,13 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
               <div className="space-y-3 border border-green-100 p-4 rounded-md bg-green-50">
                 <p className="text-sm text-gray-700">Scan QR to pay:</p>
                 <img
-                  src="images/food_1.png"
+                  src={
+                    itemsData.kitchen_qr_photo &&
+                    itemsData.kitchen_qr_photo?.replace(
+                      "/media",
+                      "/api/v1/media"
+                    )
+                  }
                   alt="QR Code"
                   className="w-40 h-40 object-contain border rounded"
                 />

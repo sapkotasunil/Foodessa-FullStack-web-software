@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { setStatus } from "@/lib/store/orders/orders.slice";
 import { Status } from "@/lib/types/types";
 
-export default function CartItem({ data, onBuy, onCancel }: any) {
+export default function CartItem({ data }: any) {
   const [quantity, setQuantity] = useState(1);
 
   const dispatch = useAppDispatch();

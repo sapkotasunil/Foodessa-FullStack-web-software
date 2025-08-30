@@ -3,16 +3,8 @@ import ItemCard from "./ItemCard";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getSellerItemsData } from "@/lib/store/seller/items/items";
 
-function ItemsData({ searched }: any) {
-  const { data } = useAppSelector((store) => store.item);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getSellerItemsData());
-  }, []);
-  console.log(data);
-
-  const SearchedItem = data.filter((item) =>
+function ItemsData({ searched, data }: any) {
+  const SearchedItem = data.filter((item: any) =>
     item.item_name.toLowerCase().includes(searched.toLowerCase())
   );
 
@@ -20,7 +12,7 @@ function ItemsData({ searched }: any) {
     <>
       <div className="">
         <div className="">
-          {SearchedItem.map((data) => (
+          {SearchedItem.map((data: any) => (
             <ItemCard key={data.id} data={data} />
           ))}
         </div>

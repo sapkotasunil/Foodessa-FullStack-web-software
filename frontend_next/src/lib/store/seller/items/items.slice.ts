@@ -17,6 +17,7 @@ export interface IresposeItemData extends IAdditemData {
   is_available: string;
   kitchen_name: string;
   kitchen_photo: File | null;
+  kitchen_qr_photo: string;
 }
 
 export interface IitemInitialData {
