@@ -1,5 +1,5 @@
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from .serializer import SellerRegistrationFormSerializers
 from rest_framework.views import APIView
 from .models import SellerRegistrationForm
@@ -26,4 +26,13 @@ class kitchenDetailsView(APIView):
             return Response(serializer.data)
         except SellerRegistrationForm.DoesNotExist:
             raise NotFound("seller profile not found")
+        
+class allKitchenDetails(generics.ListAPIView):
+    serializer_class=kitchenDetailsViewserializer
+    permission_classes=[AllowAny]
+    queryset=SellerRegistrationForm.objects.all()
     
+class KitchenDetail(generics.RetrieveAPIView):
+    serializer_class=kitchenDetailsViewserializer
+    permission_classes=[AllowAny]
+    queryset=SellerRegistrationForm.objects.all()

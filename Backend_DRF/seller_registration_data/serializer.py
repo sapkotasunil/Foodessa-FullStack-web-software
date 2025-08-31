@@ -11,10 +11,23 @@ class SellerRegistrationFormSerializers(serializers.ModelSerializer):
 class kitchenDetailsViewserializer(serializers.ModelSerializer):
     kitchen_profile_photo = serializers.SerializerMethodField()
     user=serializers.SerializerMethodField()
+    user_role=serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model=SellerRegistrationForm
-        fields="__all__"
+        fields = [
+            "id",
+            "kitchen_name",
+            "kitchen_description",
+            "kitchen_address",
+            "phone_number",
+            "kitchen_Types",
+            "kitchen_profile_photo",
+            "created_at",
+            "user",
+            "user_role",       
+            "kitchen_qr_photo"
+        ]
         extra_kwargs={"user":{"required":False}}
         
     def get_kitchen_profile_photo(self, obj):
@@ -26,3 +39,6 @@ class kitchenDetailsViewserializer(serializers.ModelSerializer):
     
     def get_user(self,obj):
         return obj.user.username
+    
+    def get_user_role(self,obj):
+        return obj.user.role
