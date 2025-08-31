@@ -15,7 +15,7 @@ function sellerDashboardLayout({
     <>
       <Navbar />
       <PersistGate persistor={persistor} loading={<FoodSkeletonGrid />}>
-        <div className="min-h-screen">{children}</div>
+        <div className="min-h-screen max-w-[1380px] mx-auto">{children}</div>
       </PersistGate>
       <Footer />
     </>

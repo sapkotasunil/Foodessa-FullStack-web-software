@@ -24,7 +24,7 @@ export default function OrdersPage() {
   }, [dispatch]);
 
   const sections = [
-    { title: "Accepted Orders", status: "ACCEPT" },
+    { title: "Ongoing Orders", status: "ACCEPT" },
     { title: "Pending Orders", status: "PENDING" },
     { title: "Completed Orders", status: "SUCESS" },
     { title: "Cancelled Orders", status: "CANCEL" },
@@ -32,7 +32,7 @@ export default function OrdersPage() {
 
   return (
     <>
-      <div className="px-16 py-6 space-y-8">
+      <div className="px- py-6 space-y-8">
         {sections.map((section) => {
           const filteredOrders = ordered_data.filter(
             (order) => order.orderStatus === section.status

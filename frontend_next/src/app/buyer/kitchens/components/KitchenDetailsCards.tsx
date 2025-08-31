@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function KitchenDetailsCards({ kitchen }: any) {
@@ -17,6 +18,8 @@ function KitchenDetailsCards({ kitchen }: any) {
       day: "numeric",
     });
   };
+
+  const router = useRouter();
 
   const getKitchenTypeColor = (type: any) => {
     switch (type) {
@@ -155,7 +158,10 @@ function KitchenDetailsCards({ kitchen }: any) {
 
         {/* Action Buttons */}
         <div className="flex space-x-3 mb-4">
-          <button className="cursor-pointer flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors">
+          <button
+            onClick={() => router.push(`/buyer/kitchens/${kitchen.id}`)}
+            className="cursor-pointer flex-1 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors"
+          >
             View Details
           </button>
         </div>
@@ -229,7 +235,7 @@ function KitchenDetailsCards({ kitchen }: any) {
               )}
             </div>
             <p className="text-center text-sm text-gray-600 mt-3">
-              Scan this QR code to view our menu and order directly
+              Scan this QR code to pay us directly
             </p>
           </div>
         </div>

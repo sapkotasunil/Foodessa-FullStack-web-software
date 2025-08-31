@@ -34,9 +34,10 @@ const Footer = () => {
       ],
     },
   ];
+
   return (
     <>
-      <footer className=" border-gray-20 border-t-[2px] pt-3  flex flex-col sm:flex-row mx-auto max-w-[1440px] px-6  justify-between gap-2">
+      <footer className=" border-gray-20  border-t-[2px] pt-3 bg-green-50  flex flex-col sm:flex-row max-w-[1380px] mx-auto px-6  justify-between gap-2">
         {/* left */}
         <div className="max-w-[400px]">
           <div>
@@ -98,10 +99,22 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <div className="mx-auto max-w-[1440px] ">
-        <div className="w-full bg-green-600 flex justify-between items-center p-1 mt-3 text-white mb-2 px-10">
-          <h6 className="h6">2025 Foodees</h6>
-          <h6 className="h6">All right reserved</h6>
+      <div className="border-t border-gray-200 bg-green-100 px-3  pt-6 pb-4 max-w-[1380px] mx-auto">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <p className="text-gray-600 text-sm">
+            © 2025 Foodessa. All rights reserved.
+          </p>
+          <div className="flex space-x-6 text-sm text-gray-600">
+            <a href="#" className="hover:text-green-600 transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-green-600 transition-colors">
+              Terms of Service
+            </a>
+            <a href="#" className="hover:text-green-600 transition-colors">
+              Cookie Policy
+            </a>
+          </div>
         </div>
       </div>
     </>

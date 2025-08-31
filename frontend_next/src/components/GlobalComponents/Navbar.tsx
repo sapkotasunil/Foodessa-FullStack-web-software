@@ -50,7 +50,7 @@ export default function Navbar() {
   }, []);
 
   const LinkClasses = (path: string) =>
-    pathname === path
+    pathname.startsWith(path)
       ? "transition flex gap-2 items-center text-green-700 border-b-4 py-0.5 border-green-600"
       : "transition flex gap-2 items-center hover:text-green-700";
 
