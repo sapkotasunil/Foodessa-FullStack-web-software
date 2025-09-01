@@ -1,8 +1,11 @@
 "use client";
 
-import { useAppDispatch } from "@/lib/store/hooks";
-import { UpdateItemsQuantity } from "@/lib/store/seller/items/items";
-import { useState } from "react";
+import Loader from "@/components/GlobalComponents/Loders";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { setStatus, UpdateItemsQuantity } from "@/lib/store/seller/items/items";
+import { Status } from "@/lib/types/types";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function ItemCard({ data }: any) {
   const [available, setAvailable] = useState(data.is_available);
@@ -10,23 +13,35 @@ function ItemCard({ data }: any) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const dispatch = useAppDispatch();
+  const [errors, setErrors] = useState({});
+
+  const { error } = useAppSelector((store) => store.item);
+  useEffect(() => {
+    if (error) {
+      //@ts-ignore
+      setErrors(error);
+    }
+  }, [error]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsUpdating(true);
 
     dispatch(
-      UpdateItemsQuantity(data.id, {
+      UpdateItemsQuantity(data.id, data.id, {
         newQuantity: quantity === "" ? 0 : quantity,
         is_available: available,
       })
     );
-
-    // Simulate API call completion
     setTimeout(() => {
       setQuantity("");
       setIsUpdating(false);
-    }, 800);
+    }, 300);
+
+    setTimeout(() => {
+      setErrors({});
+      setIsUpdating(false);
+    }, 5000);
   };
 
   return (
@@ -74,7 +89,10 @@ function ItemCard({ data }: any) {
                   type="number"
                   value={quantity}
                   className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  onChange={(e) => setQuantity(Number(e.target.value))}
+                  onChange={(e) => {
+                    setQuantity(Number(e.target.value));
+                    setErrors({});
+                  }}
                   placeholder="Enter quantity..."
                 />
 
@@ -84,7 +102,10 @@ function ItemCard({ data }: any) {
                   </label>
                   <select
                     value={available}
-                    onChange={(e) => setAvailable(e.target.value)}
+                    onChange={(e) => {
+                      setAvailable(e.target.value);
+                      setErrors({});
+                    }}
                     className={`w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 border transition-colors
                       ${
                         available === "yes"
@@ -98,7 +119,6 @@ function ItemCard({ data }: any) {
                 </div>
               </div>
             </div>
-
             {/* Status Display */}
             <div className="md:col-span-2">
               <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 h-full flex flex-col justify-center">
@@ -150,20 +170,19 @@ function ItemCard({ data }: any) {
                 </div>
               </div>
             </div>
-
             {/* Action Buttons */}
             <div className="md:col-span-1 flex flex-col space-y-2 justify-center">
               <button
                 type="submit"
                 disabled={isUpdating}
-                className={`px-4 py-2 rounded-lg text-white font-medium text-sm transition-colors
+                className={`px-4 py-2 max-h-9 rounded-lg text-white font-medium text-sm transition-colors
                   ${
                     isUpdating
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-green-600 hover:bg-green-700"
                   }`}
               >
-                {isUpdating ? "Updating..." : "Update"}
+                {isUpdating ? <Loader /> : "Update"}
               </button>
 
               <button
@@ -173,21 +192,26 @@ function ItemCard({ data }: any) {
                 Edit Details
               </button>
             </div>
+
+            {
+              //@ts-ignore
+              errors?.id === data.id ? (
+                <h1 className=" text-red-500 text-sm col-span-3 -mt-3">
+                  {" "}
+                  {
+                    //@ts-ignore
+                    errors.errors
+                  }
+                </h1>
+              ) : (
+                ""
+              )
+            }
           </div>
         </form>
       </div>
 
       {/* Success indicator */}
-      {isUpdating && (
-        <div className="bg-green-100 border-t border-green-200 py-1.5 px-4">
-          <div className="flex items-center">
-            <div className="animate-pulse h-2 w-2 bg-green-600 rounded-full mr-2"></div>
-            <span className="text-xs text-green-700">
-              Updating inventory...
-            </span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -21,6 +21,7 @@ const authInitialState: IAuthInitialState = {
     id: 0,
     last_name: "",
     phone_number: "",
+    role: "",
     profile_picture: null,
   },
 };

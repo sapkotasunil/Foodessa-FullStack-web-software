@@ -13,6 +13,7 @@ import API from "@/lib/http/API";
 const itemsIntitialState: IitemInitialData = {
   data: [],
   status: Status.LOADING,
+  error: {},
 };
 
 const itemsSlice = createSlice({
@@ -42,6 +43,9 @@ const itemsSlice = createSlice({
     setStatus(state: IitemInitialData, action: PayloadAction<Status>) {
       state.status = action.payload;
     },
+    setError(state: IitemInitialData, action: PayloadAction<{}>) {
+      state.error = action.payload;
+    },
 
     setFetchItemData(
       state: IitemInitialData,
@@ -52,8 +56,13 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { setAddItem, setFetchItemData, setStatus, setUpdateItem } =
-  itemsSlice.actions;
+export const {
+  setAddItem,
+  setFetchItemData,
+  setStatus,
+  setUpdateItem,
+  setError,
+} = itemsSlice.actions;
 export default itemsSlice.reducer;
 
 export function addItemData(data: IAdditemData) {
@@ -110,8 +119,15 @@ export function getAllItemsData() {
   };
 }
 
-export function UpdateItemsQuantity(id: number, data: any) {
+export function UpdateItemsQuantity(
+  id: number,
+  errorId: number | null,
+  data: any
+) {
   return async function UpdateItemsQuantityThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    dispatch(setError(""));
+
     try {
       const response = await APIWITHTOKEN.patch(
         "seller/item/" + id + "/",
@@ -119,11 +135,14 @@ export function UpdateItemsQuantity(id: number, data: any) {
       );
       if (response.status === 200) {
         dispatch(setUpdateItem(response.data));
+        dispatch(setStatus(Status.SUCCESS));
       } else {
-        console.log("error");
+        dispatch(setStatus(Status.ERROR));
       }
-    } catch (error) {
-      console.log("error");
+    } catch (error: any) {
+      dispatch(
+        setError({ errors: error?.response?.data?.detail, id: errorId })
+      );
     }
   };
 }

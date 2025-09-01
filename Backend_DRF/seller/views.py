@@ -61,7 +61,7 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
         if new_quantity < 0 and abs(new_quantity) > instance.available_quantity:
             raise PermissionDenied(
                 f"You are trying to remove more items ({abs(new_quantity)}) "
-                f"than available ({instance.available_quantity})."
+                f"than available item ({instance.available_quantity})."
             )
 
         # Calculate new stock
@@ -75,9 +75,7 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
 
         # Case 1: If stock becomes 0, always force is_available = "no"
         if updated_quantity < 1:
-            updated_is_available = "no"
-            
-            
+            updated_is_available = "no"      
         # Case 2: If stock > 0, accept user choice
         else:
             updated_is_available = is_available
@@ -89,14 +87,7 @@ class ItemQuantityUpdate(generics.RetrieveUpdateDestroyAPIView):
             sold_quantity=instance.sold_quantity+sold_quantity
         )
         if updated_quantity < 1:
-            if is_available == "yes" and new_quantity<0:
-                raise PermissionDenied(
-                  {
-                      "Message":"Update Quantity sucessfully",
-                      "Error":"No Quantity available for Sale! Please add Quantity to Continue."
-                  }
-                )
-            elif is_available == "yes":
+            if is_available == "yes":
                 raise PermissionDenied( "No Quantity available for Sale! Please add Quantity to Continue.")
             updated_is_available = "no"
 

@@ -34,7 +34,7 @@ function OrderDetailsModel({
       })
     );
     dispatch(
-      UpdateItemsQuantity(itemsData.items_name, {
+      UpdateItemsQuantity(itemsData.items_name, 0, {
         newQuantity: itemsData.quantity === "" ? 0 : -itemsData.quantity,
       })
     );

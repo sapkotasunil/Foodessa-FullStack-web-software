@@ -99,12 +99,12 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <div className="border-t border-gray-200 bg-green-100 px-3  pt-6 pb-4 max-w-[1380px] mx-auto">
+      <div className="border-t border-gray-200 bg-green-600 px-3  pt-6 pb-5 max-w-[1380px] mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-gray-600 text-sm">
+          <p className="text-black text-sm">
             © 2025 Foodessa. All rights reserved.
           </p>
-          <div className="flex space-x-6 text-sm text-gray-600">
+          <div className="flex space-x-6 text-sm text-black">
             <a href="#" className="hover:text-green-600 transition-colors">
               Privacy Policy
             </a>

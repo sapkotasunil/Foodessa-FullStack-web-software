@@ -2,8 +2,9 @@
 
 import Loader from "@/components/GlobalComponents/Loders";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { addItemData } from "@/lib/store/seller/items/items";
+import { addItemData, setStatus } from "@/lib/store/seller/items/items";
 import { IAdditemData } from "@/lib/store/seller/items/items.slice";
+import { Status } from "@/lib/types/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -46,6 +47,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
     if (status === "success") {
       toast.success("Item added successfully");
       closeModel();
+      dispatch(setStatus(Status.LOADING))
     }
   }, [status, closeModel]);
 

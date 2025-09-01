@@ -29,13 +29,6 @@ const OrderListCard = ({ item }: any) => {
   };
 
   // Format currency
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   return (
     <>
@@ -72,9 +65,7 @@ const OrderListCard = ({ item }: any) => {
                 Qty: {item?.quantity || 1}
               </span>
               <span className="text-sm font-medium text-green-700 bg-green-50 px-2 py-1 rounded-md">
-                {formatCurrency(
-                  item?.totalPrice || parseFloat(item?.price || 0)
-                )}
+                Rs {item?.totalPrice || parseFloat(item?.price || 0)}
               </span>
             </div>
           </div>

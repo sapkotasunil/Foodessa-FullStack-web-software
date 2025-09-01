@@ -21,6 +21,7 @@ export interface IresposeItemData extends IAdditemData {
 }
 
 export interface IitemInitialData {
+  error: {};
   data: IresposeItemData[];
   status: Status;
 }

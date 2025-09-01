@@ -209,7 +209,7 @@ export default function Navbar() {
                     <button
                       onClick={() => {
                         setProfileOpen(false);
-                        router.push("/seller/register");
+                        router.push("/seller/dashboard");
                       }}
                       className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
                     >
@@ -219,7 +219,7 @@ export default function Navbar() {
                     <button
                       onClick={() => {
                         setProfileOpen(false);
-                        router.push("/seller/dashboard");
+                        router.push("/seller/register");
                       }}
                       className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
                     >
