@@ -55,7 +55,7 @@ function ItemData() {
           title1Styles={""}
         />
 
-        <div className="grid 2xl:grid-cols-3 space-x-12 space-y-4   xl:grid-cols-2 lg:grid-cols-2 ml-8  md:ml-11">
+        <div className="grid 2xl:grid-cols-3  gap-x-12 gap-y-4  xl:grid-cols-2 lg:grid-cols-2 ml-8  md:ml-11 pb-4">
           {serchedItems.map((data) => (
             <FoodItemCard key={data.id} items={data} />
           ))}

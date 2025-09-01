@@ -25,7 +25,7 @@ export default function OrdersPage() {
 
   const sections = [
     { title: "Ongoing Orders", status: "ACCEPT" },
-    { title: "Pending Orders", status: "PENDING" },
+    { title: "New Requested Orders", status: "PENDING" },
     { title: "Completed Orders", status: "SUCESS" },
     { title: "Cancelled Orders", status: "CANCEL" },
   ];

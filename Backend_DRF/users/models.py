@@ -10,6 +10,7 @@ class User(AbstractUser):
         BUYER='buyer','Buyer'  #buyer(left side) used for store and Buyer (Right Side)used for display 
         SELLER='seller','Seller'
         MANAGER='manager','Manager'
+        AFS='afs','Applied_for_seller'
         
     class GenderOptions(models.TextChoices):
         MALE = 'male', 'Male'

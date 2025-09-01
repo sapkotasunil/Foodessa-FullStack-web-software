@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
-from users.views import CustomTokenObtainPairView
+from users.views import CustomTokenObtainPairView,userDetailsEdit
 from seller.views import ItemListCreateView,BuyerItemListView,ItemQuantityUpdate
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView,allKitchenDetails,KitchenDetail
@@ -15,6 +15,7 @@ urlpatterns = [
     path('register/',UserRegisterView.as_view()),
     path('token/',  CustomTokenObtainPairView.as_view(), name='token_obtain_pair_that_returns_user_data_with_token'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/<int:pk>/', userDetailsEdit.as_view(), name='Update user data'),  
     path('seller/register/',SellerRegistrationFormView.as_view(),name='seller_register_form'),
     path('seller/items/',ItemListCreateView.as_view(),name="food_item_fetch_and_stored"),
     path('seller/details/',kitchenDetailsView.as_view(),name="kitchen_details_by_seller_fetched"),

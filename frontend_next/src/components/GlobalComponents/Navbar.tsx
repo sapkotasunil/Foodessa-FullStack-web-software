@@ -24,7 +24,7 @@ export default function Navbar() {
 
   const { data } = useAppSelector((store) => store.cart);
   const { user } = useAppSelector((store) => store.auth);
-  const { profile_picture, email } = user;
+  const { profile_picture, email, role } = user;
   const dispatch = useAppDispatch();
 
   const Logged =
@@ -73,6 +73,7 @@ export default function Navbar() {
         last_name: "",
         phone_number: "",
         profile_picture: null,
+        role: "",
       })
     );
     toast.success("Logout successfully...", {
@@ -204,15 +205,27 @@ export default function Navbar() {
                   <p className="text-sm text-gray-500 truncate">{email}</p>
                 </div>
                 <div className="border-b border-gray-100">
-                  <button
-                    onClick={() => {
-                      setProfileOpen(false);
-                      router.push("/seller/register");
-                    }}
-                    className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
-                  >
-                    Become a seller
-                  </button>
+                  {role && role === "seller" ? (
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        router.push("/seller/register");
+                      }}
+                      className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
+                    >
+                      Switch to seller
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        setProfileOpen(false);
+                        router.push("/seller/dashboard");
+                      }}
+                      className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
+                    >
+                      Become a seller
+                    </button>
+                  )}
                 </div>
                 <div>
                   <button

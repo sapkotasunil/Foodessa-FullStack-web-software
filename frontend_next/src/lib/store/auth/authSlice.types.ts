@@ -24,6 +24,7 @@ export interface IUserProfileData {
   first_name: string;
   last_name: string;
   gender: string;
+  role: string;
 }
 
 export interface IAuthInitialState {
