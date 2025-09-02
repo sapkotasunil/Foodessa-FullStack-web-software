@@ -131,7 +131,12 @@ export function UpdateItemsQuantity(
     try {
       const response = await APIWITHTOKEN.patch(
         "seller/item/" + id + "/",
-        data
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       if (response.status === 200) {
         dispatch(setUpdateItem(response.data));

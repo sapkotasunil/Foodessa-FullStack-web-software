@@ -2,7 +2,11 @@
 
 import Loader from "@/components/GlobalComponents/Loders";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { addItemData, setStatus } from "@/lib/store/seller/items/items";
+import {
+  addItemData,
+  setStatus,
+  UpdateItemsQuantity,
+} from "@/lib/store/seller/items/items";
 import { IAdditemData } from "@/lib/store/seller/items/items.slice";
 import { Status } from "@/lib/types/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
@@ -10,16 +14,27 @@ import toast from "react-hot-toast";
 
 interface IcloseMOdel {
   closeModel: () => void;
+  previousData: {} | null;
+  type: string;
 }
 
-const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
+const AddItemModel: React.FC<IcloseMOdel> = ({
+  closeModel,
+  previousData,
+  type,
+}) => {
   const [itemData, setItemData] = useState<IAdditemData>({
-    category: "",
-    item_description: "",
-    item_name: "",
+    //@ts-ignore
+    category: previousData?.category,
+    //@ts-ignore
+    item_description: previousData?.item_description,
+    //@ts-ignore
+    item_name: previousData?.item_name,
     image: null,
-    price: 0,
-    preperiation_time: "",
+    //@ts-ignore
+    price: previousData?.price,
+    //@ts-ignore
+    preperiation_time: previousData?.preperiation_time,
   });
   const [loader, setLoader] = useState(false);
   const { status } = useAppSelector((store) => store.item);
@@ -34,10 +49,39 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
     });
   };
 
+  const updatedData = {
+    category: itemData?.category,
+
+    item_description: itemData?.item_description,
+
+    item_name: itemData?.item_name,
+
+    price: itemData?.price,
+
+    preperiation_time: itemData?.preperiation_time,
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoader(true);
-    dispatch(addItemData(itemData));
+    if (type === "Add Item") {
+      setLoader(true);
+      dispatch(addItemData(itemData));
+    } else {
+      // Construct updatedData including image if available
+      const updatedData: any = {
+        category: itemData.category,
+        item_description: itemData.item_description,
+        item_name: itemData.item_name,
+        price: itemData.price,
+        preperiation_time: itemData.preperiation_time,
+      };
+
+      if (itemData.image) {
+        updatedData.image = itemData.image;
+      }
+      //@ts-ignore
+      dispatch(UpdateItemsQuantity(previousData.id, 0, updatedData));
+    }
   };
 
   useEffect(() => {
@@ -45,9 +89,8 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
       setLoader(false);
     }
     if (status === "success") {
-      toast.success("Item added successfully");
       closeModel();
-      dispatch(setStatus(Status.LOADING))
+      dispatch(setStatus(Status.LOADING));
     }
   }, [status, closeModel]);
 
@@ -147,7 +190,12 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
           {/* Image Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Item Image <span className="text-red-500">*</span>
+              Item Image{" "}
+              {type === "Add Item" ? (
+                <span className="text-red-500">*</span>
+              ) : (
+                <span className="text-red-500"> *optional</span>
+              )}
             </label>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-green-400 transition-colors">
               <input
@@ -157,7 +205,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
                 accept="image/*"
                 className="hidden"
                 id="image-upload"
-                required
+                required={type === "Add Item"}
               />
               <label htmlFor="image-upload" className="cursor-pointer">
                 <svg
@@ -245,7 +293,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({ closeModel }) => {
                   : "bg-green-600 hover:bg-green-700 text-white  shadow-sm hover:shadow-md"
               }`}
             >
-              {loader ? <Loader /> : "Add Item"}
+              {loader ? <Loader /> : type}
             </button>
           </div>
         </form>

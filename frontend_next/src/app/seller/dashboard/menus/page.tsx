@@ -141,7 +141,13 @@ function Menus() {
           </div>
 
           {/* Add Item Modal */}
-          {modelOpen && <AddItemModel closeModel={closeModel} />}
+          {modelOpen && (
+            <AddItemModel
+              closeModel={closeModel}
+              previousData={[]}
+              type="Add Item"
+            />
+          )}
         </main>
       </div>
     </>

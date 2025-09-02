@@ -6,6 +6,7 @@ import { setStatus, UpdateItemsQuantity } from "@/lib/store/seller/items/items";
 import { Status } from "@/lib/types/types";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import AddItemModel from "./AddItemModel";
 
 function ItemCard({ data }: any) {
   const [available, setAvailable] = useState(data.is_available);
@@ -44,8 +45,27 @@ function ItemCard({ data }: any) {
     }, 5000);
   };
 
+  const [modelOpen, setModelOpen] = useState<boolean>(false);
+
+  const openModel = () => {
+    setModelOpen(true);
+    dispatch(setStatus(Status.LOADING));
+  };
+
+  const closeModel = () => {
+    setModelOpen(false);
+  };
+
   return (
     <div className="bg-red-50 rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all hover:shadow-lg my-4">
+      {modelOpen && (
+        <AddItemModel
+          closeModel={closeModel}
+          previousData={data}
+          type="Upadate Item"
+        />
+      )}
+
       <div className="flex flex-col lg:flex-row p-5">
         {/* Image and details */}
         <div className="flex items-center  space-x-4 lg:w-2/5">
@@ -175,7 +195,7 @@ function ItemCard({ data }: any) {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className={`px-4 py-2 max-h-9 rounded-lg text-white font-medium text-sm transition-colors
+                className={`px-4 py-2 max-h-9 cursor-pointer rounded-lg text-white font-medium text-sm transition-colors
                   ${
                     isUpdating
                       ? "bg-gray-400 cursor-not-allowed"
@@ -186,8 +206,9 @@ function ItemCard({ data }: any) {
               </button>
 
               <button
+                onClick={openModel}
                 type="button"
-                className="px-4 py-2 rounded-lg bg-blue-600 text-white font-medium text-sm hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 cursor-pointer rounded-lg bg-blue-600 text-white font-medium text-sm hover:bg-blue-700 transition-colors"
               >
                 Edit Details
               </button>

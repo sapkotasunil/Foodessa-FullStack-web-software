@@ -5,7 +5,7 @@ import {
 } from "../seller/items/items.slice";
 import { Status } from "@/lib/types/types";
 import { AppDispatch } from "../store";
-
+//@ts-ignore
 const cartSliceinitialData: cartdatasInitial = {
   data: [],
   status: Status.LOADING,
