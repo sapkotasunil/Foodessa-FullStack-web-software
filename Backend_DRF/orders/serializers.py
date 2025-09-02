@@ -3,14 +3,32 @@ from .models import Order
 
 class orderSerializer(serializers.ModelSerializer):
     buyer_name=serializers.SerializerMethodField(read_only=True)
+    kitchen_id=serializers.SerializerMethodField(read_only=True)
     kitchen_name=serializers.SerializerMethodField(read_only=True)
     item_image=serializers.SerializerMethodField(read_only=True)
     item_name=serializers.SerializerMethodField(read_only=True)
     
     class Meta:
-        fields='__all__'
+        fields = [
+            "item_image",
+            "kitchen_name",
+            "buyer_name",
+            "items_name",
+            "orderStatus",
+            "deleveryStatus",
+            "paymentStatus",
+            "quantity",
+            "totalPrice",
+            "deliveryAddress",
+            "created_at",
+            "Status_updated_at",
+            "payment",
+            "item_name",
+            "phone_number",
+            "kitchen_id"
+        ]
         model=Order
-        read_only_fields = ['kitchen_name', 'buyer_name', 'items_name']
+        read_only_fields = ['kitchen_name', 'buyer_name', 'items_name','kitchen_id']
         
         
     def get_buyer_name(self,obj):
@@ -18,6 +36,9 @@ class orderSerializer(serializers.ModelSerializer):
     
     def get_kitchen_name(self,obj):
         return obj.kitchen_name.kitchen_name if obj.kitchen_name else None
+    
+    def get_kitchen_id(self,obj):
+        return obj.kitchen_name.id if obj.kitchen_name else None
     
     def get_item_name(self,obj):
         return obj.items_name.item_name if obj.items_name else None
