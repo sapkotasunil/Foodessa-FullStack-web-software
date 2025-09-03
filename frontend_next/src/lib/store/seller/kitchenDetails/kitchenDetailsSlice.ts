@@ -15,6 +15,7 @@ const kitchenDetailsInitial: IkitchenDetailsinitial = {
     kitchen_type: "",
     phone_number: "",
     user: "",
+    kitchen_qr_photo: null,
   },
   status: Status.LOADING,
 };

@@ -45,6 +45,7 @@ export default sellerRegister.reducer;
 
 export function sellerRegisterForm(data: ISellerRegisterFormData) {
   return async function sellerRegisterFormThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
     try {
       const response = await APIWITHTOKEN.post("/seller/register/", data, {
         headers: {
@@ -54,6 +55,31 @@ export function sellerRegisterForm(data: ISellerRegisterFormData) {
       if (response.status === 201) {
         dispatch(setStatus(Status.SUCCESS));
         dispatch(setSellerRegisterFormData(data));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error) {
+      dispatch(setStatus(Status.ERROR));
+      console.log(error);
+    }
+  };
+}
+
+export function editedSellerData(id: number, data: any) {
+  return async function editedSellerDataThunk(dispatch: AppDispatch) {
+    try {
+      const response = await APIWITHTOKEN.patch(
+        `/update_kitchen/${id}/`,
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(setSellerRegisterFormData(response.data));
       } else {
         dispatch(setStatus(Status.ERROR));
       }

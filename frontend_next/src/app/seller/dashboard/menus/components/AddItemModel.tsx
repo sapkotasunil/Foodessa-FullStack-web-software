@@ -49,18 +49,6 @@ const AddItemModel: React.FC<IcloseMOdel> = ({
     });
   };
 
-  const updatedData = {
-    category: itemData?.category,
-
-    item_description: itemData?.item_description,
-
-    item_name: itemData?.item_name,
-
-    price: itemData?.price,
-
-    preperiation_time: itemData?.preperiation_time,
-  };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (type === "Add Item") {

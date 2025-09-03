@@ -102,9 +102,12 @@ export default function KitchenDashboard({ kitchen }: any) {
               </div>
             </div>
             <div className=" text-orange-600rounded-lg shadow-md">
-              <button className=" bg-blue-600 hover:bg-blue-700 cursor-pointer px-2 py-1 font-semibold rounded text-white ">
+              <Link
+                href={"/seller/register/update"}
+                className=" bg-blue-600 hover:bg-blue-700 cursor-pointer px-2 py-1 font-semibold rounded text-white "
+              >
                 Edit Kitchen Details
-              </button>
+              </Link>
             </div>
           </div>
         </div>

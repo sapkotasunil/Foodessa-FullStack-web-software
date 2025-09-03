@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getKitchenDetails } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
 import { useEffect } from "react";
 import KitchenDetailsBanner from "./dashboard Component/KitchenDetailsBanner";
-import WelcomeBanner from "./dashboard Component/WelcomeBanner";
 
 function dashboard() {
   const dispatch = useAppDispatch();
