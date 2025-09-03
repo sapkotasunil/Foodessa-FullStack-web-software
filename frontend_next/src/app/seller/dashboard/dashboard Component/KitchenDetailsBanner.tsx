@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getSellerItemsData } from "@/lib/store/seller/items/items";
 import { useState, useEffect } from "react";
 import { getAllOrdersDataBySeller } from "@/lib/store/orders/orders.slice";
+import Link from "next/link";
 
 export default function KitchenDashboard({ kitchen }: any) {
   const dispatch = useAppDispatch();
@@ -100,8 +101,10 @@ export default function KitchenDashboard({ kitchen }: any) {
                 <p className="text-orange-100">{kitchen.kitchen_description}</p>
               </div>
             </div>
-            <div className="bg-white text-orange-600 px-4 py-2 rounded-lg shadow-md">
-              <p className="font-semibold">Kitchen by Foodessa</p>
+            <div className=" text-orange-600rounded-lg shadow-md">
+              <button className=" bg-blue-600 hover:bg-blue-700 cursor-pointer px-2 py-1 font-semibold rounded text-white ">
+                Edit Kitchen Details
+              </button>
             </div>
           </div>
         </div>
@@ -188,27 +191,77 @@ export default function KitchenDashboard({ kitchen }: any) {
             Popular Menu Items
           </h2>
           <div className="space-y-4">
-            {TopSellingItem.map((item, index) => (
-              <div
-                key={index}
-                className=" flex justify-between p-3 bg-gray-50 rounded-lg"
-              >
-                <span className="font-medium">{item.item_name}</span>
-                <div className="grid grid-cols-2">
-                  <span className="bg-orange-100 w-20 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
-                    {item.sold_quantity} sold
-                  </span>
-                  <span className="bg-green-700 w-30 text-white  px-3 py-1 rounded-full text-sm font-semibold">
-                    Rs {item.totalRevenue}
-                  </span>
+            {TopSellingItem.length !== 0 ? (
+              TopSellingItem.map((item, index) => (
+                <div
+                  key={index}
+                  className=" flex justify-between p-3 bg-gray-50 rounded-lg"
+                >
+                  <span className="font-medium">{item.item_name}</span>
+                  <div className="grid grid-cols-2">
+                    <span className="bg-orange-100 w-20 text-orange-800 px-3 py-1 rounded-full text-sm font-semibold">
+                      {item.sold_quantity} sold
+                    </span>
+                    <span className="bg-green-700 w-30 text-white  px-3 py-1 rounded-full text-sm font-semibold">
+                      Rs {item.totalRevenue}
+                    </span>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+                <div className="text-gray-400 mb-3">
+                  <svg
+                    className="w-16 h-16 mx-auto"
+                    fill="none"
+                    stroke="red"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-500 mb-1">
+                  No Any menu available
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Please add a item to View Reports
+                </p>
               </div>
-            ))}
+            )}
           </div>
           <div className="mt-6 text-center">
-            <button className="bg-orange-500 cursor-pointer hover:bg-orange-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
-              View Full Menu &amp; Analytics
-            </button>
+            {TopSellingItem.length !== 0 && (
+              <div className="bg-white rounded-xl shadow-sm p-8 text-center">
+                <div className="text-gray-400 mb-3">
+                  <svg
+                    className="w-16 h-16 mx-auto"
+                    fill="none"
+                    stroke="red"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium text-gray-500 mb-1">
+                  No Any Items In cart
+                </h3>
+                <p className="text-gray-400 text-sm">
+                  Please add a item to orders food
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

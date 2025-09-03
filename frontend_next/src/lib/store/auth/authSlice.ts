@@ -8,6 +8,7 @@ import {
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import API from "@/lib/http/API";
 import { AppDispatch } from "../store";
+import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 
 const authInitialState: IAuthInitialState = {
   token: "",
@@ -42,10 +43,14 @@ const authSlice = createSlice({
     setErrors(state: IAuthInitialState, action: PayloadAction<any>) {
       state.errors = action.payload;
     },
+    setUpdatedUserData(state: IAuthInitialState, action: PayloadAction<any>) {
+      state.user.role = action.payload.role;
+    },
   },
 });
 
-export const { setStatus, setToken, setUser, setErrors } = authSlice.actions;
+export const { setStatus, setToken, setUser, setErrors, setUpdatedUserData } =
+  authSlice.actions;
 export default authSlice.reducer;
 
 export function registerUser(data: IUserRegisterData) {
@@ -83,6 +88,26 @@ export function loginUser(data: IUserLoginData) {
         localStorage.setItem("access", response.data.access);
         localStorage.setItem("refresh", response.data.refresh);
         dispatch(setUser(response.data.user));
+      } else {
+        dispatch(setStatus(Status.ERROR));
+      }
+    } catch (error: any) {
+      dispatch(setStatus(Status.ERROR));
+      dispatch(setErrors(error?.response?.data));
+    }
+  };
+}
+
+export function updateUser(id: number, data: {}) {
+  return async function updateUserThunk(dispatch: AppDispatch) {
+    dispatch(setStatus(Status.LOADING));
+    dispatch(setErrors({}));
+
+    try {
+      const response = await APIWITHTOKEN.patch(`/user/${id}/`, data);
+      if (response.status === 200) {
+        dispatch(setStatus(Status.SUCCESS));
+        dispatch(setUpdatedUserData(response.data));
       } else {
         dispatch(setStatus(Status.ERROR));
       }

@@ -36,3 +36,8 @@ class KitchenDetail(generics.RetrieveAPIView):
     serializer_class=kitchenDetailsViewserializer
     permission_classes=[AllowAny]
     queryset=SellerRegistrationForm.objects.all()
+    
+class KitchenDetailsEdit(generics.RetrieveUpdateAPIView):
+    serializer_class=kitchenDetailsViewserializer
+    permission_classes=[IsAuthenticated]
+    queryset=SellerRegistrationForm.objects.all()

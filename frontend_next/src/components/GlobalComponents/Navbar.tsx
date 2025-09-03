@@ -219,7 +219,11 @@ export default function Navbar() {
                     <button
                       onClick={() => {
                         setProfileOpen(false);
-                        router.push("/seller/register");
+                        router.push(
+                          role === "afs"
+                            ? "/seller/register/applied"
+                            : "/seller/register/"
+                        );
                       }}
                       className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
                     >

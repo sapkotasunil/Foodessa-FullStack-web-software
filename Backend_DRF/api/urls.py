@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 from users.views import CustomTokenObtainPairView,userDetailsEdit
 from seller.views import ItemListCreateView,BuyerItemListView,ItemQuantityUpdate
 from seller_registration_data.views import SellerRegistrationFormView
-from seller_registration_data.views import kitchenDetailsView,allKitchenDetails,KitchenDetail
+from seller_registration_data.views import kitchenDetailsView,allKitchenDetails,KitchenDetail,KitchenDetailsEdit
 from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller,OrderStatus
 
 urlpatterns = [
@@ -26,7 +26,8 @@ urlpatterns = [
     path('seller/order/<int:pk>/', OrderStatus.as_view(), name='Updating Order Status'),
     path('seller/item/<int:pk>/', ItemQuantityUpdate.as_view(), name='Updating Item Quantity and is_available or not'),
     path('kitchens/', allKitchenDetails.as_view(), name='Fetch all kitchens data'),
-    path('kitchen/<int:pk>/',KitchenDetail.as_view())
+    path('kitchen/<int:pk>/',KitchenDetail.as_view(),name="single kitchen details"),
+    path('update_kitchen/<int:pk>/',KitchenDetailsEdit.as_view(),name="single kitchen details")
 
     
 ]

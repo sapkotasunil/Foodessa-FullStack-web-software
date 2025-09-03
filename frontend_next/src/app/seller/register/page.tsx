@@ -3,10 +3,12 @@
 import Loader from "@/components/GlobalComponents/Loders";
 import Navbar from "@/components/GlobalComponents/Navbar";
 import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
+import { updateUser } from "@/lib/store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { setStatus } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
 import { sellerRegisterForm } from "@/lib/store/seller/sellerRegisterSlice";
 import { Status } from "@/lib/types/types";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useEffect, useState } from "react";
 
 export default function SellerRegistrationForm() {
@@ -21,9 +23,11 @@ export default function SellerRegistrationForm() {
     payment_method: "both", // cash, online, both
   });
   const [loader, setLoader] = useState(false);
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((store) => store.seller);
+  const { user } = useAppSelector((store) => store.auth);
 
   const handleChange = (e: any) => {
     const { name, value, files } = e.target;
@@ -36,9 +40,11 @@ export default function SellerRegistrationForm() {
     });
   };
 
+  console.log(user.id);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Submitting form:", formData);
+    dispatch(updateUser(user.id, { role: "afs" }));
     dispatch(sellerRegisterForm(formData));
     setLoader(true);
   };
@@ -49,7 +55,9 @@ export default function SellerRegistrationForm() {
     }
     if (status === "success") {
       SucessfulModel("Registered successfully", "Please Wait for the approval");
+
       dispatch(setStatus(Status.LOADING));
+      router.push("/seller/register/applied");
     }
   }, [status, dispatch]);
 
@@ -294,10 +302,10 @@ export default function SellerRegistrationForm() {
                 <button
                   type="submit"
                   disabled={loader}
-                  className={`w-full py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center ${
+                  className={`w-full cursor-pointer py-3 px-6 rounded-lg font-semibold transition-colors flex items-center justify-center ${
                     loader
                       ? "bg-gray-400 cursor-not-allowed text-white"
-                      : "bg-green-600 hover:bg-green-700 text-white shadow-md hover:shadow-lg"
+                      : "bg-green-600 hover:bg-green-700 text-white cursor-pointer shadow-md hover:shadow-lg"
                   }`}
                 >
                   {loader ? <Loader /> : "Submit Registration"}
