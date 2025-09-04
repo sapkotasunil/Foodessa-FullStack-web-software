@@ -138,32 +138,36 @@ export default function KitchenDetailsPage() {
                   d="M10 19l-7-7m0 0l7-7m-7 7h18"
                 />
               </svg>
-              Back to Kitchens
+              Back
             </button>
           </div>
         </div>
 
         {/* Kitchen Header */}
         <div className="relative h-64 md:h-80 overflow-hidden">
-          {kitchen?.kitchen_profile_photo ? (
-            <Image
-              src={kitchen?.kitchen_profile_photo}
-              alt={kitchen?.kitchen_name}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-3xl font-bold">
-                    {kitchen?.kitchen_name}
-                  </span>
+          {
+            //@ts-ignore
+            kitchen?.kitchen_profile_photo_url ? (
+              <Image
+                //@ts-ignore
+                src={kitchen?.kitchen_profile_photo_url}
+                alt={kitchen?.kitchen_name}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-green-100 to-blue-100 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white text-3xl font-bold">
+                      {kitchen?.kitchen_name}
+                    </span>
+                  </div>
+                  <p className="text-gray-600">No image available</p>
                 </div>
-                <p className="text-gray-600">No image available</p>
               </div>
-            </div>
-          )}
+            )
+          }
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/40"></div>

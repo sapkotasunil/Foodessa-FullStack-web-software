@@ -26,10 +26,16 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
               className="h-8 w-8 rounded-full"
               alt="User"
               src={
-                kitchenDetails.kitchen_profile_photo
-                  ? typeof kitchenDetails.kitchen_profile_photo === "string"
-                    ? kitchenDetails.kitchen_profile_photo
-                    : URL.createObjectURL(kitchenDetails.kitchen_profile_photo)
+                //@ts-ignore
+                kitchenDetails.kitchen_profile_photo_url
+                  ? //@ts-ignore
+                    typeof kitchenDetails.kitchen_profile_photo_url === "string"
+                    ? //@ts-ignore
+                      kitchenDetails.kitchen_profile_photo_url
+                    : URL.createObjectURL(
+                        //@ts-ignore
+                        kitchenDetails.kitchen_profile_photo_url
+                      )
                   : "/placeholder.png"
               }
             />

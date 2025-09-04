@@ -40,7 +40,7 @@ function KitchenDetailsCards({ kitchen }: any) {
       <div className="relative h-48 overflow-hidden">
         {kitchen.kitchen_profile_photo && !imageError ? (
           <Image
-            src={kitchen.kitchen_profile_photo}
+            src={kitchen.kitchen_profile_photo_url}
             alt={kitchen.kitchen_name}
             fill
             className="object-cover transition-transform duration-300 hover:scale-105"

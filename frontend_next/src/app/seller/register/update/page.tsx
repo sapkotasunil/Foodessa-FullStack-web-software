@@ -57,9 +57,6 @@ export default function SellerRegistrationForm() {
       kitchen_address: formData.kitchen_address,
       phone_number: formData.phone_number,
       kitchen_type: formData.kitchen_type,
-      kitchen_profile_photo: null,
-      kitchen_qr_photo: null,
-      payment_method: formData.payment_method,
     };
 
     if (formData.kitchen_profile_photo != null) {

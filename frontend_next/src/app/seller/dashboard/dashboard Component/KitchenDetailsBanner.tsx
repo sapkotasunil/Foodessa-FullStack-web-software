@@ -90,7 +90,7 @@ export default function KitchenDashboard({ kitchen }: any) {
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-4 mb-4 md:mb-0">
               <img
-                src={kitchen.kitchen_profile_photo}
+                src={kitchen.kitchen_profile_photo_url}
                 alt={kitchen.kitchen_name}
                 className="w-16 h-16 rounded-full border-4 border-white shadow-md"
               />
