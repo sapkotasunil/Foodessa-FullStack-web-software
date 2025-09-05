@@ -10,6 +10,7 @@ class orderSerializer(serializers.ModelSerializer):
     
     class Meta:
         fields = [
+            "id",
             "item_image",
             "kitchen_name",
             "buyer_name",

@@ -39,6 +39,8 @@ function OrderAcceptedCard({ item }: any) {
     }
   }, [orderStatus, deliveryStatus, item.orderStatus, item.deleveryStatus]);
 
+  console.log(item);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 

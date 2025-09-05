@@ -270,7 +270,7 @@ export default function ItemsDashboard({ items }: any) {
                 Avg. Revenue per item
               </p>
               <p className="text-2xl font-bold text-gray-800">
-                Rs {overallStats.averageRevenue}
+                Rs {overallStats.averageRevenue.toFixed(2)}
               </p>
             </div>
           </div>

@@ -25,6 +25,8 @@ function SellerOrdersData() {
 
   const { ordered_data } = useAppSelector((store) => store.orders);
   console.log(ordered_data);
+
+  console.log(ordered_data);
   const pendingOrder = ordered_data.filter(
     (item) => item.orderStatus === "PENDING"
   );
