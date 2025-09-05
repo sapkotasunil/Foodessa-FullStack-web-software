@@ -239,7 +239,7 @@ export default function KitchenDashboard({ kitchen }: any) {
             )}
           </div>
           <div className="mt-6 text-center">
-            {TopSellingItem.length !== 0 && (
+            {TopSellingItem.length === 0 && (
               <div className="bg-white rounded-xl shadow-sm p-8 text-center">
                 <div className="text-gray-400 mb-3">
                   <svg

@@ -13,6 +13,7 @@ class kitchenDetailsViewserializer(serializers.ModelSerializer):
     kitchen_profile_photo_url = serializers.SerializerMethodField(read_only=True)
     user = serializers.SerializerMethodField()
     user_role = serializers.SerializerMethodField(read_only=True)
+    user_id = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = SellerRegistrationForm
@@ -29,6 +30,7 @@ class kitchenDetailsViewserializer(serializers.ModelSerializer):
             "user",
             "user_role",
             "kitchen_qr_photo",
+            "user_id"
         ]
 
     def get_kitchen_profile_photo_url(self, obj):
@@ -43,3 +45,6 @@ class kitchenDetailsViewserializer(serializers.ModelSerializer):
 
     def get_user_role(self, obj):
         return obj.user.role
+    
+    def get_user_id(self, obj):
+        return obj.user.id

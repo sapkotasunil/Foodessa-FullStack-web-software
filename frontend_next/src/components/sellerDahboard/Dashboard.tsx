@@ -62,7 +62,7 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
 
             {/* Dropdown trigger */}
             <button
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-gray-500 cursor-pointer hover:text-gray-700 focus:outline-none"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               <svg
@@ -98,30 +98,29 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
                 onClick={() =>
                   router.push(`/buyer/kitchens/${kitchenDetails.id}`)
                 }
-                className="block px-2 py-2 text-sm text-gray-700 font-medium hover:bg-gray-100"
+                className="block px-2 py-2 border-t text-sm text-start cursor-pointer text-gray-700 font-medium hover:bg-gray-100 w-full"
               >
                 <i className="fas fa-user-circle mr-2 font-medium"></i>Your
                 Profile
               </button>
-              <button className="block px-2 py-2 border-t text-sm text-gray-700 font-medium hover:bg-gray-100">
+              <Link
+                href={"/seller/register/update"}
+                className="block px-2 py-2 border-t text-sm text-gray-700 font-medium hover:bg-gray-100"
+              >
                 <i className="fas fa-cog mr-2"></i>Edit kitchen details
-              </button>
+              </Link>
 
               <div className="border-t border-gray-100 my-1"></div>
 
               {/* Switch to Seller button */}
-              <button className="w-full text-left text-gray-700 block px-2 py-2 text-sm hover:bg-gray-100 font-medium">
+              <Link
+                href={"/buyer/home"}
+                className="w-full text-left text-gray-700 block px-2 py-2 text-sm hover:bg-gray-100 font-medium"
+              >
                 <i className="fas fa-store mr-2"></i>Switch to Seller
-              </button>
+              </Link>
 
               <div className="border-t border-gray-100 my-1"></div>
-
-              <Link
-                href="#"
-                className="block px-2 py-2 text-sm text-gray-700 font-medium hover:bg-gray-100"
-              >
-                <i className="fas fa-sign-out-alt mr-2"></i>Sign out
-              </Link>
             </div>
           )}
         </div>

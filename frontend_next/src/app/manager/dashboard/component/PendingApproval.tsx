@@ -4,18 +4,19 @@ import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 import { updateUser } from "@/lib/store/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 function PendingApproval({ seller, formatDate, type }: any) {
-  const { user } = useAppSelector((store) => store.auth);
-  const dispatch = useAppDispatch;
+  const [types, settypes] = useState(type);
   const handleAccept = async () => {
     try {
-      const response = await APIWITHTOKEN.patch(`/user/${user.id}/`, {
+      const response = await APIWITHTOKEN.patch(`/user/${seller.user_id}/`, {
         role: "seller",
       });
       if (response.status === 200) {
         toast.success("Seller Approved Sucessfully ");
+        settypes("seller");
       } else {
         alert("something wrong right now! please wait");
       }
@@ -44,7 +45,7 @@ function PendingApproval({ seller, formatDate, type }: any) {
                 className={`px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800                      "pending"
                     `}
               >
-                {type === "pending" ? "Pending Approval" : "Accepted kitchen"}
+                {types === "pending" ? "Pending Approval" : "Accepted kitchen"}
               </span>
             </div>
           </div>
@@ -115,7 +116,7 @@ function PendingApproval({ seller, formatDate, type }: any) {
             </div>
 
             <div className="flex space-x-3">
-              {type === "pending" && (
+              {types === "pending" && (
                 <>
                   <button
                     onClick={handleAccept}

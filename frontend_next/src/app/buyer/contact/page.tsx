@@ -3,6 +3,8 @@
 
 import { useState } from "react";
 import Head from "next/head";
+import API from "@/lib/http/API";
+import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -20,11 +22,22 @@ export default function ContactPage() {
     });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // Handle form submission here
+    try {
+      const response = await API.post("/feedback/", formData);
+      if (response.status === 201) {
+        SucessfulModel(
+          "Thank you for your feedback!",
+          "Our team is looking into it"
+        );
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (error) {
+      alert("Something went wrong");
+    }
     console.log("Form submitted:", formData);
-    // You would typically send this data to your backend or email service
   };
 
   return (

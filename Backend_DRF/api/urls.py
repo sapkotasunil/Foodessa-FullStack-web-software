@@ -10,6 +10,7 @@ from seller.views import ItemListCreateView,BuyerItemListView,ItemQuantityUpdate
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView,allKitchenDetails,KitchenDetail,KitchenDetailsEdit
 from orders.views import CreateOrderView,FetchOrderByBuyer,FetchOrderBySeller,OrderStatus
+from feedback.views import FeedbackForm
 
 urlpatterns = [
     path('register/',UserRegisterView.as_view()),
@@ -27,7 +28,8 @@ urlpatterns = [
     path('seller/item/<int:pk>/', ItemQuantityUpdate.as_view(), name='Updating Item Quantity and is_available or not'),
     path('kitchens/', allKitchenDetails.as_view(), name='Fetch all kitchens data'),
     path('kitchen/<int:pk>/',KitchenDetail.as_view(),name="single kitchen details"),
-    path('update_kitchen/<int:pk>/',KitchenDetailsEdit.as_view(),name="single kitchen details")
+    path('update_kitchen/<int:pk>/',KitchenDetailsEdit.as_view(),name="single kitchen details"),
+    path('feedback/',FeedbackForm.as_view(),name="add and view feedback")
 
     
 ]
