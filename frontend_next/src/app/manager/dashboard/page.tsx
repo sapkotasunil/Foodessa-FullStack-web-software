@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import API from "@/lib/http/API";
 import PendingApproval from "./component/PendingApproval";
+import { useAppSelector } from "@/lib/store/hooks";
+import { useRouter } from "next/navigation";
 
 type Kitchen = {
   id: number;
@@ -18,34 +20,9 @@ type Kitchen = {
   total_orders?: number;
 };
 
-const mockFeedback = [
-  {
-    id: 1,
-    name: "Ramesh Kumar",
-    email: "ramesh@example.com",
-    phone: "9812345678",
-    subject: "Excellent Service",
-    message:
-      "The food was delicious and delivery was on time. Will order again!",
-    rating: 5,
-    created_at: "2025-09-03T14:25:36.123456+05:45",
-  },
-  {
-    id: 2,
-    name: "Sita Sharma",
-    email: "sita@example.com",
-    phone: "9861234567",
-    subject: "Food Quality Issue",
-    message:
-      "The chicken momo was undercooked. Please improve quality control.",
-    rating: 2,
-    created_at: "2025-09-02T18:40:22.654321+05:45",
-  },
-];
-
 function Dashboard() {
   const [kitchensData, setKitchensData] = useState<Kitchen[]>([]);
-  const [feedback] = useState(mockFeedback);
+  const [feedback, setFeedback] = useState();
   const [activeTab, setActiveTab] = useState<"afs" | "approved" | "feedback">(
     "afs"
   );
@@ -65,8 +42,20 @@ function Dashboard() {
     }
   };
 
+  const fetchFeedback = async () => {
+    try {
+      const response = await API.get("/feedback/");
+      if (response.status === 200) {
+        setFeedback(response.data);
+      }
+    } catch (error) {
+      alert("Something went wrong! Please try later.");
+    }
+  };
+
   useEffect(() => {
     fetchKitchens();
+    fetchFeedback();
   }, []);
 
   // Derive lists without setting state during render
@@ -97,19 +86,13 @@ function Dashboard() {
       minute: "2-digit",
     });
   };
+  const router = useRouter();
 
-  const getStatusColor = (status: "afs" | "approved" | "rejected" | string) => {
-    switch (status) {
-      case "afs":
-        return "";
-      case "approved":
-        return "bg-green-100 text-green-800";
-      case "rejected":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
+  const { user } = useAppSelector((store) => store.auth);
+
+  if (user.role !== "manager") {
+    router.push("/buyer/home");
+  }
 
   return (
     <>
@@ -164,7 +147,13 @@ function Dashboard() {
                 }`}
                 onClick={() => setActiveTab("feedback")}
               >
-                Customer Feedback ({feedback.length})
+                Customer Feedback (
+                {
+                  //@ts-ignore
+
+                  feedback?.length
+                }
+                )
               </button>
             </div>
           </div>
@@ -248,65 +237,73 @@ function Dashboard() {
                 <h2 className="text-xl font-semibold text-gray-800 mb-4">
                   Customer Feedback
                 </h2>
-                {feedback.length === 0 ? (
-                  <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                    <div className="text-gray-400 text-5xl mb-4">💬</div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                      No feedback yet
-                    </h3>
-                    <p className="text-gray-500">
-                      Customer feedback will appear here.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {feedback.map((item) => (
-                      <div
-                        key={item.id}
-                        className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
-                      >
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="font-semibold text-gray-800">
-                              {item.name}
-                            </h3>
-                            <p className="text-gray-600 text-sm">
-                              {item.email} • {item.phone}
-                            </p>
-                          </div>
-                          <div className="flex items-center">
-                            {item.rating && (
-                              <div className="flex items-center mr-3">
-                                {[...Array(5)].map((_, i) => (
-                                  <svg
-                                    key={i}
-                                    className={`w-4 h-4 ${
-                                      i < item.rating
-                                        ? "text-amber-500"
-                                        : "text-gray-300"
-                                    }`}
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                  >
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                  </svg>
-                                ))}
-                              </div>
-                            )}
-                            <span className="text-sm text-gray-500">
-                              {formatDate(item.created_at)}
-                            </span>
-                          </div>
-                        </div>
+                {
+                  //@ts-ignore
+                  feedback?.length === 0 ? (
+                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                      <div className="text-gray-400 text-5xl mb-4">💬</div>
+                      <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        No feedback yet
+                      </h3>
+                      <p className="text-gray-500">
+                        Customer feedback will appear here.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {
+                        //@ts-ignore
 
-                        <h4 className="font-medium text-gray-800 mb-2">
-                          {item.subject}
-                        </h4>
-                        <p className="text-gray-600">{item.message}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                        feedback?.map((item) => (
+                          <div
+                            key={item.id}
+                            className="bg-white rounded-lg shadow-sm p-6 border border-gray-200"
+                          >
+                            <div className="flex justify-between items-start mb-4">
+                              <div>
+                                <h3 className="font-semibold text-gray-800">
+                                  {item.name}
+                                </h3>
+                                <p className="text-gray-600 text-sm">
+                                  {item.email} • {item.phone}
+                                </p>
+                              </div>
+                              <div className="flex items-center">
+                                {item.rating && (
+                                  <div className="flex items-center mr-3">
+                                    {[...Array(5)].map((_, i) => (
+                                      <svg
+                                        key={i}
+                                        className={`w-4 h-4 ${
+                                          i < item.rating
+                                            ? "text-amber-500"
+                                            : "text-gray-300"
+                                        }`}
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                      >
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                      </svg>
+                                    ))}
+                                  </div>
+                                )}
+                                <span className="text-sm text-gray-500">
+                                  {formatDate(item.created_at)}
+                                </span>
+                              </div>
+                            </div>
+
+                            <h4 className="font-medium text-gray-600 mb-2">
+                              <span className="text-black">Subject:</span>{" "}
+                              {item.subject}
+                            </h4>
+                            <p className="text-gray-600">{item.message}</p>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )
+                }
               </div>
             )}
           </div>

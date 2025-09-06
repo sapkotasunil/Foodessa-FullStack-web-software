@@ -31,6 +31,13 @@ export default function ContactPage() {
           "Thank you for your feedback!",
           "Our team is looking into it"
         );
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
       } else {
         alert("Something went wrong");
       }
@@ -177,7 +184,7 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
+                  className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-md hover:shadow-lg"
                 >
                   Send Message
                 </button>
