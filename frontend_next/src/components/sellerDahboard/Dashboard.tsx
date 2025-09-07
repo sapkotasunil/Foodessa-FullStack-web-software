@@ -117,7 +117,7 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
                 href={"/buyer/home"}
                 className="w-full text-left text-gray-700 block px-2 py-2 text-sm hover:bg-gray-100 font-medium"
               >
-                <i className="fas fa-store mr-2"></i>Switch to Seller
+                <i className="fas fa-store mr-2"></i>Switch to Buyer
               </Link>
 
               <div className="border-t border-gray-100 my-1"></div>
