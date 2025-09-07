@@ -6,6 +6,7 @@ import API from "@/lib/http/API";
 import PendingApproval from "./component/PendingApproval";
 import { useAppSelector } from "@/lib/store/hooks";
 import { useRouter } from "next/navigation";
+import ProtectedManager from "./component/protectedManager";
 
 type Kitchen = {
   id: number;
@@ -90,8 +91,28 @@ function Dashboard() {
 
   const { user } = useAppSelector((store) => store.auth);
 
-  if (user.role !== "manager") {
-    router.push("/buyer/home");
+  const [checking, setChecking] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      // still checking auth
+      setChecking(true);
+      return;
+    }
+
+    if (user.role !== "manager") {
+      router.push("/buyer/home");
+    } else {
+      setChecking(false);
+    }
+  }, [user, router]);
+
+  if (checking) {
+    return (
+      <h1 className="text-2xl w-full mx-auto mt-20 h-screen  text-black font-semibold flex items-center justify-center">
+        Checking authorization...
+      </h1>
+    );
   }
 
   return (
