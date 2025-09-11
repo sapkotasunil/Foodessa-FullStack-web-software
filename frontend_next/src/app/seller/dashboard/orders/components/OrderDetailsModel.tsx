@@ -10,12 +10,11 @@ function OrderDetailsModel({
   closeModel,
   itemsData,
   availableStockOfOrderItems,
+  type,
 }: any) {
   const dispatch = useAppDispatch();
   const [showReceipt, setShowReceipt] = useState(false);
   const [stockNotAvailable, setstockNotAvailable] = useState(false);
-
-  console.log(typeof availableStockOfOrderItems?.available_quantity);
 
   const onAccept = () => {
     if (
@@ -367,7 +366,7 @@ function OrderDetailsModel({
           </div>
 
           {/* Actions */}
-          {itemsData.orderStatus === "PENDING" && (
+          {itemsData.orderStatus === "PENDING" && type !== "BuyerSide" && (
             <div className="w-full">
               <div className="flex justify-end gap-4 mt-6 pt-6 border-t border-gray-200">
                 <button

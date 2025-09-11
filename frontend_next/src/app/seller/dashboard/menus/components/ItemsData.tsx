@@ -13,21 +13,16 @@ function ItemsData({ searched, data }: any) {
     item.item_name.toLowerCase().includes(searched.toLowerCase())
   );
 
-  const { status } = useAppSelector((store) => store.item);
+  const { saveStatus } = useAppSelector((store) => store.item);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (status !== Status.LOADING) {
-      dispatch(setStatus(Status.LOADING));
+    if (saveStatus === Status.SUCCESS) {
+      toast.success("Item saved successfully");
+      dispatch(setStatus(Status.IDLE)); // prevents re-trigger
     }
-    if (status === Status.SUCCESS) {
-      toast.success("Item update Sucessfully");
+  }, [saveStatus]);
 
-      dispatch(setStatus(Status.LOADING));
-    } else {
-      dispatch(setStatus(Status.LOADING));
-    }
-  }, [status]);
   return (
     <>
       <div className="">

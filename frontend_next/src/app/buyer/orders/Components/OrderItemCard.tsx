@@ -46,7 +46,11 @@ function OrderItemCard({ order }: any) {
       className="bg-[#f4fbf2] border-t-2 border-gray-400 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 p-1"
     >
       {modelOpen && (
-        <OrderDetailsModel itemsData={order} closeModel={closeModel} />
+        <OrderDetailsModel
+          itemsData={order}
+          closeModel={closeModel}
+          type={"BuyerSide"}
+        />
       )}
       <img
         src={

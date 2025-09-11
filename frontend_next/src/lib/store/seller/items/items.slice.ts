@@ -24,6 +24,7 @@ export interface IitemInitialData {
   error: {} | null;
   data: IresposeItemData[];
   status: Status;
+  saveStatus: Status;
 }
 
 export interface IItemQuantity {

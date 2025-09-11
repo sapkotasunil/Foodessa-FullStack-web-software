@@ -4,13 +4,13 @@ import Loader from "@/components/GlobalComponents/Loders";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import {
   addItemData,
+  setSaveStatus,
   setStatus,
   UpdateItemsQuantity,
 } from "@/lib/store/seller/items/items";
 import { IAdditemData } from "@/lib/store/seller/items/items.slice";
 import { Status } from "@/lib/types/types";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 interface IcloseMOdel {
   closeModel: () => void;
@@ -37,7 +37,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({
     preperiation_time: previousData?.preperiation_time,
   });
   const [loader, setLoader] = useState(false);
-  const { status } = useAppSelector((store) => store.item);
+  const { saveStatus } = useAppSelector((store) => store.item);
 
   const dispatch = useAppDispatch();
 
@@ -73,14 +73,14 @@ const AddItemModel: React.FC<IcloseMOdel> = ({
   };
 
   useEffect(() => {
-    if (status !== "loading") {
+    if (saveStatus !== "loading") {
       setLoader(false);
     }
-    if (status === "success") {
+    if (saveStatus === "success") {
       closeModel();
-      dispatch(setStatus(Status.LOADING));
+      dispatch(setSaveStatus(Status.LOADING));
     }
-  }, [status, closeModel]);
+  }, [saveStatus, closeModel]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6 bg-black/50 backdrop-blur-sm">
@@ -89,7 +89,9 @@ const AddItemModel: React.FC<IcloseMOdel> = ({
         {/* Header */}
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-white">Add New Menu Item</h2>
+            <h2 className="text-xl font-bold text-white">
+              {type === "Add Item" ? "Add" : "Update"} Menu Item
+            </h2>
             <button
               onClick={closeModel}
               className="text-white cursor-pointer hover:text-gray-200 transition-colors p-1 rounded-full hover:bg-white/10"

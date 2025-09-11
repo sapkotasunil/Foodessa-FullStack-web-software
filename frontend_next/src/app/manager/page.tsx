@@ -46,18 +46,14 @@ export default function LoginPage() {
   if (user?.role) {
     if (user.role === "manager") {
       router.push("/manager/dashboard");
-    } else if (user.role === "seller") {
-      router.push("/seller/dashboard");
-    } else if (user.role === "buyer") {
-      router.push("/buyer/home");
     }
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-6">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Manager Login
+    <div className="flex items-center justify-center min-h-screen bg-green-50  ">
+      <div className="w-full max-w-md bg-white shadow-xl shadow-green-400 rounded-xl p-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6 border-b-2">
+          Foodessa Manager Login
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -100,7 +96,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loader}
-            className={`w-full py-2 rounded-lg text-white font-medium transition-colors ${
+            className={`w-full py-2 cursor-pointer rounded-lg text-white font-medium transition-colors ${
               loader
                 ? "bg-gray-400 cursor-not-allowed"
                 : "bg-green-600 hover:bg-green-700"

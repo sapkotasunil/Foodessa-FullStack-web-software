@@ -12,8 +12,9 @@ import API from "@/lib/http/API";
 
 const itemsIntitialState: IitemInitialData = {
   data: [],
-  status: Status.LOADING,
+  status: Status.IDLE,
   error: {},
+  saveStatus: Status.IDLE,
 };
 
 const itemsSlice = createSlice({
@@ -53,6 +54,10 @@ const itemsSlice = createSlice({
     ) {
       state.data = action.payload;
     },
+
+    setSaveStatus(state: IitemInitialData, action: PayloadAction<Status>) {
+      state.saveStatus = action.payload;
+    },
   },
 });
 
@@ -62,11 +67,14 @@ export const {
   setStatus,
   setUpdateItem,
   setError,
+  setSaveStatus,
 } = itemsSlice.actions;
 export default itemsSlice.reducer;
 
 export function addItemData(data: IAdditemData) {
   return async function addItemDataThunk(dispatch: AppDispatch) {
+    dispatch(setSaveStatus(Status.IDLE));
+
     try {
       const response = await APIWITHTOKEN.post("/seller/items/", data, {
         headers: {
@@ -76,7 +84,7 @@ export function addItemData(data: IAdditemData) {
       console.log("item added sucessfully", response.data);
       if (response.status === 201) {
         dispatch(setAddItem(response.data));
-        dispatch(setStatus(Status.SUCCESS));
+        dispatch(setSaveStatus(Status.SUCCESS));
       } else {
         dispatch(setStatus(Status.ERROR));
       }
@@ -125,7 +133,7 @@ export function UpdateItemsQuantity(
   data: any
 ) {
   return async function UpdateItemsQuantityThunk(dispatch: AppDispatch) {
-    dispatch(setStatus(Status.LOADING));
+    dispatch(setSaveStatus(Status.IDLE));
     dispatch(setError(""));
 
     try {
@@ -140,9 +148,9 @@ export function UpdateItemsQuantity(
       );
       if (response.status === 200) {
         dispatch(setUpdateItem(response.data));
-        dispatch(setStatus(Status.SUCCESS));
+        dispatch(setSaveStatus(Status.SUCCESS));
       } else {
-        dispatch(setStatus(Status.ERROR));
+        dispatch(setSaveStatus(Status.ERROR));
       }
     } catch (error: any) {
       dispatch(
