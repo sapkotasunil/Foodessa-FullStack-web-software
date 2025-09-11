@@ -17,7 +17,7 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="bg-gray-100 flex h-full min-h-screen">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md ">
+      <aside className="min-w-64 bg-white shadow-md ">
         <div className="p-4 border-b">
           <div className="flex items-center">
             <Link href="/" className="text-[24px] font-bold flex items-center">
@@ -95,17 +95,19 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
               </div>
 
               <button
-                onClick={() =>
-                  router.push(`/buyer/kitchens/${kitchenDetails.id}`)
-                }
+                onClick={() => {
+                  router.push(`/seller/dashboard/${kitchenDetails.id}`);
+                  setIsDropdownOpen(false);
+                }}
                 className="block px-2 py-2 border-t text-sm text-start cursor-pointer text-gray-700 font-medium hover:bg-gray-100 w-full"
               >
                 <i className="fas fa-user-circle mr-2 font-medium"></i>Your
                 Profile
               </button>
               <Link
-                href={"/seller/register/update"}
-                className="block px-2 py-2 border-t text-sm text-gray-700 font-medium hover:bg-gray-100"
+                href={"/seller/dashboard/KitchenUpdate"}
+                onClick={() => setIsDropdownOpen(false)}
+                className="block px-2 py-2 border-t text-sm  text-gray-700 font-medium hover:bg-gray-100"
               >
                 <i className="fas fa-cog mr-2"></i>Edit kitchen details
               </Link>
@@ -114,6 +116,7 @@ function Dashboard({ children }: Readonly<{ children: React.ReactNode }>) {
 
               {/* Switch to Seller button */}
               <Link
+                onClick={() => setIsDropdownOpen(false)}
                 href={"/buyer/home"}
                 className="w-full text-left text-gray-700 block px-2 py-2 text-sm hover:bg-gray-100 font-medium"
               >

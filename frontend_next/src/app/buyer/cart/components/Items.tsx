@@ -43,7 +43,7 @@ export default function CartItem({ data }: any) {
           prevQuantity={quantity}
         />
       )}
-      <div className="w-full grid   bg-white shadow-xl rounded-2xl p-4 grid-cols-4  items-center space-x-4 mb-4">
+      <div className="w-full grid   bg-white shadow-xl rounded-2xl p-4 grid-cols-1 md:grid-cols-4 sm:grid-cols-2  items-center space-x-4 mb-4">
         <div className="flex items-center gap-3  ">
           <Image
             src={data?.image && data.image.replace("/media/", "/api/v1/media/")}

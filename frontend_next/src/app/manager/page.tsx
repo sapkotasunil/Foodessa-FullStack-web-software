@@ -1,22 +1,35 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { loginUser } from "@/lib/store/auth/authSlice";
-import { Status } from "@/lib/types/types";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const { user, status, errors } = useAppSelector((store) => store.auth);
-  const [loader, setloader] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (status !== "loading") {
+      setLoader(false);
+    }
+    if (status === "success") {
+      if (user.role !== "manager") {
+        toast.error("You are Not a manager");
+      } else {
+        toast.success("Logged as a manager sucessfully !");
+      }
+    }
+  }, [status]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,7 +38,7 @@ export default function LoginPage() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setloader(true);
+    setLoader(true);
     dispatch(loginUser(formData));
   };
 
@@ -79,6 +92,9 @@ export default function LoginPage() {
           </div>
 
           {/* Error */}
+          {errors?.detail && (
+            <p className="text-red-500 text-sm mt-2">{errors.detail}</p>
+          )}
 
           {/* Submit Button */}
           <button

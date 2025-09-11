@@ -10,7 +10,7 @@ export default function CartPage() {
 
   return (
     <>
-      <div className="min-h-screen  py-10 scrol px-16">
+      <div className="min-h-screen  py-10 scrol px-1">
         <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
         {data.length !== 0 ? (
           data.map((item) => <CartItem data={item} key={item.id} />)

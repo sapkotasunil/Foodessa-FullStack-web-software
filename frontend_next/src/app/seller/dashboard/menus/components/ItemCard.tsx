@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { setStatus, UpdateItemsQuantity } from "@/lib/store/seller/items/items";
 import { Status } from "@/lib/types/types";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import AddItemModel from "./AddItemModel";
 
 function ItemCard({ data }: any) {

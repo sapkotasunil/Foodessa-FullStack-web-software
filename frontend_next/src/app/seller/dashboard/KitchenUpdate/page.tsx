@@ -1,7 +1,6 @@
 "use client";
 
 import Loader from "@/components/GlobalComponents/Loders";
-import Navbar from "@/components/GlobalComponents/Navbar";
 import { SucessfulModel } from "@/components/GlobalComponents/SucessfullModel";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import { getKitchenDetails } from "@/lib/store/seller/kitchenDetails/kitchenDetailsSlice";
@@ -86,17 +85,16 @@ export default function SellerRegistrationForm() {
   }, [status, dispatch]);
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center py-10 px-4">
-        <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg overflow-hidden">
+    <div className=" h-screen overflow-y-scroll w-full">
+      <div className="  w-full flex items-center justify-center py-10 px-4   ">
+        <div className="w-full max-w-4xl bg-white rounded-xl shadow-lg ">
           {/* Header Section */}
           <div className="bg-gradient-to-r from-green-600 to-emerald-700 px-8 py-6 text-white">
             <h2 className="text-2xl md:text-3xl font-bold mb-2">
-              Register Your Kitchen
+              Update Your Kitchen
             </h2>
             <p className="text-green-100">
-              Join our platform and start serving delicious meals to your
+              Update your kitchen and start serving delicious meals to your
               customers
             </p>
           </div>
@@ -337,6 +335,6 @@ export default function SellerRegistrationForm() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

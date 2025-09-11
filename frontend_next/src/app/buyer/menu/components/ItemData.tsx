@@ -38,12 +38,12 @@ function ItemData() {
               className="border-none outline-none w-full text-sm pl-4 bg-deep"
               placeholder="search here.."
             />
-            <div
+            {/* <div
               // onClick={toogleShowCategory}
               className="flexCenetr cursor-pointer text-lg border-1 pl-2"
             >
               <LuSettings2 />
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -55,7 +55,7 @@ function ItemData() {
           title1Styles={""}
         />
 
-        <div className="grid 2xl:grid-cols-3  gap-x-12 gap-y-4  xl:grid-cols-2 lg:grid-cols-2 ml-8  md:ml-11 pb-4">
+        <div className="grid xl:grid-cols-3  gap-x-12 gap-y-4   lg:grid-cols-2 ml-8  md:ml-11 pb-4">
           {serchedItems.map((data) => (
             <FoodItemCard key={data.id} items={data} />
           ))}

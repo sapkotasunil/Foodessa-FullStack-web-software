@@ -56,9 +56,33 @@ function FoodItemCard({ items }: { items: IresposeItemData }) {
               {items.item_name}
             </h4>
             <div className="flex items-center justify-between pb-2 w-full">
-              <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full">
-                {items.category}
-              </span>
+              <div className=" flex gap-2">
+                <span className="text-xs font-medium text-green-700 bg-green-100 px-2 py-1 rounded-full">
+                  {items.category}
+                </span>
+                {items.is_available === "no" ? (
+                  <div className="flex items-center">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                    </span>
+                    <span className="text-gray-400 text-xs pl-1">
+                      Not available now
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span className="text-gray-400 text-xs pl-1">
+                      Available now
+                    </span>
+                  </div>
+                )}
+              </div>
+
               <div className="flex items-center gap-x-0.5 text-amber-500 text-sm">
                 <FaStar className="w-3 h-3" />
                 <FaStar className="w-3 h-3" />

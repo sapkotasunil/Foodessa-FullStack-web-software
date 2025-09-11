@@ -32,7 +32,7 @@ function PopularFoods() {
       />
       <Swiper
         autoplay={{
-          delay: 3500,
+          delay: 2000,
           disableOnInteraction: false,
         }}
         pagination={{

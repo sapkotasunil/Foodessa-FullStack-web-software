@@ -32,7 +32,7 @@ export default function OrdersPage() {
 
   return (
     <>
-      <div className="px- py-6 space-y-8">
+      <div className="px-1 py-6 space-y-8">
         {sections.map((section) => {
           const filteredOrders = ordered_data.filter(
             (order) => order.orderStatus === section.status
@@ -54,7 +54,7 @@ export default function OrdersPage() {
                 {section.title}
               </h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6">
                 {filteredOrders.length > 0 ? (
                   filteredOrders.map((order) => <ItemCard order={order} />)
                 ) : (

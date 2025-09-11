@@ -26,7 +26,7 @@ function kitchen() {
   );
 
   return (
-    <div>
+    <div className="px-2">
       <div className="max-w-[1340px] mx-auto mt-5">
         <Title
           title1={"Kitchen"}

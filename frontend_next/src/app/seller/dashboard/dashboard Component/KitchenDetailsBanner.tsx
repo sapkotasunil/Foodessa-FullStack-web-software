@@ -103,7 +103,7 @@ export default function KitchenDashboard({ kitchen }: any) {
             </div>
             <div className=" text-orange-600rounded-lg shadow-md">
               <Link
-                href={"/seller/register/update"}
+                href={"/seller/dashboard/KitchenUpdate"}
                 className=" bg-blue-600 hover:bg-blue-700 cursor-pointer px-2 py-1 font-semibold rounded text-white "
               >
                 Edit Kitchen Details
@@ -234,34 +234,6 @@ export default function KitchenDashboard({ kitchen }: any) {
                 </h3>
                 <p className="text-gray-400 text-sm">
                   Please add a item to View Reports
-                </p>
-              </div>
-            )}
-          </div>
-          <div className="mt-6 text-center">
-            {TopSellingItem.length === 0 && (
-              <div className="bg-white rounded-xl shadow-sm p-8 text-center">
-                <div className="text-gray-400 mb-3">
-                  <svg
-                    className="w-16 h-16 mx-auto"
-                    fill="none"
-                    stroke="red"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={1.5}
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
-                  </svg>
-                </div>
-                <h3 className="text-lg font-medium text-gray-500 mb-1">
-                  No Any Items In cart
-                </h3>
-                <p className="text-gray-400 text-sm">
-                  Please add a item to orders food
                 </p>
               </div>
             )}

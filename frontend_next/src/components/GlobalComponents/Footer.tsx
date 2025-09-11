@@ -37,7 +37,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className=" border-gray-20  border-t-[2px] pt-3 bg-green-50  flex flex-col sm:flex-row max-w-[1380px] mx-auto px-6  justify-between gap-2">
+      <footer className=" border-gray-20  border-t-[2px] pt-3 bg-green-50  flex flex-col sm:flex-row  mx-auto px-6  justify-between gap-2">
         {/* left */}
         <div className="max-w-[400px]">
           <div>
@@ -99,12 +99,12 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <div className="border-t border-gray-200 bg-green-600 px-3  pt-6 pb-5 max-w-[1380px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <p className="text-black text-sm">
+      <div className="border-t border-gray-200 bg-green-600 px-3  py-3  mx-auto ">
+        <div className="flex flex-col md:flex-row justify-between font-semibold items-center space-y-4 md:space-y-0">
+          <p className="text-white text-sm">
             © 2025 Foodessa. All rights reserved.
           </p>
-          <div className="flex space-x-6 text-sm text-black">
+          <div className="flex space-x-6 text-sm text-white">
             <a href="#" className="hover:text-green-600 transition-colors">
               Privacy Policy
             </a>

@@ -140,7 +140,7 @@ function PendingApproval({ seller, formatDate, type }: any) {
                 </>
               )}
               <button
-                onClick={() => router.push(`/buyer/kitchens/${seller.id}`)}
+                onClick={() => router.push(`/manager/dashboard/${seller.id}`)}
                 className="flex-1 border cursor-pointer border-blue-600 text-blue-600 hover:bg-blue-100 disabled:opacity-50 py-2 px-4 rounded-lg font-medium transition-colors"
               >
                 View Details
