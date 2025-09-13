@@ -44,7 +44,6 @@ export default function ContactPage() {
     } catch (error) {
       alert("Something went wrong");
     }
-    console.log("Form submitted:", formData);
   };
 
   return (

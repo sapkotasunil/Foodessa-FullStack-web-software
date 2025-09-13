@@ -15,7 +15,6 @@ import { removecartData } from "@/lib/store/cart/cart.slice";
 export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
   const { status } = useAppSelector((store) => store.orders);
   const { user } = useAppSelector((store) => store.auth);
-  console.log(user);
 
   const [quantity, setQuantity] = useState(prevQuantity);
   const [loader, setLoader] = useState(false);
@@ -38,8 +37,6 @@ export default function BuyModel({ itemsData, closeModel, prevQuantity }: any) {
       [name]: name === "payment" ? files?.[0] ?? null : value,
     });
   };
-
-  console.log(itemsData.kitchen_qr_photo);
 
   const handlSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

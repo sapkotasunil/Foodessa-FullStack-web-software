@@ -62,9 +62,6 @@ function OrderDetailsModel({
   const isOnlinePayment = itemsData?.paymentStatus === "ONLINE";
   const hasReceipt = itemsData?.payment;
 
-  console.log("order:", isOnlinePayment);
-  console.log("receipt:", hasReceipt);
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative animate-fadeIn">

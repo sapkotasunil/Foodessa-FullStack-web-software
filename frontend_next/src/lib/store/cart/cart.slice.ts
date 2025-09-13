@@ -24,7 +24,6 @@ const cartData = createSlice({
         (items) => items.id === action.payload
       );
       if (index === -1) {
-        console.log("canot find items");
       }
       state.data.splice(index, 1);
     },

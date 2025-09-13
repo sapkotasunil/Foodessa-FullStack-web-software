@@ -11,10 +11,14 @@ function ProtectedManager({ children }: { children: React.ReactNode }) {
     if (user && user.role !== "manager") {
       router.push("/buyer/home");
     }
-  }, []);
+  }, [user.role]);
 
-  if (!user) {
-    return <p className="text-center mt-10">Checking permissions...</p>;
+  if (!user.role) {
+    return (
+      <h1 className="text-2xl w-full mx-auto mt-20 h-screen  text-black font-semibold flex items-center justify-center">
+        Checking authorization...
+      </h1>
+    );
   }
 
   if (user.role === "manager") {

@@ -43,11 +43,11 @@ export default function LoginPage() {
   };
 
   // 🔎 After login success, check role and redirect
-  if (user?.role) {
-    if (user.role === "manager") {
+  useEffect(() => {
+    if (status === "success" && user?.role === "manager") {
       router.push("/manager/dashboard");
     }
-  }
+  }, [user.role]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-green-50  ">

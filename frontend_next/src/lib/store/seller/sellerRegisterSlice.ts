@@ -60,7 +60,6 @@ export function sellerRegisterForm(data: ISellerRegisterFormData) {
       }
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
-      console.log(error);
     }
   };
 }
@@ -85,7 +84,6 @@ export function editedSellerData(id: number, data: any) {
       }
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
-      console.log(error);
     }
   };
 }

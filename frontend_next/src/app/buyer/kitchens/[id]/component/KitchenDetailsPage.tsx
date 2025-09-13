@@ -68,7 +68,6 @@ export default function KitchenDetailsPage() {
           setLoading(false);
         }, 2000);
       } catch (error) {
-        console.error("Error fetching kitchen data:", error);
         setLoading(false);
       }
     };

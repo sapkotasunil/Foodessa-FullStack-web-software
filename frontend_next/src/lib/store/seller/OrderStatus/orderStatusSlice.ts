@@ -44,13 +44,11 @@ export function UpdateOrderStatus(id: number, data: IOrderStatusData) {
         data
       );
       if (response.status === 200) {
-        console.log("status update sucessfully");
         dispatch(setOrderStatus(Status.SUCCESS));
 
         dispatch(setorderStatusData(response.data.orderStatus));
         dispatch(setUpdateStatus(response.data));
       } else {
-        console.log("error");
         dispatch(setOrderStatus(Status.ERROR));
       }
     } catch (error) {

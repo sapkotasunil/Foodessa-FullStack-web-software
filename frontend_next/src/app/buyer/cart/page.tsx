@@ -6,7 +6,6 @@ import Navbar from "@/components/GlobalComponents/Navbar";
 
 export default function CartPage() {
   const { data } = useAppSelector((store) => store.cart);
-  console.log(data);
 
   return (
     <>

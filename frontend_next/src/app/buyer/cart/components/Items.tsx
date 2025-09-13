@@ -43,7 +43,7 @@ export default function CartItem({ data }: any) {
           prevQuantity={quantity}
         />
       )}
-      <div className="w-full grid   bg-white shadow-xl rounded-2xl p-4 grid-cols-1 md:grid-cols-4 sm:grid-cols-2  items-center space-x-4 mb-4">
+      <div className="w-full grid   bg-white shadow-xl rounded-2xl p-4 grid-cols-1 md:grid-cols-5 sm:grid-cols-2  items-center space-x-4 mb-4">
         <div className="flex items-center gap-3  ">
           <Image
             src={data?.image && data.image.replace("/media/", "/api/v1/media/")}
@@ -76,6 +76,29 @@ export default function CartItem({ data }: any) {
             +
           </button>
         </div>
+
+        <div>
+          {data.is_available === "no" ? (
+            <div className="flex items-center">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </span>
+              <span className="text-gray-400 text-sm pl-1">
+                Not available now
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
+              <span className="text-gray-400 text-sm pl-1">Available now</span>
+            </div>
+          )}
+        </div>
+
         <p className="text-gray-700 font-bold flex items-center mt-2">
           Price: Rs. {data?.price * quantity}
         </p>

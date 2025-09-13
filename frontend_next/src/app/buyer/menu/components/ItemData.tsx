@@ -15,12 +15,10 @@ function ItemData() {
   useEffect(() => {
     data.length === 0 && dispatch(getAllItemsData());
   }, []);
-  console.log(data);
   const [search, setSearch] = useState<string>("");
   let serchedItems = data.filter((item) =>
     item.item_name.toLowerCase().includes(search.toLowerCase())
   );
-  console.log(serchedItems);
 
   return (
     <>

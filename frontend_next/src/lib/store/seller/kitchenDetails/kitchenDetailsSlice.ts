@@ -50,7 +50,6 @@ export function getKitchenDetails() {
         dispatch(setStatus(Status.ERROR));
       }
     } catch (error) {
-      console.log(error);
       dispatch(setStatus(Status.ERROR));
     }
   };

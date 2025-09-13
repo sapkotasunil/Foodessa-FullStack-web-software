@@ -45,7 +45,6 @@ function Register() {
       setLoader(true);
       setPassWordMatch(true);
       dispatch(registerUser(data));
-      console.log("submmited", data);
     } else setPassWordMatch(false);
   };
 

@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import OrderDetailsModel from "./OrderDetailsModel";
 import { UpdateItemsQuantity } from "@/lib/store/seller/items/items";
-import { error } from "console";
 
 function OrderAcceptedCard({ item }: any) {
   const [IsUpdated, setisUpdated] = useState(true);
@@ -38,8 +37,6 @@ function OrderAcceptedCard({ item }: any) {
       setisUpdated(false);
     }
   }, [orderStatus, deliveryStatus, item.orderStatus, item.deleveryStatus]);
-
-  console.log(item);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

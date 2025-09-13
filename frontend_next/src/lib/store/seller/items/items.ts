@@ -37,7 +37,7 @@ const itemsSlice = createSlice({
       if (index != -1) {
         state.data[index] = action.payload;
       } else {
-        console.log("cannot find order");
+        alert("error");
       }
     },
 
@@ -81,7 +81,6 @@ export function addItemData(data: IAdditemData) {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("item added sucessfully", response.data);
       if (response.status === 201) {
         dispatch(setAddItem(response.data));
         dispatch(setSaveStatus(Status.SUCCESS));
@@ -90,7 +89,6 @@ export function addItemData(data: IAdditemData) {
       }
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
-      console.log(error);
     }
   };
 }
@@ -106,7 +104,6 @@ export function getSellerItemsData() {
       }
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
-      console.log(error);
     }
   };
 }
@@ -122,7 +119,6 @@ export function getAllItemsData() {
       }
     } catch (error) {
       dispatch(setStatus(Status.ERROR));
-      console.log(error);
     }
   };
 }

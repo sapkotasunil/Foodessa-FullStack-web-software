@@ -14,7 +14,6 @@ function reports() {
       dispatch(getSellerItemsData());
     }
   }, []);
-  console.log(data);
   return (
     <>
       <div className=" overflow-y-scroll h-screen w-full ">

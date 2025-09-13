@@ -8,7 +8,7 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <>
-      <section className=" mx-auto max-w-[1440px] px-6  lg:px-12 py-10 xl:py-18  ">
+      <section className=" mx-auto max-w-[1440px] px-6  lg:px-12 py-10 xl:py-18  mb-3 ">
         <div className=" flex items-center justify-center gap-6 flex-col xl:flex-row">
           {/* left side */}
           <div className=" flex flex-1 flex-col pt-12 xl:pt-32">
@@ -27,8 +27,8 @@ const Hero = () => {
             </p>
             <div className="mt-6">
               <Link
-                href={"#"}
-                className="medium-14 bg-[#217041] text-white px-7 py-3.5 rounded-full transition-all"
+                href={"/buyer/menu"}
+                className="medium-14 hover:bg-green-600 cursor-pointer bg-[#217041] text-white px-7 py-3.5 rounded-full transition-all"
               >
                 Explore Now
               </Link>
