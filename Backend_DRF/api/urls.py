@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
-from users.views import CustomTokenObtainPairView,userDetailsEdit
+from users.views import CustomTokenObtainPairView,userDetailsEdit,UserRole
 from seller.views import ItemListCreateView,BuyerItemListView,ItemQuantityUpdate
 from seller_registration_data.views import SellerRegistrationFormView
 from seller_registration_data.views import kitchenDetailsView,allKitchenDetails,KitchenDetail,KitchenDetailsEdit
@@ -29,7 +29,8 @@ urlpatterns = [
     path('kitchens/', allKitchenDetails.as_view(), name='Fetch all kitchens data'),
     path('kitchen/<int:pk>/',KitchenDetail.as_view(),name="single kitchen details"),
     path('update_kitchen/<int:pk>/',KitchenDetailsEdit.as_view(),name="single kitchen details"),
-    path('feedback/',FeedbackForm.as_view(),name="add and view feedback")
+    path('feedback/',FeedbackForm.as_view(),name="add and view feedback"),
+    path('userrole/',UserRole.as_view(),name="UserRole")
 
     
 ]

@@ -103,7 +103,7 @@ function KitchenDetailsCards({ kitchen }: any) {
           <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1">
             {kitchen.kitchen_name}
           </h3>
-          <p className="text-gray-600 text-sm line-clamp-2">
+          <p className="text-gray-600 text-sm line-clamp-1">
             {kitchen.kitchen_description || "No description available"}
           </p>
         </div>

@@ -206,15 +206,15 @@ export default function Navbar() {
                 </div>
                 <div className="border-b border-gray-100">
                   {role && role === "seller" ? (
-                    <button
+                    <a
+                      href="/seller/dashboard"
                       onClick={() => {
                         setProfileOpen(false);
-                        router.push("/seller/dashboard");
                       }}
-                      className="w-full cursor-pointer text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
+                      className="w-full cursor-pointer inline-block text-left px-4 py-3 text-sm text-green-600 hover:bg-green-50 transition-colors"
                     >
                       Switch to seller
-                    </button>
+                    </a>
                   ) : (
                     <button
                       onClick={() => {

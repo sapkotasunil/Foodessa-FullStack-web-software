@@ -59,3 +59,10 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             raw_url = obj.profile_picture.url.replace("/media/", "/api/v1/media/")
             return request.build_absolute_uri(raw_url)
         return None
+
+
+class UserRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=["role"]
+    

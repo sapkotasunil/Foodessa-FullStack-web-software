@@ -4,7 +4,7 @@ from .models import User
 from .serializers import UserRegisterSerializers
 from rest_framework.permissions import AllowAny,IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import CustomTokenObtainPairSerializer
+from .serializers import CustomTokenObtainPairSerializer,UserRoleSerializer
 
 
 
@@ -21,3 +21,12 @@ class userDetailsEdit(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=UserRegisterSerializers
     queryset=User.objects.all()
     permission_classes=[IsAuthenticated]
+    
+    
+class UserRole(generics.RetrieveAPIView):
+    serializer_class=UserRoleSerializer
+    queryset=User.objects.all()
+    permission_classes=[IsAuthenticated]
+    
+    def get_object(self):
+        return self.request.user

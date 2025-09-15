@@ -1,35 +1,48 @@
 "use client";
-import { useAppSelector } from "@/lib/store/hooks";
+import APIWITHTOKEN from "@/lib/http/APIWITHTOKEN";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function ProtectedManager({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { user } = useAppSelector((store) => store.auth);
-
-  const [checking, setChecking] = useState(true);
+  const [role, setRole] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true); // new loading state
 
   useEffect(() => {
-    // If user is still undefined/null (Redux not ready), don't do anything yet
-    if (!user) return;
+    const checkRole = async () => {
+      try {
+        const response = await APIWITHTOKEN.get("/userrole/");
+        const userRole = response.data.role;
 
-    if (user.role !== "seller") {
-      router.replace("/buyer/home"); // replace prevents back button loop
-    } else {
-      setChecking(false);
-    }
-  }, [user, router]);
+        if (userRole !== "seller") {
+          router.replace("/buyer/home"); // redirect immediately
+        } else {
+          setRole(userRole); // only set role if manager
+        }
+      } catch (error) {
+        console.error(error);
+        router.replace("/login");
+      } finally {
+        setLoading(false); // stop loader once check is done
+      }
+    };
 
-  // Loader until we know user's role
-  if (checking) {
+    checkRole();
+  }, [router]);
+
+  // Show loader while checking
+  if (loading || role === null) {
     return (
-      <h1 className="text-2xl w-full mx-auto mt-20 h-screen text-black font-semibold flex items-center justify-center">
-        Checking authorization...
-      </h1>
+      <>
+        <h1 className="text-2xl absolute w-full mx-auto bg-white mt-20 h-screen text-black font-semibold flex items-center justify-center">
+          Checking authorization...
+        </h1>
+      </>
     );
   }
 
+  // Render children only if role verified as manager
   return <>{children}</>;
 }
 
-export default ProtectedRoute;
+export default ProtectedManager;
