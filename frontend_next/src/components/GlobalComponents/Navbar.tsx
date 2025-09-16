@@ -63,6 +63,7 @@ export default function Navbar() {
   const handleLogout = () => {
     setProfileOpen(false);
     localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
     dispatch(
       setUser({
         address: "",

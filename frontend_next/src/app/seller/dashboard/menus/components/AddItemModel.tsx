@@ -112,7 +112,7 @@ const AddItemModel: React.FC<IcloseMOdel> = ({
             </button>
           </div>
           <p className="text-green-100 text-sm mt-1">
-            Fill in the details to add a new item to your menu
+            Fill in the details to updae or add a new item to your menu
           </p>
         </div>
 

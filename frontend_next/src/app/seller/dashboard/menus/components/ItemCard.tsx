@@ -61,7 +61,7 @@ function ItemCard({ data }: any) {
         <AddItemModel
           closeModel={closeModel}
           previousData={data}
-          type="Upadate Item"
+          type="Update Item"
         />
       )}
 

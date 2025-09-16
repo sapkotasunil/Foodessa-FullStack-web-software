@@ -113,12 +113,11 @@ function OrderDetailsModel({
                     <span className="font-medium">{itemsData?.quantity}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Unit Price:</span>
+                    <span className="text-gray-600">Item Price:</span>
                     <span className="font-medium">
                       Rs{" "}
-                      {parseFloat(
-                        String(availableStockOfOrderItems?.price ?? "0")
-                      ) || 0}
+                      {Number(itemsData?.totalPrice) /
+                        Number(itemsData?.quantity) || 0}
                     </span>
                   </div>
                   <div className="flex justify-between text-lg font-bold border-t border-gray-200 pt-2">
